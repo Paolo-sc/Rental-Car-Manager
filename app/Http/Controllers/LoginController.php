@@ -23,7 +23,9 @@ class LoginController extends BaseController
     public function dashboard()
     {
         // Mostra lo user autenticato
-        return auth()->user();
+        return view('dashboard', [
+            'user' => auth()->user(),
+        ]);
     }
 
     public function doLogout()
