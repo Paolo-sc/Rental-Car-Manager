@@ -28,6 +28,14 @@ class LoginController extends BaseController
         ]);
     }
 
+    public function documents()
+    {
+        // Mostra i documenti dell'utente autenticato
+        return view('documents', [
+            'user' => auth()->user(),
+        ]);
+    }
+
     public function doLogout()
     {
         // Effettua il logout dell'utente

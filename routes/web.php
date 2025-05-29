@@ -12,3 +12,5 @@ Route::get('login', 'App\Http\Controllers\LoginController@showLoginForm')->name(
 Route::post('login', 'App\Http\Controllers\LoginController@doLogin');
 Route::get('dashboard', 'App\Http\Controllers\LoginController@dashboard')->middleware('auth')->name('dashboard');
 Route::get('logout', 'App\Http\Controllers\LoginController@doLogout')->middleware('auth')->name('logout');
+Route::get('documents', 'App\Http\Controllers\LoginController@documents')->middleware('auth')->name('documents');
+Route::get('customers', 'App\Http\Controllers\LoginController@documents')->middleware('auth')->name('customers');
