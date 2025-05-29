@@ -136,6 +136,7 @@ html, body {
     margin-top: auto; /* Spinge il profilo utente in fondo */
     border-top: 1px solid #eee;
     gap: 10px;
+    border: 2px solid red;
 }
 
 .sidebar .user-profile .user-avatar-icon {
@@ -151,15 +152,24 @@ html, body {
 
 .sidebar .user-info {
     flex-grow: 1; /* Permette al contenitore di occupare lo spazio rimanente */
+    overflow: hidden; /* Impedisce che il testo esca dal contenitore */
+    white-space: nowrap; /* Impedisce il ritorno a capo del testo */
 }
 
 .sidebar .user-profile .user-info .username {
     font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
 }
 
 .sidebar .user-profile .user-info .user-email {
     font-size: 0.8em;
     color: #777;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .sidebar .user-profile .nav-icon { /* Selettore più specifico per l'icona a destra del profilo */
