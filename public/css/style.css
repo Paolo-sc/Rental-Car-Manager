@@ -136,7 +136,6 @@ html, body {
     margin-top: auto; /* Spinge il profilo utente in fondo */
     border-top: 1px solid #eee;
     gap: 10px;
-    border: 2px solid red;
 }
 
 .sidebar .user-profile .user-avatar-icon {
