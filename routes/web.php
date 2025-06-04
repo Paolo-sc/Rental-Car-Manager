@@ -14,3 +14,4 @@ Route::get('dashboard', 'App\Http\Controllers\DashboardController@showDashboard'
 Route::get('logout', 'App\Http\Controllers\LoginController@doLogout')->middleware('auth')->name('logout');
 Route::get('documents', 'App\Http\Controllers\DocumentController@showDocuments')->middleware('auth')->name('documents');
 Route::get('customers', 'App\Http\Controllers\DocumentController@showDocuments')->middleware('auth')->name('customers');
+Route::get('/calendar-data', 'App\Http\Controllers\CalendarDataController@index')->name('calendar.data');
