@@ -6,12 +6,12 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class DashboardController extends BaseController
+class DocumentController extends BaseController
 {
-    public function showDashboard()
+    public function showDocuments()
     {
-        // Mostra la dashboard dell'utente autenticato
-        return view('dashboard', [
+        // Mostra i documenti dell'utente autenticato
+        return view('documents', [
             'user' => auth()->user(),
         ]);
     }

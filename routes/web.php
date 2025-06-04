@@ -10,7 +10,7 @@ Route::get('register', 'App\Http\Controllers\LoginController@showRegistrationFor
 Route::post('register', 'App\Http\Controllers\LoginController@doRegister');
 Route::get('login', 'App\Http\Controllers\LoginController@showLoginForm')->name('login');
 Route::post('login', 'App\Http\Controllers\LoginController@doLogin');
-Route::get('dashboard', 'App\Http\Controllers\LoginController@dashboard')->middleware('auth')->name('dashboard');
+Route::get('dashboard', 'App\Http\Controllers\DashboardController@showDashboard')->middleware('auth')->name('dashboard');
 Route::get('logout', 'App\Http\Controllers\LoginController@doLogout')->middleware('auth')->name('logout');
-Route::get('documents', 'App\Http\Controllers\LoginController@documents')->middleware('auth')->name('documents');
-Route::get('customers', 'App\Http\Controllers\LoginController@documents')->middleware('auth')->name('customers');
+Route::get('documents', 'App\Http\Controllers\DocumentController@showDocuments')->middleware('auth')->name('documents');
+Route::get('customers', 'App\Http\Controllers\DocumentController@showDocuments')->middleware('auth')->name('customers');

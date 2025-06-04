@@ -20,22 +20,6 @@ class LoginController extends BaseController
         return view('login');
     }
 
-    public function dashboard()
-    {
-        // Mostra lo user autenticato
-        return view('dashboard', [
-            'user' => auth()->user(),
-        ]);
-    }
-
-    public function documents()
-    {
-        // Mostra i documenti dell'utente autenticato
-        return view('documents', [
-            'user' => auth()->user(),
-        ]);
-    }
-
     public function doLogout()
     {
         // Effettua il logout dell'utente
