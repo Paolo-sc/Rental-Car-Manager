@@ -18,14 +18,14 @@ class CalendarDataController extends BaseController
     public function index(Request $request)
     {
         // 1) Carico tutti i veicoli (eventualmente filtrare per status se volete mostrare solo "available")
-        $vehicles = Vehicle::select('id', 'brand', 'model')
+        $vehicles = Vehicle::select('id', 'brand', 'model', 'license_plate')
             // ->where('status', 'available')
             ->get()
             ->map(function ($v) {
                 // Componiamo un nome leggibile, ad esempio "Fiat Panda (123-ABC)"
                 return [
                     'id'   => $v->id,
-                    'name' => $v->brand . ' ' . $v->model,
+                    'name' => $v->brand . ' ' . $v->model . ' ' . $v->license_plate,
                 ];
             });
 
@@ -34,14 +34,14 @@ class CalendarDataController extends BaseController
         $from = $request->query('from'); // es. "2025-01-01"
         $to   = $request->query('to');   // es. "2025-12-31"
 
-        // Impostiamo un minimo/massimo per evitare query troppo vaste (es. ±1 anno rispetto a oggi)
+        // Impostiamo un minimo/massimo per evitare query troppo vaste (es. ±1 mese rispetto a oggi)
         $today = Carbon::today();
 
         if (!$from) {
-            $from = $today->copy()->subMonths(12)->toDateString();
+            $from = $today->copy()->subMonths(1)->toDateString();
         }
         if (!$to) {
-            $to = $today->copy()->addMonths(12)->toDateString();
+            $to = $today->copy()->addMonths(1)->toDateString();
         }
 
         // 3) Carichiamo i contratti attivi (stato in ["pending", "active", "completed", ...])
