@@ -29,6 +29,9 @@ class RegistrationController extends BaseController
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+        // Imposta il campo 'last_login_at' a null
+        $user->last_login_at = null;
+        $user->save(); // Salva l'utente nel database
 
         // Autenticazione dell'utente appena registrato
         auth()->login($user);
