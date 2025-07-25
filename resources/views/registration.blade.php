@@ -52,28 +52,13 @@
                         </div>
                     </form>
                 </div>
+
         </main>
         <footer>
             <div id="footer">
                 <p>&copy; 2025 Manager Car rental. Tutti i diritti riservati.</p>
             </div>
         </footer>
-        <script>
-            function togglePasswordVisibility() {
-                const passwordField = document.getElementById('password');
-                const confirmPasswordField = document.getElementById('password_confirmation');
-                const eyeIcon = document.getElementById('eye');
-                if (passwordField.type === 'password') {
-                    passwordField.type = 'text';
-                    confirmPasswordField.type = 'text';
-                    eyeIcon.src = '{{ url("img/icon-eye-open.svg") }}';
-                } else {
-                    passwordField.type = 'password';
-                    confirmPasswordField.type = 'password';
-                    eyeIcon.src = '{{ url("img/icon-eye.svg") }}';
-                }
-            }
-        </script>
-        <script src="{{url('js/registration.js')}}" defer></script>
+        <script src="{{url('js/login.js')}}" defer></script>
     </body>
 </html>
