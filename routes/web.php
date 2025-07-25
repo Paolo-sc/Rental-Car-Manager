@@ -6,8 +6,8 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-Route::get('register', 'App\Http\Controllers\LoginController@showRegistrationForm');
-Route::post('register', 'App\Http\Controllers\LoginController@doRegister');
+Route::get('registretion', 'App\Http\Controllers\RegistretionController@showRegistrationForm')->name('registretion');
+Route::post('registration', 'App\Http\Controllers\RegistretionController@doRegister');
 Route::get('login', 'App\Http\Controllers\LoginController@showLoginForm')->name('login');
 Route::post('login', 'App\Http\Controllers\LoginController@doLogin');
 Route::get('dashboard', 'App\Http\Controllers\DashboardController@showDashboard')->middleware('auth')->name('dashboard');
