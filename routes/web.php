@@ -6,8 +6,6 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-Route::get('registration', 'App\Http\Controllers\RegistrationController@showRegistrationForm')->name('registretion');
-Route::post('registration', 'App\Http\Controllers\RegistrationController@doRegister');
 Route::get('login', 'App\Http\Controllers\LoginController@showLoginForm')->name('login');
 Route::post('login', 'App\Http\Controllers\LoginController@doLogin');
 Route::get('dashboard', 'App\Http\Controllers\DashboardController@showDashboard')->middleware('auth')->name('dashboard');
@@ -15,3 +13,6 @@ Route::get('logout', 'App\Http\Controllers\LoginController@doLogout')->middlewar
 Route::get('documents', 'App\Http\Controllers\DocumentController@showDocuments')->middleware('auth')->name('documents');
 Route::get('customers', 'App\Http\Controllers\DocumentController@showDocuments')->middleware('auth')->name('customers');
 Route::get('/calendar-data', 'App\Http\Controllers\CalendarDataController@index')->name('calendar.data');
+Route::post('documents', 'App\Http\Controllers\InvitationController@doInvite')->name('invite');
+Route::get('register/invitation/{token}', 'App\Http\Controllers\RegistrationController@showRegistrationFormWithToken')->name('register.invitation');
+Route::post('register/invitation', 'App\Http\Controllers\RegistrationController@doRegisterWithToken')->name('register.invitation.post');
