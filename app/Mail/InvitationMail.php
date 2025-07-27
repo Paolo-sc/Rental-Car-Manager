@@ -8,46 +8,27 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Invitation;
 
 class InvitationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
+    public $invitation;
+
+    public function __construct(Invitation $invitation)
     {
-        //
+        $this->invitation = $invitation;
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Invitation Mail',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        return $this->subject('Invito per Noleggio Auto Autofficina Mirisciotti')
+                    ->view('mails.invitation')
+                    ->with([
+                        'invitationUrl' => route('register.invitation', ['token' => $this->invitation->token]),
+                        'expiresAt' => $this->invitation->expires_at->format('d/m/Y H:i'),
+                        'companyName' => config('app.name', 'Car Rental Management')
+                    ]);
     }
 }
