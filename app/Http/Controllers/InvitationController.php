@@ -38,7 +38,7 @@ class InvitationController extends BaseController
             'token' => $token,
             'used' => false,
             'created_by' => auth()->id(), // ID dell'utente che ha creato l'invito
-            'expires_at' => now()->addDays(7) // Imposta la scadenza a 7 giorni
+            'expires_at' => now()->addDays(2) // Imposta la scadenza a 2 giorni
         ]);
 
         // Logica per inviare l'invito via email
