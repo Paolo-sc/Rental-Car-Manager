@@ -14,7 +14,10 @@ class RegistrationController extends BaseController
         $invitation = \App\Models\Invitation::where('token', $token)->where('used', false)->first();
 
         if (!$invitation || $invitation->expires_at < now()) {
-            return redirect('login')->withErrors(['token' => 'Invito non valido o scaduto.']);
+            return view('error', [
+                'title' => 'Invito non valido o scaduto',
+                'message' => 'Il link di invito non è più valido oppure è già stato usato.'
+            ]);
         }
 
         // Mostra il modulo di registrazione con i dati dell'invito
