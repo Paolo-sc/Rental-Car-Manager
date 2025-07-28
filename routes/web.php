@@ -15,5 +15,5 @@ Route::get('customers', 'App\Http\Controllers\DocumentController@showDocuments')
 Route::get('/calendar-data', 'App\Http\Controllers\CalendarDataController@index')->name('calendar.data');
 Route::post('invitations', 'App\Http\Controllers\InvitationController@doInvite')->name('invite');
 Route::get('register/invitation/{token}', 'App\Http\Controllers\RegisterController@showRegisterFormWithToken')->name('register.invitation');
-Route::post('register/invitation', 'App\Http\Controllers\RegisterController@doRegisterWithToken')->name('register.invitation.post');
+Route::post('register/invitation/{token}', 'App\Http\Controllers\RegisterController@doRegisterWithToken')->name('register.invitation.token.post');
 Route::get('invitations', 'App\Http\Controllers\InvitationController@index')->middleware('auth')->name('invitations');

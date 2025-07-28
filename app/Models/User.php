@@ -24,7 +24,6 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'phone',
-        'role',
         'status',
         'invitation_token',
         'invitation_expires_at',
@@ -46,7 +45,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at'     => 'datetime',
-        'invitation_expires_at' => 'datetime',
         'last_login_at'         => 'datetime',
         'created_by'            => 'integer',
     ];

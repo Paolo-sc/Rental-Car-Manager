@@ -21,17 +21,18 @@ class RegisterController extends BaseController
         }
 
         // Mostra il modulo di registrazione con i dati dell'invito
-        return view('auth.register', ['invitation' => $invitation]);
+        return view('auth.register', compact('invitation'));
     }
 
     public function doRegisterWithToken(Request $request)
     {
         // Validazione dei dati di input
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'first-name' => ['required', 'string', 'max:255'],
+            'last-name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:15'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'token' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
 
         // Recupera l'invito utilizzando il token
@@ -43,13 +44,18 @@ class RegisterController extends BaseController
 
         // Creazione dell'utente
         $user = \App\Models\User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'first_name' => $request->input('first-name'),
+            'last_name' => $request->input('last-name'),
+            'email' => $invitation->email,
+            'phone' => $request->phone,
+            'status' => 'active', // Imposta lo stato dell'utente
+            'invitation_token' => $invitation->token,
+            'created_by' => $invitation->created_by, // ID dell'utente che ha creato l'invito
+            'email_verified_at' => now(), // Imposta la verifica dell'email
+            'password' => bcrypt($request->password), // Cifra la password
+            'remember_token' => null, // Inizializza il token di remember
+            'last_login_at' => now(), // Imposta l'ultima data di accesso
         ]);
-
-        // Imposta il campo 'last_login_at' a null
-        $user->last_login_at = null;
         $user->save(); // Salva l'utente nel database
 
         // Segna l'invito come utilizzato
@@ -58,6 +64,7 @@ class RegisterController extends BaseController
 
         // Autenticazione dell'utente appena registrato
         auth()->login($user);
+
 
         // Reindirizza l'utente alla dashboard
         return redirect()->intended('dashboard');
