@@ -78,14 +78,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Documenti caricati da questo utente (tabella user_documents).
-     */
-    public function userDocuments(): HasMany
-    {
-        return $this->hasMany(UserDocument::class, 'uploaded_by');
-    }
-
-    /**
      * Documenti di persone caricati da questo utente (tabella person_documents).
      */
     public function personDocuments(): HasMany
