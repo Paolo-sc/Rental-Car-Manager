@@ -7,7 +7,7 @@
         <main>
             <div id="login">
                 <div class="container">
-                    <div id="title-container" class="input-container">
+                    <div id="title-container">
                         <h1>Bentornato</h1>
                         <p>Inserisci le tue credenziali per accedere</p>
                     </div>
