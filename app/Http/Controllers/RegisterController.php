@@ -21,7 +21,7 @@ class RegisterController extends BaseController
         }
 
         // Mostra il modulo di registrazione con i dati dell'invito
-        return view('register', ['invitation' => $invitation]);
+        return view('auth.register', ['invitation' => $invitation]);
     }
 
     public function doRegisterWithToken(Request $request)

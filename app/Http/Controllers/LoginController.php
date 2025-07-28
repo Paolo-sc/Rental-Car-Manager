@@ -17,7 +17,7 @@ class LoginController extends BaseController
     public function showLoginForm()
     {
         // Mostra il modulo di login
-        return view('login');
+        return view('auth.login');
     }
 
     public function doLogout()
