@@ -6,9 +6,9 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class RegistrationController extends BaseController
+class RegisterController extends BaseController
 {
-    public function showRegistrationFormWithToken($token)
+    public function showRegisterFormWithToken($token)
     {
         // Verifica se il token esiste e non è stato utilizzato
         $invitation = \App\Models\Invitation::where('token', $token)->where('used', false)->first();
