@@ -16,6 +16,10 @@ class LoginController extends BaseController
 {
     public function showLoginForm()
     {
+        // Se l'utente è già autenticato, reindirizza alla dashboard
+        if (auth()->check()) {
+            return redirect()->route('dashboard');
+        }
         // Mostra il modulo di login
         return view('auth.login');
     }
