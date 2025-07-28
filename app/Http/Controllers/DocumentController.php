@@ -11,7 +11,7 @@ class DocumentController extends BaseController
     public function showDocuments()
     {
         // Mostra i documenti dell'utente autenticato
-        return view('documents.index', [
+        return view('documents', [
             'user' => auth()->user(),
         ]);
     }

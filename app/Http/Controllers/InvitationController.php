@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Mail;
 
 class InvitationController extends BaseController
 {
+    // Mostra la view per la gestione degli inviti
+    public function index()
+    {
+        // Recupera tutti gli inviti non utilizzati
+        $invitations = Invitation::where('used', false)->get();
+
+        // Ritorna la view con gli inviti
+        return view('invitations', compact('invitations'));
+    }
+
     public function doInvite(Request $request)
     {
         // Validazione dei dati di input
