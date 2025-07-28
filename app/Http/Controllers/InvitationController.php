@@ -14,8 +14,8 @@ class InvitationController extends BaseController
     // Mostra la view per la gestione degli inviti
     public function index()
     {
-        // Recupera tutti gli inviti non utilizzati
-        $invitations = Invitation::where('used', false)->get();
+        // Recupera tutti gli inviti
+        $invitations = Invitation::all();
 
         // Ritorna la view con gli inviti
         return view('invitations', compact('invitations'));
