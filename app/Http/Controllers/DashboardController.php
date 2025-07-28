@@ -11,7 +11,7 @@ class DashboardController extends BaseController
     public function showDashboard()
     {
         // Mostra la dashboard dell'utente autenticato
-        return view('dashboard.dashboard', [
+        return view('dashboard.index', [
             'user' => auth()->user(),
         ]);
     }
