@@ -47,22 +47,27 @@ function formatDateToYMD(date) {
 
 // 4) Popola dropdown anno e mese
 function populateYearSelect() {
-    yearSelect.innerHTML = '<option value="">Tutti</option>';
     const currentYear = new Date().getFullYear();
+    yearSelect.innerHTML = ''; // svuota
+
     for (let y = currentYear - 2; y <= currentYear + 2; y++) {
         const opt = document.createElement('option');
         opt.value = y;
         opt.textContent = y;
+        if (y === currentYear) opt.selected = true; // seleziona quello corrente
         yearSelect.appendChild(opt);
     }
 }
 
 function populateMonthSelect() {
-    monthSelect.innerHTML = '<option value="">Tutti</option>';
+    const currentMonth = new Date().getMonth(); // 0 = Gennaio
+    monthSelect.innerHTML = ''; // svuota completamente
+
     monthNames.forEach((m, idx) => {
         const opt = document.createElement('option');
         opt.value = idx;
         opt.textContent = m;
+        if (idx === currentMonth) opt.selected = true; // seleziona il mese corrente
         monthSelect.appendChild(opt);
     });
 }
@@ -414,8 +419,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     yearSelect.addEventListener('change', handleFilterChange);
     monthSelect.addEventListener('change', handleFilterChange);
     resetFilter.addEventListener('click', () => {
-        yearSelect.value = '';
-        monthSelect.value = '';
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth();
+        yearSelect.value = currentYear;
+        monthSelect.value = currentMonth;
         loadAndRenderInitialWindow();
     });
 });
