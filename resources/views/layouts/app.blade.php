@@ -48,6 +48,23 @@
                         Dashboard
                     </a>
                 </li>
+                <li class="{{ Request::routeIs('vehicles.index') ? 'active' : '' }}">
+                    <a href="{{ route('vehicles.index') }}">
+                        <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M14 16H9M19 16H22V12.85C22.0007 12.612 21.9165 12.3816 21.7625 12.2001C21.6085 12.0187 21.3949 11.8981 21.16 11.86L16 11L13.3 7.39999C13.2069 7.27579 13.0861 7.17499 12.9472 7.10556C12.8084 7.03613 12.6552 6.99999 12.5 6.99999H5.24C4.86727 6.99739 4.50123 7.09901 4.18318 7.29338C3.86513 7.48774 3.60772 7.76712 3.44 8.09999L2.64 9.72999C2.22015 10.5646 2.00099 11.4857 2 12.42V16H4"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M6.5 19C7.88071 19 9 17.8807 9 16.5C9 15.1193 7.88071 14 6.5 14C5.11929 14 4 15.1193 4 16.5C4 17.8807 5.11929 19 6.5 19Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M16.5 19C17.8807 19 19 17.8807 19 16.5C19 15.1193 17.8807 14 16.5 14C15.1193 14 14 15.1193 14 16.5C14 17.8807 15.1193 19 16.5 19Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Veicoli
+                    </a>
+                </li>
                 <li class="{{ Request::routeIs('documents') ? 'active' : '' }}">
                     <a href="{{ route('documents') }}">
                         <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -84,7 +101,8 @@
                             xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M22 13V6C22 5.46957 21.7893 4.96086 21.4142 4.58579C21.0391 4.21071 20.5304 4 20 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V18C2 19.1 2.9 20 4 20H12"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
                             <path
                                 d="M22 7L13.03 12.7C12.7213 12.8934 12.3643 12.996 12 12.996C11.6357 12.996 11.2787 12.8934 10.97 12.7L2 7"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -94,7 +112,7 @@
                             <path d="M16 19H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
-                        Invitations
+                        Inviti
                     </a>
                 </li>
             </ul>
