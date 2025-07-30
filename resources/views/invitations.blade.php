@@ -2,6 +2,10 @@
 
 @section('title', 'Inviti') {{-- Definisce il titolo per questa pagina --}}
 
+@push('styles') {{-- Questa sezione corrisponde a @stack('styles') nel layout --}}
+    <link rel="stylesheet" href="{{ asset('css/pages/invitations.css') }}"> {{-- Include il CSS specifico per la pagina inviti --}}
+@endpush
+
 @section('content')
     <section class="simple-page-content">
         <h1>Qui puoi occuparti degli inviti.</h1>
