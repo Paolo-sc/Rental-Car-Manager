@@ -4,6 +4,7 @@
 @import url('./components/buttons.css');
 @import url('./components/forms.css');
 @import url('./base/typography.css');
+@import url('./components/sidebar.css');
 
 /* --- Stili generali e reset --- */
 html, body {
@@ -13,155 +14,6 @@ html, body {
     background-color: #f2f2f2; /* Sfondo leggermente grigio */
     color: #333;
     overflow: hidden; /* NUOVO: Impedisce lo scroll dell'intera pagina del body */
-}
-
-
-/* Sidebar - ORA FISSA E SCROLLABILE INTERNAMENTE */
-.sidebar {
-    position: fixed; /* NUOVO: La rende fissa rispetto al viewport */
-    top: 0;          /* NUOVO: Posiziona in alto */
-    left: 0;         /* NUOVO: Posiziona a sinistra */
-    width: 250px;
-    height: 100vh;   /* NUOVO: Alta quanto l'intera viewport */
-    background-color: #f2f2f2;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Per posizionare il profilo utente in basso */
-    overflow-y: auto; /* NUOVO: Permette lo scroll interno alla sidebar se il suo contenuto è troppo lungo */
-    z-index: 1000; /* NUOVO: Assicura che la sidebar sia sopra gli altri elementi */
-    box-sizing: border-box; /* NUOVO: Include padding e bordo nel calcolo della larghezza/altezza */
-}
-
-.sidebar .logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-    font-weight: bold;
-    font-size: 1.2em;
-    color: #122133; /* Colore principale per il logo */
-}
-
-.sidebar .logo img {
-    margin-right: 10px;
-    border-radius: 5px;
-    width: 48px;
-    height: 48px;
-    /* Considera di aggiungere una dimensione fissa qui, es: width: 30px; height: 30px; */
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar ul li {
-    margin-bottom: 10px;
-
-}
-
-.sidebar ul li a {
-    text-decoration: none;
-    color: #555;
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    border-radius: 5px;
-    font-size: 0.875em;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.sidebar ul li a:hover,
-.sidebar ul li.active a {
-    background-color: #cfd9e3;
-    color: #122133; /* Colore principale per l'elemento attivo/hover */
-    font-weight: 500;
-}
-
-.sidebar ul li a .nav-icon {
-    margin-right: 10px;
-    color: #777; /* Colore delle icone */
-}
-
-.sidebar ul li.active a .nav-icon {
-    color: #122133; /* Colore principale per l'icona attiva */
-}
-
-.nav-icon {
-    width: 20px;
-    height: 20px;
-    /* Assicurati che gli SVG abbiano stroke="currentColor" o fill="currentColor" */
-}
-
-.sidebar hr {
-    border: 0;
-    border-top: 1px solid #eee;
-    margin: 20px 0;
-}
-
-.sidebar .nav-title {
-    color: #888;
-    font-size: 0.8em;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-    padding: 0 15px;
-}
-
-.sidebar .user-profile {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    margin-top: auto; /* Spinge il profilo utente in fondo */
-    border-top: 1px solid #eee;
-    gap: 10px;
-}
-
-.sidebar .user-profile .user-avatar-icon {
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0; /* NUOVO: Impedisce all'icona di ridursi */
-}
-
-/* Rimosso .sidebar .user-profile svg, non serve più specifico con .user-avatar-icon */
-/* Se vuoi un bordo rotondo per l'avatar, applicalo a .user-avatar-icon se è un <img> o a una <div> che contiene l'icona */
-/* Per l'SVG, se vuoi un effetto rotondo, puoi racchiuderlo in un div con border-radius */
-
-
-.sidebar .user-info {
-    flex-grow: 1; /* Permette al contenitore di occupare lo spazio rimanente */
-    overflow: hidden; /* Impedisce che il testo esca dal contenitore */
-    white-space: nowrap; /* Impedisce il ritorno a capo del testo */
-}
-
-.sidebar .user-profile .user-info .username {
-    font-weight: bold;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    
-}
-
-.sidebar .user-profile .user-info .user-email {
-    font-size: 0.8em;
-    color: #777;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.sidebar .user-profile .nav-icon { /* Selettore più specifico per l'icona a destra del profilo */
-    width: 20px;
-    height: 20px;
-    margin-left: auto; /* Spinge l'icona a destra */
-    color: #777;
-    cursor: pointer;
-    transition: opacity 0.3s ease; /* Transizione per l'hover */
-    flex-shrink: 0; /* NUOVO: Impedisce all'icona di ridursi */
-}
-
-.sidebar .user-profile .nav-icon:hover {
-    opacity: 0.7; /* Effetto hover per l'icona */
 }
 
 /* Main Content - SCORREVOLE */
@@ -233,37 +85,6 @@ html, body {
     height: 1.8em; 
     background-color: #e8e8e8;     
     margin-right: 20px;
-}
-
-.nav-button {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.quick-create-btn {
-    display: flex;
-    background-color: #122133; /* Colore principale per il pulsante */
-    align-items: center;
-    flex:1;
-    color: #fff;
-    border: none;
-    padding: 8px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.875em;
-    transition: background-color 0.3s ease;
-}
-
-.quick-create-btn:hover {
-    background-color: #0d1a29; /* Una tonalità leggermente più scura del colore principale */
-}
-
-.quick-create-btn svg{
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
-    color: #fff; /* Colore dell'icona */
 }
 
 /* Metrics Cards */

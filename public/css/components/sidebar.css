@@ -1,0 +1,159 @@
+/* Sidebar*/
+.sidebar {
+    position: fixed; /* NUOVO: La rende fissa rispetto al viewport */
+    top: 0;          /* NUOVO: Posiziona in alto */
+    left: 0;         /* NUOVO: Posiziona a sinistra */
+    width: 250px;
+    height: 100vh;   /* NUOVO: Alta quanto l'intera viewport */
+    background-color: #f2f2f2;
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Per posizionare il profilo utente in basso */
+    overflow-y: auto; /* NUOVO: Permette lo scroll interno alla sidebar se il suo contenuto è troppo lungo */
+    z-index: 1000; /* NUOVO: Assicura che la sidebar sia sopra gli altri elementi */
+    box-sizing: border-box; /* NUOVO: Include padding e bordo nel calcolo della larghezza/altezza */
+}
+
+.sidebar .logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    font-weight: bold;
+    font-size: var(--font-size-lg);
+    color: var(--color-primary); /* Colore principale per il logo */
+}
+
+.sidebar .logo img {
+    margin-right: var(--spacing-xs);
+    border-radius: var(--border-radius-sm);
+    width: 48px;
+    height: 48px;
+}
+
+.nav-button {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.quick-create-btn {
+    display: flex;
+    flex:1;
+    padding: var(--spacing-xs);
+}
+
+.quick-create-btn svg{
+    margin-right: var(--spacing-xs);
+    width: var(--spacing-md);
+    height: var(--spacing-md);
+    color: var(--color-white); /* Colore dell'icona */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: var(--spacing-xs);
+
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: var(--color-sidebar-a); /* Colore dei link della sidebar */
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-xs);
+    border-radius: var(--border-radius-sm);
+    font-size: 0.875em;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li.active a {
+    background-color: #cfd9e3;
+    color: var(--color-primary); /* Colore principale per l'elemento attivo/hover */
+    font-weight: var(--font-weight-medium); /* Rende il testo più evidente quando attivo o in hover */
+}
+
+.sidebar ul li a .nav-icon {
+    margin-right: var(--spacing-xs);
+    color: var(--color-text-muted); /* Colore delle icone */
+}
+
+.sidebar ul li.active a .nav-icon {
+    color: var(--color-primary); /* Colore principale per l'icona attiva */
+}
+
+.nav-icon {
+    width: var(--spacing-md);
+    height: var(--spacing-md);
+}
+
+.sidebar hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: var(--spacing-md) 0;
+}
+
+.sidebar .nav-title {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-sm);
+    padding: 0 var(--spacing-sm);
+}
+
+.sidebar .user-profile {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-sm);
+    margin-top: auto; /* Spinge il profilo utente in fondo */
+    border-top: 1px solid #eee;
+    gap: var(--spacing-xs);
+}
+
+.sidebar .user-profile .user-avatar-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0; /* NUOVO: Impedisce all'icona di ridursi */
+}
+
+.sidebar .user-info {
+    flex-grow: 1; /* Permette al contenitore di occupare lo spazio rimanente */
+    overflow: hidden; /* Impedisce che il testo esca dal contenitore */
+    white-space: nowrap; /* Impedisce il ritorno a capo del testo */
+}
+
+.sidebar .user-profile .user-info .username {
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
+}
+
+.sidebar .user-profile .user-info .user-email {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.sidebar .user-profile .nav-icon { /* Selettore più specifico per l'icona a destra del profilo */
+    width: var(--spacing-md);
+    height: var(--spacing-md);
+    margin-left: auto; /* Spinge l'icona a destra */
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: opacity 0.3s ease; /* Transizione per l'hover */
+    flex-shrink: 0; /* NUOVO: Impedisce all'icona di ridursi */
+}
+
+.sidebar .user-profile .nav-icon:hover {
+    opacity: 0.7; /* Effetto hover per l'icona */
+}

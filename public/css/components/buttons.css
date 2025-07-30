@@ -9,6 +9,7 @@ button,input[type="submit"],input[type="button"] {
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-medium);
     cursor: pointer;
+    align-items: center;
 }
 
 button:hover,input[type="submit"]:hover,input[type="button"]:hover {
