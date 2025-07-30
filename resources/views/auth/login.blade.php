@@ -20,7 +20,7 @@
                         @csrf
                         <div id="email-container" class="input-container">
                             <div id="email-label"><label for="email">Email</label></div>
-                            <div><input type="email" id="email" name="email" placeholder="m@example.com" value="{{ old("email") }}"></div>
+                            <div><input type="email" id="email" name="email" autocomplete="email" placeholder="m@example.com" value="{{ old("email") }}"></div>
                             @error('email')
                             {{-- Solo se l'errore NON è quello generico delle credenziali non valide --}}
                                 @if ($message !== __('auth.failed'))
@@ -46,7 +46,8 @@
                             <div><label for="remember">Ricordami</label></div>
                         </div>
                         <div id="login-button-container" class="input-container">
-                            <div><input type="submit" id="login-button" name="login" value="Login"></div></div>
+                            <div><input type="submit" id="login-button" name="login" value="Login"></div>
+                        </div>
                     </form>
                 </div>
                 <div id="image">
