@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{-- Il titolo della pagina sarà dinamico --}}
     <title>Rental Car Manager - @yield('title', 'Dashboard')</title>
-    <link rel="stylesheet" href="{{ url('css/style.css') }}">
+    <link rel="stylesheet" href="{{ url('css/main.css') }}">
     {{-- Aggiungi qui eventuali stili extra specifici per una pagina --}}
     @stack('styles')
 </head>
