@@ -1,0 +1,26 @@
+/** STILI PER I FORM **/
+form {
+    font-family: 'Geist', sans-serif;
+    margin-top: 2rem;
+    display: flex; /* Imposta il form come contenitore flessibile */
+    flex-direction: column; /* Disponi gli elementi interni in colonna */
+    align-items: center; /* Centra gli elementi orizzontalmente */
+    justify-content: center; /* Centra gli elementi verticalmente */
+    box-sizing: border-box; /* Assicura che il form occupi tutta l'altezza del suo contenitore */
+    width: 100%; /* Assicura che il form occupi tutta la larghezza del suo contenitore */
+    gap: 10px;
+}
+
+label{
+    line-height: 1;
+    font-weight: 500;
+    font-size: .875rem;
+    margin-bottom: 0.5rem;
+}
+
+.input-container {
+    margin-bottom: 15px; /* Aggiunge un po' di spazio tra i gruppi di input */
+    width: 80%; /* Imposta una larghezza massima per gli input */
+    display: flex; /* Permette di allineare label e input nella stessa riga */
+    flex-direction: column; /* Impila label e input verticalmente all'interno di ogni container */
+}
