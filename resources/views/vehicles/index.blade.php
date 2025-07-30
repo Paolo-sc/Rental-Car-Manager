@@ -2,6 +2,10 @@
 
 @section('title', 'Veicoli') {{-- Definisce il titolo per questa pagina --}}
 
+@push('styles') {{-- Questa sezione corrisponde a @stack('styles') nel layout --}}
+    <link rel="stylesheet" href="{{ asset('css/pages/vehicles.css') }}"> {{-- Include il CSS specifico per la pagina veicoli --}}
+@endpush
+
 @section('content')
 <div x-data="carCrud()" class="container mx-auto py-4">
 
