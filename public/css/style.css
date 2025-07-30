@@ -1,36 +1,15 @@
-/* --- FONT FACE DECLARATIONS --- */
-/* Assicurati che questi percorsi siano corretti rispetto alla posizione del file style.css */
-@font-face {
-    font-family: 'Geist';
-    src: url(/fonts/Geist/Geist-Regular.woff2) format('woff2');
-    font-weight: 400;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Geist';
-    src: url(/fonts/Geist/Geist-Medium.woff2) format('woff2');
-    font-weight: 500;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Geist';
-    src: url(/fonts/Geist/Geist-Bold.woff2) format('woff2');
-    font-weight: 700;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Geist';
-    src: url(/fonts/Geist/Geist-SemiBold.woff2) format('woff2');
-    font-weight: 600;
-    font-style: normal;
-}
+@import url('./base/fonts.css');
+@import url('./base/variable.css');
+@import url('./components/inputs.css');
+@import url('./components/buttons.css');
+@import url('./components/forms.css');
+@import url('./base/typography.css');
 
 /* --- Stili generali e reset --- */
 html, body {
     height: 100%; /* NUOVO: Cruciale per permettere agli elementi figli di avere altezze basate su percentuale */
     margin: 0;
     padding: 0;
-    font-family: Geist, sans-serif;
     background-color: #f2f2f2; /* Sfondo leggermente grigio */
     color: #333;
     overflow: hidden; /* NUOVO: Impedisce lo scroll dell'intera pagina del body */

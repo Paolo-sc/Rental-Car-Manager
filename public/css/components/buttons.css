@@ -12,5 +12,5 @@ button,input[type="submit"],input[type="button"] {
 }
 
 button:hover,input[type="submit"]:hover,input[type="button"]:hover {
-    background-color: #122133ea;
+    background-color: var(--color-button-hover);
 }

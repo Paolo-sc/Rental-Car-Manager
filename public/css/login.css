@@ -6,7 +6,7 @@
 @import url('/css/base/typography.css');
 
 body{
-    background-color: #F4F4F5;
+    background-color: var(--color-background-alt);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -18,8 +18,8 @@ body{
 #login{
     display: flex;
     background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-xl);
     overflow: hidden;
     width: 85%;
     max-width: 900px;
@@ -29,7 +29,7 @@ body{
 }
 
 .container{
-    margin-top: 3.5rem;
+    margin-top: var(--spacing-xxl);
     flex:1;
     display: flex;
     flex-direction: column;
@@ -37,7 +37,7 @@ body{
 }
 
 #email-label{
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--layout-spacing-xxs);
 }
 
 #password-container{
@@ -52,7 +52,7 @@ body{
 }
 
 #psw-label a{
-    font-size: .875rem;
+    font-size: var(--font-size-xs);
     color: #122133;
     text-decoration: none;
     font-weight: 400;
@@ -74,17 +74,17 @@ body{
 }
 
 #password-container input {
-    padding-right: 30px;
+    padding-right: var(--spacing-lg);
     box-sizing: border-box;
 }
 
 #eye {
     position: absolute;
-    right: 10px;
+    right: var(--spacing-xs);
     top: 73%;
     transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
+    width: var(--spacing-md);
+    height: var(--spacing-md);
     cursor: pointer;
 }
 
@@ -95,7 +95,7 @@ body{
 #remember-container{
     display: flex;
     flex-direction: row;
-    gap: 0.5rem;
+    gap: var(--layout-spacing-xxs);
 }
 
 #remember-container label{
@@ -103,7 +103,7 @@ body{
 }
 
 #footer{
-    margin-top: 1rem;
+    margin-top: var(--layout-spacing-sm);
 }
 
 .fixed-eye{

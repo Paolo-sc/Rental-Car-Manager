@@ -3,26 +3,26 @@
 input{
     box-sizing: border-box;
     width: 100%;
-    max-height: 35px;
-    padding: 12px;
+    max-height: var(--spacing-xl);
+    padding: var(--spacing-sm);
     outline: none;
 }
 
 .input-container input {
     box-sizing: border-box;
     width: 100%;
-    max-height: 35px;
-    padding: 12px;
-    border-radius: 6px;
+    max-height: var(--spacing-xl);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius);
     border: 1.5px solid lightgrey;
     outline: none;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    box-shadow: var(--box-shadow);
 }
 
 .input-container input:hover,.input-container input:hover{
-    border-color: #122133;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
-  border: 1px solid rgb(147, 147, 147);
+    border-color: var(--color-primary);
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgb(147, 147, 147);
 }
 
 input[type="checkbox"] {
@@ -30,5 +30,5 @@ input[type="checkbox"] {
     height: 100%;
     margin: 0;
     cursor: pointer;
-    accent-color: #122133;
+    accent-color: var(--color-primary);
 }
