@@ -1,0 +1,41 @@
+/* --- CSS CUSTOM PROPERTIES --- */
+/* Definizioni globali per colori, font e dimensioni */
+
+:root {
+    /* --- COLORI --- */
+    --color-primary: #122133;
+    --color-background: #f2f2f2;
+    --color-background-alt: #F4F4F5;
+    --color-text: #333;
+    --color-text-muted: rgb(113, 113, 122);
+    --color-white: white;
+    
+    /* --- TIPOGRAFIA --- */
+    --font-family-primary: 'Geist', sans-serif;
+    --font-size-xs: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.2em;
+    --font-size-xl: 1.5rem;
+    --line-height-base: 1.5rem;
+    --line-height-lg: 2rem;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* --- LAYOUT --- */
+    --sidebar-width: 250px;
+    --spacing-xs: 10px;
+    --spacing-sm: 15px;
+    --spacing-md: 20px;
+    --spacing-lg: 30px;
+    --spacing-xl: 3.5rem;
+    
+    /* --- BORDI E OMBRE --- */
+    --border-radius: 8px;
+    --border-radius-sm: 5px;
+    --box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+    /* --- Z-INDEX --- */
+    --z-sidebar: 1000;
+}
