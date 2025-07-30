@@ -1,0 +1,16 @@
+/* --- STILI PER I PULSANTI --- */
+/* Pulsanti primari */
+button,input[type="submit"],input[type="button"] {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none ;
+    padding: var(--spacing-xs) var(--spacing-md) ;
+    border-radius: var(--border-radius) ;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+}
+
+button:hover,input[type="submit"]:hover,input[type="button"]:hover {
+    background-color: #122133ea;
+}
