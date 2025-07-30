@@ -2,6 +2,9 @@
 
 @section('title', 'Dashboard') {{-- Definisce il titolo per questa pagina --}}
 
+@push('styles') {{-- Questa sezione corrisponde a @stack('styles') nel layout --}}
+    <link rel="stylesheet" href="{{ asset('css/pages/dashboard.css') }}"> {{-- Include il CSS specifico per la dashboard --}} 
+@endpush
 @section('content') {{-- Questa sezione corrisponde a @yield('content') nel layout --}}
     <section class="simple-page-content">
         <h2>Benvenuto nella tua Dashboard, {{ auth()->user()->full_name ?? 'Utente' }}!</h2>
