@@ -1,65 +1,18 @@
-@font-face {
-    font-family: 'Geist';
-    src: url(/fonts/Geist/Geist-Regular.woff2) format('woff2');
-    font-weight: 400;
-    font-style: normal;    
-}
-@font-face {
-    font-family: 'Geist';
-    src: url(/fonts/Geist/Geist-Medium.woff2) format('woff2');
-    font-weight: 500;
-    font-style: normal;    
-}
-@font-face {
-    font-family: 'Geist';
-    src: url(/fonts/Geist/Geist-Bold.woff2) format('woff2');
-    font-weight: 700;
-    font-style: normal;    
-}
-@font-face {
-    font-family: 'Geist';
-    src: url(/fonts/Geist/Geist-SemiBold.woff2) format('woff2');
-    font-weight: 600;
-    font-style: normal;
-}
+@import url('/css/base/fonts.css');
+@import url('/css/base/variable.css');
+@import url('/css/components/inputs.css');
+@import url('/css/components/buttons.css');
+@import url('/css/components/forms.css');
+@import url('/css/base/typography.css');
 
 body{
     background-color: #F4F4F5;
-    font-family: 'Geist', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 100vh;
     align-items: center;
     margin: 0;
-}
-
-
-h1{
-    font-size: 1.5rem;
-    line-height: 2rem;
-    font-weight: 700;
-    margin: 0;
-    text-align: center;
-    justify-content: flex-start;
-    color: #122133;
-}
-
-p{
-    font-size: 1rem;
-    line-height: 1.5rem;
-    color: rgb(113, 113, 122);
-    font-weight: 400;
-    margin: 0;
-    text-align: center;
-}
-
-a{
-    color:#122133;
-}
-
-a:visited{
-    color:#122133;
 }
 
 #login{
@@ -74,6 +27,7 @@ a:visited{
     height: auto;
     margin: 0 auto;
 }
+
 .container{
     margin-top: 3.5rem;
     flex:1;
@@ -82,27 +36,7 @@ a:visited{
     align-items: center;
 }
 
-form {
-    font-family: 'Geist', sans-serif;
-    margin-top: 2rem;
-    display: flex; /* Imposta il form come contenitore flessibile */
-    flex-direction: column; /* Disponi gli elementi interni in colonna */
-    align-items: center; /* Centra gli elementi orizzontalmente */
-    justify-content: center; /* Centra gli elementi verticalmente */
-    box-sizing: border-box; /* Assicura che il form occupi tutta l'altezza del suo contenitore */
-    width: 100%; /* Assicura che il form occupi tutta la larghezza del suo contenitore */
-    gap: 10px;
-}
-
-
-.input-container {
-    margin-bottom: 15px; /* Aggiunge un po' di spazio tra i gruppi di input */
-    width: 80%; /* Imposta una larghezza massima per gli input */
-    display: flex; /* Permette di allineare label e input nella stessa riga */
-    flex-direction: column; /* Impila label e input verticalmente all'interno di ogni container */
-}
-
-.label,#email-label{
+#email-label{
     margin-bottom: 0.5rem;
 }
 
@@ -115,7 +49,6 @@ form {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-bottom: 0.5rem;
 }
 
 #psw-label a{
@@ -140,31 +73,6 @@ form {
     overflow: hidden;
 }
 
-label{
-    line-height: 1;
-    font-weight: 500;
-    font-size: .875rem;
-}
-
-input{
-    box-sizing: border-box;
-    width: 100%;
-    max-height: 35px;
-    padding: 12px;
-    outline: none;
-}
-
-.input-container input {
-    box-sizing: border-box;
-    width: 100%;
-    max-height: 35px;
-    padding: 12px;
-    border-radius: 6px;
-    border: 1.5px solid lightgrey;
-    outline: none;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
-}
-
 #password-container input {
     padding-right: 30px;
     box-sizing: border-box;
@@ -180,13 +88,6 @@ input{
     cursor: pointer;
 }
 
-.input-container input:hover,.input-container input:hover{
-    border-color: #122133;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
-  border: 1px solid rgb(147, 147, 147);
-}
-
-
 #remember-container > div{
     display: flex;
 }
@@ -199,35 +100,6 @@ input{
 
 #remember-container label{
     cursor: pointer;
-}
-
-
-input[type="checkbox"] {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    cursor: pointer;
-    accent-color: #122133;
-}
-
-#login-button,#register-button{
-    background-color: #122133;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: .875rem;
-    align-items: center;
-    justify-content: center;;
-}
-#login-button:hover,#register-button:hover{
-    background-color: #122133ea;
-}
-
-input,label,a,button{
-    font-family: 'Geist', sans-serif;
 }
 
 #footer{
