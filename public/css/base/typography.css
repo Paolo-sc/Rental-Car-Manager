@@ -1,0 +1,31 @@
+/**STILI PER LA TIPOGRAFIA**/
+body, input, textarea, button, select {
+  font-family: var(--font-family-primary);
+}
+
+h1{
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    justify-content: flex-start;
+    color: #122133;
+}
+
+p{
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: rgb(113, 113, 122);
+    font-weight: 400;
+    margin: 0;
+    text-align: center;
+}
+
+a{
+    color:#122133;
+}
+
+a:visited{
+    color:#122133;
+}
