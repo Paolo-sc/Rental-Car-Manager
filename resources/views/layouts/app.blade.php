@@ -163,9 +163,7 @@
             </header>
 
             {{-- Qui verrà iniettato il contenuto specifico di ogni pagina --}}
-            <div id="main-content-area">
-                @yield('content')
-            </div>
+            @yield('content')
         </div>
     </main>
 
