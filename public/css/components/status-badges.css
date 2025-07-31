@@ -1,0 +1,30 @@
+/* Badge di stato */
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.status-disponibile {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-in-manutenzione {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-fuori-servizio {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status-riservato {
+  background: #dbeafe;
+  color: #1e40af;
+}

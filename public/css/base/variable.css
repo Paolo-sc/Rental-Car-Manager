@@ -11,6 +11,10 @@
     --color-white: white;
     --color-button-hover: #122133ea;
     --color-sidebar-a: #555;
+    --color-btn-secondary: #f2f2f2;
+    --color-btn-edit-secondary: #d1d5db;
+    --color-btn-danger: #ef4444;
+    --color-btn-danger-hover: #dc2626;
     
     /* --- TIPOGRAFIA --- */
     --font-family-primary: 'Geist', sans-serif;
@@ -42,7 +46,7 @@
     --layout-spacing-xxl: 3.5rem;
     
     /* --- BORDI E OMBRE --- */
-    --border-radius: 8px;
+    --border-radius: 999px;
     --border-radius-sm: 5px;
     --box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     --box-shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.1);

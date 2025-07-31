@@ -65,6 +65,18 @@
   text-align: center;
 }
 
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.action-buttons button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+  min-width: 5rem;
+}
+
 .data-table .col-date {
   width: 120px;
   font-size: 0.85rem;

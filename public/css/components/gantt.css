@@ -1,6 +1,6 @@
 .calendar-card {
     background: #fff;
-    border-radius: 12px;
+    border-radius: 50px;
     border: 1px solid #d9dce0d6;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
     overflow: hidden;
@@ -50,7 +50,7 @@
     gap: 16px;
     background: #f8f9fa;
     padding: 16px 20px;
-    border-radius: 8px;
+    border-radius: 999px;
     border: 1px solid #e9ecef;
 }
 
@@ -70,7 +70,7 @@
 .month-filter select {
     padding: 8px 12px;
     border: 1px solid #ced4da;
-    border-radius: 6px;
+    border-radius: 999px;
     background: #fff;
     font-size: 0.875em;
     color: #495057;
@@ -91,13 +91,6 @@
 
 .filter-reset {
     padding: 8px 16px;
-    background: #122133;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.8em;
-    cursor: pointer;
-    transition: all 0.2s ease;
     font-weight: 500;
     margin-left: 8px;
 }
@@ -382,7 +375,7 @@
     left: 6px;
     height: 36px;
     background: #122133;
-    border-radius: 6px;
+    border-radius: 999px;
     color: #fff;
     font-size: 0.75em;
     font-weight: 500;

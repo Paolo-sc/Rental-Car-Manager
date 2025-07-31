@@ -15,3 +15,24 @@ button,input[type="submit"],input[type="button"] {
 button:hover,input[type="submit"]:hover,input[type="button"]:hover {
     background-color: var(--color-button-hover);
 }
+
+/* Bottoni azione */
+.btn-danger {
+  background: var(--color-btn-danger);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: var(--color-btn-danger-hover);
+}
+
+.btn-secondary {
+  background: var(--color-btn-secondary);      /* grigio chiaro */
+  color: var(--color-text);           /* grigio scuro */
+  border: 1px solid #d1d5db;
+}
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background: var(--color-btn-secondary-hover);      /* più scuro al passaggio */
+  color: var(--color-text);
+}
