@@ -9,6 +9,8 @@
 .search-input {
     width: 100%;
     max-width: 400px;
+    height: 100%;
+    max-height: 50px;
     padding: 0.75rem 1rem 0.75rem 2.5rem;
     border: 1.5px solid #d1d5db;
     border-radius: var(--border-radius);
@@ -17,7 +19,6 @@
     background: #ffffff;
     outline: none;
     transition: all 0.2s ease;
-    box-sizing: border-box;
 }
 
 .search-input:focus {
@@ -43,13 +44,19 @@
     margin-top: 0.5rem;
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
 }
 
 .filter-container > *{
     cursor: pointer;
+    font-size: var(--font-size-lg);
 }
 
 .filter-container input[type="checkbox"] {
     accent-color: var(--color-primary);
+    transform: scale(1.2);
+    width: auto;
 }
 
