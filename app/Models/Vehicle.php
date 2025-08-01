@@ -26,12 +26,16 @@ class Vehicle extends Model
         'mileage',
         'status',
         'notes',
+        'archived',
     ];
 
     protected $casts = [
         'year'    => 'integer',
         'seats'   => 'integer',
         'mileage' => 'integer',
+        'archived' => 'boolean',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**
