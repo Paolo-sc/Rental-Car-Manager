@@ -11,12 +11,12 @@
   justify-content: center;
   z-index: 1000;
   padding: 1rem;
-  display: none;
+  display: none; /* Nascondi per default */
 }
 
 .modal-content {
   background: white;
-  border-radius: 12px;
+  border-radius: 50px;
   width: 100%;
   max-width: 500px;
   max-height: 90vh;

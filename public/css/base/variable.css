@@ -11,6 +11,8 @@
     --color-white: white;
     --color-button-hover: #122133ea;
     --color-sidebar-a: #555;
+    --color-sidebar-a-selected: #cfd9e3;
+    --color-table-archived: #eaf1fb;
     --color-btn-secondary: #f2f2f2;
     --color-btn-edit-secondary: #d1d5db;
     --color-btn-danger: #ef4444;

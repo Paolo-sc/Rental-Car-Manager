@@ -82,3 +82,9 @@
   font-size: 0.85rem;
   color: #718096;
 }
+
+.archived-row {
+    background-color: var(--color-table-archived) !important;
+    color: #888;
+    border-left: 5px solid var(--color-primary);
+}

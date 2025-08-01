@@ -2,6 +2,8 @@
 .search-section {
     margin-bottom: 1.5rem;
     position: relative;
+    display: flex;
+    justify-content: space-between;
 }
 
 .search-input {
@@ -37,13 +39,17 @@
     pointer-events: none;
 }
 
-/* Se vuoi aggiungere l'icona con CSS puro */
-.search-input-with-icon::before {
-    content: "🔍";
-    position: absolute;
-    left: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #9ca3af;
-    pointer-events: none;
+.filter-container {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
 }
+
+.filter-container > *{
+    cursor: pointer;
+}
+
+.filter-container input[type="checkbox"] {
+    accent-color: var(--color-primary);
+}
+

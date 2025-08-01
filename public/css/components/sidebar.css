@@ -74,7 +74,7 @@
 
 .sidebar ul li a:hover,
 .sidebar ul li.active a {
-    background-color: #cfd9e3;
+    background-color: var(--color-sidebar-a-selected);
     color: var(--color-primary); /* Colore principale per l'elemento attivo/hover */
     font-weight: var(--font-weight-medium); /* Rende il testo più evidente quando attivo o in hover */
 }

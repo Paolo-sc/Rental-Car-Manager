@@ -24,7 +24,7 @@ h1,p{
 #login{
     display: flex;
     background-color: white;
-    border-radius: var(--border-radius);
+    border-radius: 50px;
     box-shadow: var(--box-shadow-xl);
     overflow: hidden;
     width: 85%;

@@ -7,7 +7,7 @@
 @endpush
 
 @section('content')
-    <div x-data="carCrud()" class="vehicles-container">
+    <div class="vehicles-container">
 
         <div class="content-card">
             <!-- Header della card -->
@@ -34,8 +34,19 @@
                             stroke-linejoin="round" />
                     </svg>
                     <input type="text" class="search-input" placeholder="Cerca per targa, marca o modello...">
+                    <div class="filter-container">
+                        <label>
+                            <input type="checkbox" id="archivedCheckbox"/>
+                            Mostra Archiviati
+                        </label>
+                    </div>
                 </div>
-
+                <!-- Messaggio di successo -->
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <!-- Tabella -->
                 <div class="vehicles-table-section">
                     <div class="table-responsive">
@@ -59,35 +70,42 @@
                                     <th class="col-actions">Azioni</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="vehiclesTableBody">
                                 @foreach ($vehicles as $vehicle)
-                                    <tr>
-                                        <td class="col-id">{{ $vehicle->id }}</td>
-                                        <td>{{ $vehicle->license_plate }}</td>
-                                        <td>{{ $vehicle->brand }}</td>
-                                        <td>{{ $vehicle->model }}</td>
-                                        <td>{{ $vehicle->year }}</td>
-                                        <td>{{ $vehicle->color }}</td>
-                                        <td>{{ $vehicle->fuel_type }}</td>
-                                        <td>{{ $vehicle->transmission }}</td>
-                                        <td>{{ $vehicle->seats }}</td>
-                                        <td>{{ $vehicle->vin }}</td>
-                                        <td>{{ $vehicle->engine_size }}</td>
-                                        <td>{{ $vehicle->mileage }}</td>
-                                        <td>
-                                            <span
-                                                class="status-badge status-{{ strtolower(str_replace(' ', '-', $vehicle->status)) }}">
-                                                {{ $vehicle->status }}
-                                            </span>
-                                        </td>
-                                        <td>{{ $vehicle->notes ?? 'Nessuna nota' }}</td>
-                                        <td class="col-actions">
-                                            <div class="action-buttons">
-                                                <button class="btn-secondary">Modifica</button>
-                                                <button class="btn-danger">Elimina</button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @if ($vehicle->archived == 0)
+                                        <tr>
+                                            <td class="col-id">{{ $vehicle->id }}</td>
+                                            <td>{{ $vehicle->license_plate }}</td>
+                                            <td>{{ $vehicle->brand }}</td>
+                                            <td>{{ $vehicle->model }}</td>
+                                            <td>{{ $vehicle->year }}</td>
+                                            <td>{{ $vehicle->color }}</td>
+                                            <td>{{ $vehicle->fuel_type }}</td>
+                                            <td>{{ $vehicle->transmission }}</td>
+                                            <td>{{ $vehicle->seats }}</td>
+                                            <td>{{ $vehicle->vin }}</td>
+                                            <td>{{ $vehicle->engine_size }}</td>
+                                            <td>{{ $vehicle->mileage }}</td>
+                                            <td>
+                                                <span
+                                                    class="status-badge status-{{ strtolower(str_replace(' ', '-', $vehicle->status)) }}">
+                                                    {{ $vehicle->status }}
+                                                </span>
+                                            </td>
+                                            <td>{{ $vehicle->notes ?? 'Nessuna nota' }}</td>
+                                            <td class="col-actions">
+                                                <div class="action-buttons">
+                                                    <button class="btn-secondary">Modifica</button>
+                                                    <button class="btn-danger delete-vehicle-btn"
+                                                        data-vehicle-id="{{ $vehicle->id }}"
+                                                        data-brand="{{ $vehicle->brand }}"
+                                                        data-model="{{ $vehicle->model }}"
+                                                        data-license_plate="{{ $vehicle->license_plate }}"
+                                                        data-action="{{ route('vehicles.destroy', $vehicle->id) }}">Elimina</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -95,48 +113,11 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modal Aggiungi/Modifica -->
-        <div x-show="showFormModal" class="modal-overlay">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" x-text="formTitle"></h2>
-                </div>
-                <div class="modal-body">
-                    <form :action="formAction" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <template x-if="isEdit">
-                            <input type="hidden" name="_method" value="PUT">
-                        </template>
-                        @include('vehicles.partials._form')
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary">Annulla</button>
-                    <button type="submit" class="btn-primary">Salva</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Elimina -->
-        <div x-show="showDeleteModal" class="modal-overlay">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">Conferma eliminazione</h2>
-                </div>
-                <div class="modal-body">
-                    <p>Vuoi eliminare il veicolo <span style="font-weight: 600;" x-text="deleteCarName"></span>?</p>
-                    <form :action="'/vehicles/' + deleteCarId" method="POST">
-                        @csrf
-                        @method('DELETE')
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary">Annulla</button>
-                    <button type="submit" class="btn-danger">Elimina</button>
-                </div>
-            </div>
-        </div>
-
     </div>
+    @include('vehicles.partials.delete-modal')
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/modal.js') }}"></script>
+    <script src="{{ asset('js/archivedVehicles.js') }}"></script>
+@endpush
