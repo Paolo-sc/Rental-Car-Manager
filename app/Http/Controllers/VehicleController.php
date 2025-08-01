@@ -30,7 +30,7 @@ class VehicleController extends BaseController
     public function showArchivedVehicles()
     {
         // Recupera i veicoli archiviati dal database
-        $archivedVehicles = \App\Models\Vehicle::where('archived', 1)->get();
+        $archivedVehicles = \App\Models\Vehicle::where('status', 'Archiviato')->get();
         // Verifica se ci sono veicoli archiviati
         return response()->json($archivedVehicles, 200);
     }
