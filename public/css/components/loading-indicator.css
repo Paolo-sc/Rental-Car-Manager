@@ -1,0 +1,39 @@
+.loader-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4); /* sfondo scuro semi-trasparente */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000; /* abbastanza alto da stare sopra tutto */
+  display: none; /* inizialmente nascosto */
+}
+
+.loader-spinner {
+  width: 60px; height: 60px;
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+/* Archived Row Styling */
+.archived-row {
+    background-color: #f8f9fa !important;
+    opacity: 0.7;
+}
+
+.archived-row:hover {
+    background-color: #e9ecef !important;
+}
+
+/* Status Badge per stati archiviati */
+.status-badge.status-archiviato {
+    background-color: #6c757d;
+    color: white;
+}

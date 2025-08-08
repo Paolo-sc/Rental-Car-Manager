@@ -5,7 +5,7 @@
 @import url("../components/table.css");
 @import url("../components/status-badges.css");
 @import url("../components/simple-modal.css");
-
+@import url("../components/loading-indicator.css");
 .vehicles-container {
   padding: 0 !important;
   margin: 0 !important;

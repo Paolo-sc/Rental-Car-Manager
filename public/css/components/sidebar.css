@@ -76,7 +76,15 @@
 .sidebar ul li.active a {
     background-color: var(--color-sidebar-a-selected);
     color: var(--color-primary); /* Colore principale per l'elemento attivo/hover */
-    font-weight: var(--font-weight-medium); /* Rende il testo più evidente quando attivo o in hover */
+    font-weight: var(--font-weight-medium);
+    text-shadow: var(--shadow-sm); /* shadow-sm */
+    box-shadow: var(--shadow-sm); /* shadow-sm */
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem; /* px-4 */
+    padding-top: 0.5rem; /* py-2 */
+    padding-bottom: 0.5rem; /* py-2 */
+    border-radius: 0.5rem; /* rounded-lg */
+    border: 1px solid #d0def2; /* border */
 }
 
 .sidebar ul li a .nav-icon {

@@ -16,9 +16,32 @@
                     <h1 class="content-title">Veicoli</h1>
                     <p class="content-subtitle">Visualizza, aggiungi e gestisci la tua flotta di veicoli.</p>
                 </div>
-                <button>
-                    + Aggiungi Veicolo
-                </button>
+                <div>
+                    <button id="refresh-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 2V8H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M3 12.0001C3.00158 10.2634 3.5056 8.56429 4.45125 7.10764C5.39691 5.651 6.74382 4.49907 8.32951 3.79079C9.9152 3.08252 11.6719 2.84815 13.3879 3.11596C15.1038 3.38377 16.7056 4.14232 18 5.30011L21 8.00011"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M3 22V16H9" stroke="black" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M21 12C20.9984 13.7367 20.4944 15.4358 19.5487 16.8925C18.6031 18.3491 17.2562 19.501 15.6705 20.2093C14.0848 20.9176 12.3281 21.152 10.6121 20.8841C8.89623 20.6163 7.29445 19.8578 6 18.7L3 16"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button id="addVehicleButton">
+                        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Aggiungi Veicolo
+                    </button>
+                </div>
             </div>
 
             <!-- Body della card -->
@@ -33,10 +56,11 @@
                         <path d="M21 20.9999L16.65 16.6499" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
-                    <input type="text" class="search-input" placeholder="Cerca per targa, marca o modello...">
+                    <input type="text" id="searchInput" class="search-input"
+                        placeholder="Cerca per targa, marca o modello...">
                     <div class="filter-container">
                         <label>
-                            <input type="checkbox" id="archivedCheckbox"/>
+                            <input type="checkbox" id="archivedCheckbox" />
                             Mostra Archiviati
                         </label>
                     </div>
@@ -48,76 +72,44 @@
                     </div>
                 @endif
                 <!-- Tabella -->
-                <div class="vehicles-table-section">
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th class="col-id">ID</th>
-                                    <th>Targa</th>
-                                    <th>Marca</th>
-                                    <th>Modello</th>
-                                    <th>Anno</th>
-                                    <th>Colore</th>
-                                    <th>Carburante</th>
-                                    <th>Trasmissione</th>
-                                    <th>Posti</th>
-                                    <th>VIN</th>
-                                    <th>Cilindrata</th>
-                                    <th>Km</th>
-                                    <th>Stato</th>
-                                    <th>Note</th>
-                                    <th class="col-actions">Azioni</th>
-                                </tr>
-                            </thead>
-                            <tbody id="vehiclesTableBody">
-                                @foreach ($vehicles as $vehicle)
-                                    @if ($vehicle->archived == 0)
-                                        <tr>
-                                            <td class="col-id">{{ $vehicle->id }}</td>
-                                            <td>{{ $vehicle->license_plate }}</td>
-                                            <td>{{ $vehicle->brand }}</td>
-                                            <td>{{ $vehicle->model }}</td>
-                                            <td>{{ $vehicle->year }}</td>
-                                            <td>{{ $vehicle->color }}</td>
-                                            <td>{{ $vehicle->fuel_type }}</td>
-                                            <td>{{ $vehicle->transmission }}</td>
-                                            <td>{{ $vehicle->seats }}</td>
-                                            <td>{{ $vehicle->vin }}</td>
-                                            <td>{{ $vehicle->engine_size }}</td>
-                                            <td>{{ $vehicle->mileage }}</td>
-                                            <td>
-                                                <span
-                                                    class="status-badge status-{{ strtolower(str_replace(' ', '-', $vehicle->status)) }}">
-                                                    {{ $vehicle->status }}
-                                                </span>
-                                            </td>
-                                            <td>{{ $vehicle->notes ?? 'Nessuna nota' }}</td>
-                                            <td class="col-actions">
-                                                <div class="action-buttons">
-                                                    <button class="btn-secondary">Modifica</button>
-                                                    <button class="btn-danger delete-vehicle-btn"
-                                                        data-vehicle-id="{{ $vehicle->id }}"
-                                                        data-brand="{{ $vehicle->brand }}"
-                                                        data-model="{{ $vehicle->model }}"
-                                                        data-license_plate="{{ $vehicle->license_plate }}"
-                                                        data-action="{{ route('vehicles.destroy', $vehicle->id) }}">Elimina</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="table-responsive" id="vehiclesTableSection">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Targa</th>
+                                <th>Marca</th>
+                                <th>Modello</th>
+                                <th>Anno</th>
+                                <th>Colore</th>
+                                <th>Carburante</th>
+                                <th>Trasmissione</th>
+                                <th>Posti</th>
+                                <th>VIN</th>
+                                <th>Cilindrata</th>
+                                <th>Km</th>
+                                <th>Stato</th>
+                                <th>Note</th>
+                                <th class="col-actions">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vehiclesTableBody">
+                            <!-- I veicoli attivi verranno caricati qui tramite AJAX -->
+                        </tbody>
+                    </table>
+                    <!-- Paginazione -->
+                    <div id="pagination-controls"></div>
                 </div>
             </div>
         </div>
     </div>
-    @include('vehicles.partials.delete-modal')
+    </div>
+    <div id="loader-overlay" class="loader-overlay">
+        <div class="loader-spinner"></div>
+    </div>
+    @include('vehicles.partials.delete-vehicle-modal')
+    @include('vehicles.partials.edit-vehicle-modal')
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/modal.js') }}"></script>
-    <script src="{{ asset('js/archivedVehicles.js') }}"></script>
+    <script src="{{ asset('js/vehicles.js') }}"></script>
 @endpush

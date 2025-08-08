@@ -9,29 +9,72 @@ use Illuminate\Validation\ValidationException;
 class VehicleController extends BaseController
 {
     public function index()
-    {
-        // Recupera tutti i veicoli dal database
-        $vehicles = \App\Models\Vehicle::all();
-        
+    {        
         // Mostra la vista con la lista dei veicoli
-        return view('vehicles.index', compact('vehicles'));
+        return view('vehicles.index');
     }
 
-    public function destroy(Request $request, $id)
+    public function delete(Request $request, $id)
     {
-    // Trova il veicolo da eliminare
-    $vehicle = \App\Models\Vehicle::findOrFail($id);
-    // Elimina il veicolo
-    $vehicle->delete();
-
-    return redirect()->route('vehicles.index')->with('success', 'Veicolo eliminato con successo!');
+        // Trova il veicolo da eliminare
+        $vehicle = \App\Models\Vehicle::findOrFail($id);
+        // Elimina il veicolo
+        $vehicle->delete();
+        return response()->noContent();
     }
 
-    public function showArchivedVehicles()
+    public function getVehicles(Request $request, $status)
     {
-        // Recupera i veicoli archiviati dal database
-        $archivedVehicles = \App\Models\Vehicle::where('status', 'Archiviato')->get();
-        // Verifica se ci sono veicoli archiviati
-        return response()->json($archivedVehicles, 200);
+        // Prendi i parametri di paginazione dalla query string (default: pagina 1, 10 elementi per pagina)
+        $page = (int)$request->query('page', 1);
+        $pageSize = (int)$request->query('pageSize', 10);
+    
+        //Parametro di ricerca
+        $search = trim($request->query('search', ''));
+
+        // Crea la query base sul modello Vehicle
+        $query = \App\Models\Vehicle::query();
+
+        // Applica il filtro: se status == 'archived' mostra solo archiviati, altrimenti mostra solo non archiviati
+        if ($status === 'archived') {
+            $query->where('status', 'Archiviato');
+        } else {
+            $query->where('status', '!=', 'Archiviato');
+        }
+
+        //Filtro di ricerca
+        if ($search !== '') {
+            $searchTerms = preg_split('/\s+/', $search); // divide la stringa in parole
+            $query->where(function($q) use ($searchTerms) {
+            foreach ($searchTerms as $term) {
+                $q->where(function($qq) use ($term) {
+                $searchLike = "%{$term}%";
+                $qq->where('license_plate', 'LIKE', $searchLike)
+                   ->orWhere('vin', 'LIKE', $searchLike)
+                   ->orWhere('brand', 'LIKE', $searchLike)
+                   ->orWhere('model', 'LIKE', $searchLike)
+                   ->orWhere('transmission', 'LIKE', $searchLike)
+                   ->orWhere('fuel_type', 'LIKE', $searchLike)
+                   ->orWhere('status', 'LIKE', $searchLike);
+
+            });
+        }
+    });
+}
+
+        // Conta il totale dei veicoli corrispondenti al filtro (serve per la paginazione)
+        $total = $query->count();
+
+        // Prendi solo i veicoli della pagina richiesta, ordinati per id
+        $vehicles = $query->offset(($page - 1) * $pageSize)
+                          ->limit($pageSize)
+                          ->orderBy('id')
+                          ->get();
+
+        // Restituisci i dati in formato JSON (veicoli della pagina e il totale)
+        return response()->json([
+            'vehicles' => $vehicles,
+            'total' => $total
+        ]);
     }
 }

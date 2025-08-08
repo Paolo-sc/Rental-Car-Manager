@@ -18,5 +18,5 @@ Route::get('register/invitation/{token}', 'App\Http\Controllers\RegisterControll
 Route::post('register/invitation/{token}', 'App\Http\Controllers\RegisterController@doRegisterWithToken')->middleware('guest')->name('register.invitation.token.post');
 Route::get('invitations', 'App\Http\Controllers\InvitationController@index')->middleware('auth')->name('invitations');
 Route::get('vehicles', 'App\Http\Controllers\VehicleController@index')->middleware('auth')->name('vehicles.index');
-Route::delete('vehicles/{id}', 'App\Http\Controllers\VehicleController@destroy')->middleware('auth')->name('vehicles.destroy');
-Route::get('vehicles/archived', 'App\Http\Controllers\VehicleController@showArchivedVehicles')->middleware('auth')->name('vehicles.archived');
+Route::delete('vehicles/delete/{id}', 'App\Http\Controllers\VehicleController@delete')->middleware('auth')->name('vehicles.delete');
+Route::get('vehicles/get/{status}', 'App\Http\Controllers\VehicleController@getVehicles')->middleware('auth')->name('vehicles.get');

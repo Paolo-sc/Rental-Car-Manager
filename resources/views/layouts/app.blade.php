@@ -7,6 +7,7 @@
     {{-- Il titolo della pagina sarà dinamico --}}
     <title>Rental Car Manager - @yield('title', 'Dashboard')</title>
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
+    <link rel="preload" href="/fonts/Geist/Geist-Regular.woff2" as="font" type="font/woff2" crossorigin>
     {{-- Aggiungi qui eventuali stili extra specifici per una pagina --}}
     @stack('styles')
 </head>
@@ -14,7 +15,7 @@
 <body>
     <aside class="sidebar">
         <div class="logo">
-            <img src="{{ url('img/logo.png') }}" alt="Logo Acme Inc.">
+            <img src="{{ url('img/logo.jpg') }}" alt="Logo Acme Inc.">
             <span>Rental Car Manager</span>
         </div>
         <nav class="main-nav">

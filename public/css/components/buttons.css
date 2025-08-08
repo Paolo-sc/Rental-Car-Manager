@@ -1,38 +1,130 @@
 /* --- STILI PER I PULSANTI --- */
 /* Pulsanti primari */
-button,input[type="submit"],input[type="button"] {
+button,
+input[type="submit"],
+input[type="button"] {
     background-color: var(--color-primary);
     color: var(--color-white);
-    border: none ;
-    padding: var(--spacing-xs) var(--spacing-md) ;
-    border-radius: var(--border-radius) ;
+    border: none;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--border-radius);
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-medium);
     cursor: pointer;
     align-items: center;
+    transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 2px 6px var(--color-primary);
 }
 
-button:hover,input[type="submit"]:hover,input[type="button"]:hover {
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
     background-color: var(--color-button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px var(--color-primary);
 }
 
 /* Bottoni azione */
 .btn-danger {
-  background: var(--color-btn-danger);
-  color: white;
+    background: var(--color-btn-danger);
+    color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5); /*Ombra leggera per mostrarlo in risalto*/
 }
 
 .btn-danger:hover {
-  background: var(--color-btn-danger-hover);
+    background: var(--color-btn-danger-hover);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5); /*Ombra leggera per mostrarlo in risalto*/
 }
 
 .btn-secondary {
-  background: var(--color-btn-secondary);      /* grigio chiaro */
-  color: var(--color-text);           /* grigio scuro */
-  border: 1px solid #d1d5db;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    color: var(--color-text); /* grigio scuro */
 }
 .btn-secondary:hover,
 .btn-secondary:focus {
-  background: var(--color-btn-secondary-hover);      /* più scuro al passaggio */
+    background: var(--color-btn-secondary-hover); /* più scuro al passaggio */
+    color: var(--color-text);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /*Ombra leggera per mostrarlo in risalto*/
+
+}
+
+#refresh-btn {
+    background: #fff;
+  border: none; /* <-- rimuove il bordo */
+  color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(0,123,255,0.13);
+}
+
+#refresh-btn:hover {
+  background: var(--color-pagination-button-hover);
+  box-shadow: 0 4px 16px rgba(0,123,255,0.22);
+}
+
+#pagination-controls {
+    margin: 1em 0;
+    text-align: center;
+}
+
+/* Pulsanti di paginazione */
+.pagination-button {
+  background: #fff;
+  border: none; /* <-- rimuove il bordo */
+  color: #222;
+  padding: 0.4em 1em;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  margin: 2px;
+  border-radius: 999px; /* bottoni arrotondati */
+  min-width: 45px;
+  min-height: 45px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0,123,255,0.13); /* ombra leggera di default */
+}
+
+.pagination-button.round {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;    /* cerchio perfetto */
+  padding: 0;
+  font-size: 1.2em;
+}
+
+.pagination-button:hover {
+  background: var(--color-pagination-button-hover,);
   color: var(--color-text);
+  box-shadow: 0 4px 16px rgba(0,123,255,0.22); /* ombra più intensa su hover */
+}
+
+.pagination-button.selected-page {
+  background: var(--color-pagination-button-hover);
+  transform: translateY(-2px);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  text-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 20px rgba(0,123,255,0.26); /* ombra ancora più intensa */
+  border: none; /* <-- nessun bordo */
+}
+
+.pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: transparent;
+  color: #b0b8c5;
+  font-size: 1.3em;
+  letter-spacing: 2px;
+  font-weight: 500;
+  box-shadow: none;
+  margin: 2px;
+  user-select: none;
 }

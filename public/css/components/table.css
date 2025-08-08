@@ -1,7 +1,7 @@
 /* Wrapper responsive per tabelle */
 .table-responsive {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 /* Stili base tabella */
@@ -23,6 +23,11 @@
   border-bottom: 1px solid #e8edf3;
   text-align: left;
   vertical-align: middle;
+  text-overflow: ellipsis;
+}
+
+.data-table td{
+  height: 35px;
 }
 
 .data-table th {
@@ -49,17 +54,10 @@
 }
 
 .data-table tbody tr:hover {
-  background: #f0f8ff;
+  background: var(--color-table-row-hover);
 }
 
 /* Colonne specifiche */
-.data-table .col-id {
-  width: 60px;
-  text-align: center;
-  font-weight: 600;
-  color: #4a5568;
-}
-
 .data-table .col-actions {
   width: 140px;
   text-align: center;
