@@ -8,9 +8,6 @@
 @endpush
 @section('content') {{-- Questa sezione corrisponde a @yield('content') nel layout --}}
     <section class="simple-page-content">
-        <h2>Benvenuto nella tua Dashboard, {{ auth()->user()->full_name ?? 'Utente' }}!</h2>
-        <p>Qui potrai visualizzare un riepilogo delle tue attività e metriche principali.</p>
-
         {{-- INIZIO DEL CODICE DELLE METRICHE --}}
         <section class="metrics-cards">
             <div class="content-card metric-card">

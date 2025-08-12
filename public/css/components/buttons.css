@@ -128,3 +128,17 @@ input[type="button"]:hover {
   margin: 2px;
   user-select: none;
 }
+
+.quick-btn{
+  background: none;
+  color: var(--color-text);
+  cursor: pointer;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.quick-btn:hover {
+  background: none;
+  box-shadow: none;
+}

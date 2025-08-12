@@ -1,23 +1,17 @@
 .top-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: var(--spacing-lg);
-    background-color: #fff;
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-bottom: 1px solid #d9dce0d6;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    margin-top: -20px;
-    margin-left: -20px;
+    box-sizing: border-box;
+    margin-top: -5px;
     width: 100%; /* Per compensare il margine negativo */
-    
+    height: 88px;
 }
 
 .top-header h1 {
     margin: 0;
     color: var(--color-text);
-    font-size: var(--font-size-lg);
+    font-size: 2rem;
     font-weight: var(--font-weight-medium);
 }
 
@@ -25,7 +19,10 @@
     display: flex;
     align-items: center;
     color: var(--color-text);
+    padding: var(--spacing-md);
+
 }
+
 
 .top-header .header-left svg{
     height: 1.125em;
@@ -45,4 +42,46 @@
     height: 1.8em; 
     background-color: #e8e8e8;     
     margin-right: var(--spacing-md);
+}
+
+.header-right{
+    display: flex;
+    align-items: center;
+    max-width: fit-content;
+}
+
+.header-right .header-widget {
+    display: flex;
+    align-items: center;
+    margin-right: var(--spacing-md);
+}
+
+.weather-widget {
+    display: flex;
+    align-items: center;
+    color: var(--color-text);
+    border-radius: 24px;
+    padding: var(--spacing-md);
+    background-color: #fff;
+    box-shadow: var(--box-shadow);
+    border-radius: 999px;
+}
+.theme-toggle{
+    cursor: pointer;
+}
+.header-right .header-widget:last-child {
+    margin-right: 0;
+}
+.header-right .header-widget p {
+    margin: 0;
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+/*Bottone secondario rotondo*/
+
+.header-right .btn-secondary:hover{
+    background: var(--color-pagination-button-hover);
+    box-shadow: 0 4px 16px rgba(0,123,255,0.22);
 }

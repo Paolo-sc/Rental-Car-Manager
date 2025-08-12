@@ -25,11 +25,9 @@ body {
 }
 
 .main-card {
-    background-color: #fff;
     border-radius: 12px;
     padding: 20px; /* spazio interno alla card */
     box-sizing: border-box; /* include padding nel min-height */
     min-height: 100%; /* almeno l’altezza del viewport meno i 20px top/bottom di padding del main-content */
-    border: 1px solid #d9dce0d6;
     overflow: visible; /* lascia che sia il main-content a gestire lo scroll */
 }
