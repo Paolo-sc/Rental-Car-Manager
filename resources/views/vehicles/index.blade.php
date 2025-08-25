@@ -13,7 +13,7 @@
             <!-- Header della card -->
             <div class="content-card-header">
                 <div>
-                    <h1 class="content-title">Veicoli</h1>
+                    <h1 class="content-title">Tabella dei veicoli</h1>
                     <p class="content-subtitle">Visualizza, aggiungi e gestisci la tua flotta di veicoli.</p>
                 </div>
                 <div>

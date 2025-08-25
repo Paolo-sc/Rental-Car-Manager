@@ -23,6 +23,35 @@ class VehicleController extends BaseController
         return response()->noContent();
     }
 
+    public function addVehicle(Request $request)
+    {
+        // Valida i dati del veicolo
+        $validated = $request->validate([
+            'license_plate' => 'required|string|max:10',
+            'brand' => 'required|string|max:50',
+            'model' => 'required|string|max:50',
+            'year' => 'required|integer|min:1886|max:' . date('Y'),
+            'color' => 'required|string|max:30',
+            'fuel_type' => 'required|string|max:20',
+            'transmission' => 'required|string|max:20',
+            'seats' => 'required|integer|min:1',
+            'vin' => 'required|string|max:17',
+            'engine_size' => 'required|numeric|min:0',
+            'mileage' => 'required|numeric|min:0',
+            'status' => 'required|string|in:Disponibile,Archiviato,Manutenzione',
+            'notes' => 'nullable|string|max:255',
+        ]);
+
+        // Crea un nuovo veicolo
+        $vehicle = \App\Models\Vehicle::create($validated);
+
+        // Restituisci una risposta in caso di successo
+        return response()->json([
+            'message' => 'Veicolo aggiunto con successo.',
+            'vehicle' => $vehicle
+        ], 201);
+    }
+
     public function getVehicles(Request $request, $status)
     {
         // Prendi i parametri di paginazione dalla query string (default: pagina 1, 10 elementi per pagina)

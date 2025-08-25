@@ -163,6 +163,11 @@ function openDeleteModal(vehicleId, brand, model, licensePlate, action) {
         }
     });
 }
+//Modal di edit: chiudi
+function closeEditModal() {
+    const editModal = document.getElementById('edit-modal');
+    editModal.style.display = 'none';
+}
 
 // Modal di eliminazione: chiudi
 function closeDeleteModal() {
@@ -276,10 +281,30 @@ function onPageChange() {
     loadVehicles(isChecked ? "archived" : "active", currentPage, pageSize, searchQuery);
 }
 
+function openAddModal() {
+    const addModal = document.getElementById("edit-modal");
+    const editModalCloseButton = document.getElementById("close-edit-modal");
+    addModal.style.display = 'flex';
+
+    editModalCloseButton.addEventListener("click", closeEditModal);
+
+    window.addEventListener('click', function (event) {
+        if (event.target === addModal) {
+            closeEditModal();
+        }
+    });
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            closeEditModal();
+        }
+    });
+}
+
 // Gestione checkbox e avvio
 document.addEventListener("DOMContentLoaded", function () {
     const checkbox = document.getElementById("archivedCheckbox");
     const searchInput = document.getElementById("searchInput");
+    const addButton = document.getElementById("addVehicleButton");
     let searchTimeout;
 
     //Gestione ricerca
@@ -295,6 +320,10 @@ document.addEventListener("DOMContentLoaded", function () {
         currentPage = 1;
         onPageChange();
     });
+
+    //Event listner addButton
+    addButton.addEventListener("click", openAddModal);
+
     // Modal delete submit
     document.getElementById("delete-form").onsubmit = async function (e) {
         e.preventDefault();

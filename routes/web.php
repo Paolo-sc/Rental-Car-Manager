@@ -20,3 +20,4 @@ Route::get('invitations', 'App\Http\Controllers\InvitationController@index')->mi
 Route::get('vehicles', 'App\Http\Controllers\VehicleController@index')->middleware('auth')->name('vehicles.index');
 Route::delete('vehicles/delete/{id}', 'App\Http\Controllers\VehicleController@delete')->middleware('auth')->name('vehicles.delete');
 Route::get('vehicles/get/{status}', 'App\Http\Controllers\VehicleController@getVehicles')->middleware('auth')->name('vehicles.get');
+Route::post('vehicles', 'App\Http\Controllers\VehicleController@addVehicle')->middleware('auth')->name('vehicles.add');
