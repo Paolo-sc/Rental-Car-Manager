@@ -21,3 +21,5 @@ Route::get('vehicles', 'App\Http\Controllers\VehicleController@index')->middlewa
 Route::delete('vehicles/delete/{id}', 'App\Http\Controllers\VehicleController@delete')->middleware('auth')->name('vehicles.delete');
 Route::get('vehicles/get/{status}', 'App\Http\Controllers\VehicleController@getVehicles')->middleware('auth')->name('vehicles.get');
 Route::post('vehicles', 'App\Http\Controllers\VehicleController@addVehicle')->middleware('auth')->name('vehicles.add');
+Route::get('vehicles/getById/{id}', 'App\Http\Controllers\VehicleController@getVehicleById')->middleware('auth')->name('vehicles.getById');
+Route::put('vehicles/update/{id}', 'App\Http\Controllers\VehicleController@updateVehicle')->middleware('auth')->name('vehicles.update');

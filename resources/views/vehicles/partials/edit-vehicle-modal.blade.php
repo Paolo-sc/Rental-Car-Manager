@@ -1,7 +1,7 @@
 <div id="edit-modal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Edit Vehicle</h2>
+            <h2 id="modal-header-h2">Aggiungi Veicolo</h2>
         </div>
         <div class="modal-body">
             @if ($errors->any())
@@ -13,7 +13,8 @@
                     </ul>
                 </div>
             @endif
-            <form id="edit-vehicle-form" method="POST" action="{{ route('vehicles.add') }}">
+            <form id="edit-vehicle-form" method="POST" action="{{ route('vehicles.add') }}"
+            data-add-action="{{ route('vehicles.add') }}">
                 @csrf
                 <div class="input-container">
                     <label for="edit-vehicle-plate">Targa</label>
@@ -69,7 +70,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn-secondary" id="close-edit-modal">Annulla</button>
-            <button type="submit" class="btn-primary" form="edit-vehicle-form">Aggiungi</button>
+            <button type="submit" class="btn-primary" form="edit-vehicle-form" id="submit-edit-vehicle">Aggiungi</button>
         </div>
     </div>
 </div>
