@@ -11,7 +11,7 @@ Route::post('login', 'App\Http\Controllers\LoginController@doLogin')->middleware
 Route::get('dashboard', 'App\Http\Controllers\DashboardController@showDashboard')->middleware('auth')->name('dashboard');
 Route::get('logout', 'App\Http\Controllers\LoginController@doLogout')->middleware('auth')->name('logout');
 Route::get('documents', 'App\Http\Controllers\DocumentController@showDocuments')->middleware('auth')->name('documents');
-Route::get('customers', 'App\Http\Controllers\DocumentController@showDocuments')->middleware('auth')->name('customers');
+Route::get('customers', 'App\Http\Controllers\CustomerController@index')->middleware('auth')->name('customers');
 Route::get('/calendar-data', 'App\Http\Controllers\CalendarDataController@index')->middleware('auth')->name('calendar.data');
 Route::post('invitations', 'App\Http\Controllers\InvitationController@doInvite')->middleware('auth')->name('invite');
 Route::get('register/invitation/{token}', 'App\Http\Controllers\RegisterController@showRegisterFormWithToken')->middleware('guest')->name('register.invitation');
@@ -23,3 +23,5 @@ Route::get('vehicles/get/{status}', 'App\Http\Controllers\VehicleController@getV
 Route::post('vehicles', 'App\Http\Controllers\VehicleController@addVehicle')->middleware('auth')->name('vehicles.add');
 Route::get('vehicles/getById/{id}', 'App\Http\Controllers\VehicleController@getVehicleById')->middleware('auth')->name('vehicles.getById');
 Route::put('vehicles/update/{id}', 'App\Http\Controllers\VehicleController@updateVehicle')->middleware('auth')->name('vehicles.update');
+Route::post('customers', 'App\Http\Controllers\CustomerController@addCustomer')->middleware('auth')->name('customers.add');
+Route::get('customers/get', 'App\Http\Controllers\CustomerController@getCustomers')->middleware('auth')->name('customers.get');

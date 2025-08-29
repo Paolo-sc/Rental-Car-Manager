@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Veicoli')
+@section('title', 'Clienti')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/pages/vehicles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pages/customers.css') }}">
 @endpush
 
 @section('content')
-    <div class="vehicles-container">
+    <div class="customers-container">
 
         <div class="content-card">
             <!-- Header della card -->
             <div class="content-card-header">
                 <div>
-                    <h1 class="content-title">Tabella dei veicoli</h1>
-                    <p class="content-subtitle">Visualizza, aggiungi e gestisci la tua flotta di veicoli.</p>
+                    <h1 class="content-title">Tabella dei Clienti</h1>
+                    <p class="content-subtitle">Visualizza, aggiungi e gestisci i tuoi clienti.</p>
                 </div>
                 <div>
                     <button id="refresh-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -31,7 +31,7 @@
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </button>
-                    <button id="add-vehicle-button" class="add-btn">
+                    <button id="add-customer-button" class="add-btn">
                         <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -39,7 +39,7 @@
                             <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
-                        Aggiungi Veicolo
+                        Aggiungi Cliente
                     </button>
                 </div>
             </div>
@@ -57,13 +57,7 @@
                             stroke-linejoin="round" />
                     </svg>
                     <input type="text" id="searchInput" class="search-input"
-                        placeholder="Cerca per targa, marca o modello...">
-                    <div class="filter-container">
-                        <label>
-                            <input type="checkbox" id="archivedCheckbox" />
-                            Mostra Archiviati
-                        </label>
-                    </div>
+                        placeholder="Cerca per nome, email o telefono...">
                 </div>
                 <!-- Messaggio di successo -->
                 @if (session('success'))
@@ -72,28 +66,28 @@
                     </div>
                 @endif
                 <!-- Tabella -->
-                <div class="table-responsive" id="vehiclesTableSection">
+                <div class="table-responsive" id="customersTableSection">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>Targa</th>
-                                <th>Marca</th>
-                                <th>Modello</th>
-                                <th>Anno</th>
-                                <th>Colore</th>
-                                <th>Carburante</th>
-                                <th>Trasmissione</th>
-                                <th>Posti</th>
-                                <th>VIN</th>
-                                <th>Cilindrata</th>
-                                <th>Km</th>
+                                <th>Nome</th>
+                                <th>Cognome</th>
+                                <th>Codice Fiscale</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>Indirizzo</th>
+                                <th>Ditta</th>
                                 <th>Stato</th>
+                                <th>Città</th>
+                                <th>CAP</th>
+                                <th>Partita Iva</th>
+                                <th>Documento</th>
                                 <th>Note</th>
                                 <th class="col-actions">Azioni</th>
                             </tr>
                         </thead>
-                        <tbody id="vehiclesTableBody">
-                            <!-- I veicoli attivi verranno caricati qui tramite AJAX -->
+                        <tbody id="customersTableBody">
+                            <!-- I clienti attivi verranno caricati qui tramite AJAX -->
                         </tbody>
                     </table>
                     <!-- Paginazione -->
@@ -106,10 +100,10 @@
     <div id="loader-overlay" class="loader-overlay">
         <div class="loader-spinner"></div>
     </div>
-    @include('vehicles.partials.delete-vehicle-modal')
-    @include('vehicles.partials.edit-vehicle-modal')
+    @include('customers.partials.delete-customer-modal')
+    @include('customers.partials.edit-customer-modal')
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/vehicles.js') }}"></script>
+    <script src="{{ asset('js/customers.js') }}"></script>
 @endpush

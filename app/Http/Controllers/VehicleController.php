@@ -125,10 +125,10 @@ class VehicleController extends BaseController
                    ->orWhere('fuel_type', 'LIKE', $searchLike)
                    ->orWhere('status', 'LIKE', $searchLike);
 
+                    });
+                }
             });
         }
-    });
-}
 
         // Conta il totale dei veicoli corrispondenti al filtro (serve per la paginazione)
         $total = $query->count();

@@ -129,7 +129,7 @@ input[type="button"]:hover {
   user-select: none;
 }
 
-#add-vehicle-button {
+.add-btn{
   display: inline-flex;
   align-items: center;
   justify-content: center;
