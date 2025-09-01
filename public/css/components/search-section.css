@@ -48,6 +48,7 @@
     width: 100%;
     max-width: 300px;
     justify-content: right;
+    gap: 12px;
 }
 
 .filter-container > *{
@@ -61,3 +62,29 @@
     width: auto;
 }
 
+.filter-select{
+    display: flex;
+    align-items: center;
+}
+
+.filter-container select{
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 999px;
+    background: #fff;
+    font-size: 0.875em;
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 120px;
+}
+
+.filter-container select:focus{
+    outline: none;
+    border-color: #122133;
+    box-shadow: 0 0 0 3px rgba(18, 33, 51, 0.1);
+}
+
+.filter-container select:hover{
+    border-color: #adb5bd;
+}

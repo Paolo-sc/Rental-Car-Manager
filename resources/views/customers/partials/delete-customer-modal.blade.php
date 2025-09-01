@@ -7,7 +7,7 @@
             <form id="delete-form" method="POST">
                 @csrf
                 @method('DELETE')
-                <p>Sei sicuro di voler eliminare il cliente <span id="delete-car-name" style="font-weight:600"></span>?
+                <p>Sei sicuro di voler eliminare il cliente <span id="delete-customer-name" style="font-weight:600"></span>?
                     <br>Una volta eliminato non potrai recuperarlo.</p>
                 <p style="color: red; font-weight: bold;">
                     Attenzione: Eliminando questo cliente perderai anche tutti i contratti e le prenotazioni collegati!

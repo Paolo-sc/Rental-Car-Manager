@@ -58,6 +58,16 @@
                     </svg>
                     <input type="text" id="searchInput" class="search-input"
                         placeholder="Cerca per nome, email o telefono...">
+
+                            <div class="filter-container">
+                                <label for="typeFilter">Filtra per:</label>
+                                <select id="typeFilter" class="filter-select">
+                                    <option value="all">Tutti</option>
+                                    <option value="individual">Cliente privato</option>
+                                    <option value="company">Azienda</option>
+                                </select>
+                            </div>
+
                 </div>
                 <!-- Messaggio di successo -->
                 @if (session('success'))

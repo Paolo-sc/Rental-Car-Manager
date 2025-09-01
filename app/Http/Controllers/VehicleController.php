@@ -56,6 +56,9 @@ class VehicleController extends BaseController
     {
         // Trova il veicolo per ID
         $vehicle = \App\Models\Vehicle::findOrFail($id);
+        if(!$vehicle) {
+            return response()->json(['message' => 'Veicolo non trovato'], 404);
+        }
         return response()->json($vehicle);
     }
 

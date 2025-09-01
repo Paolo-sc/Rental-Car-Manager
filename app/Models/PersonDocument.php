@@ -16,7 +16,7 @@ class PersonDocument extends Model
         'customer_id',
         'driver_id',
         'document_type',
-        'document_name',
+        'id_document_number',
         'drive_file_id',
         'drive_file_url',
         'expiry_date',

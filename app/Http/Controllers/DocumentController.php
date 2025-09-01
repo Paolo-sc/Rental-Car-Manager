@@ -15,4 +15,9 @@ class DocumentController extends BaseController
             'user' => auth()->user(),
         ]);
     }
+
+    public function uploadDocument(Request $request)
+    {
+        // Logica per caricare un documento
+    }
 }

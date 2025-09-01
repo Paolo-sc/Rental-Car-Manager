@@ -19,7 +19,26 @@ class CustomerController extends BaseController
         // Logica per aggiungere un nuovo cliente
     }
 
-    public function getCustomers(Request $request)
+    public function getCustomerById(Request $request, $id)
+    {
+        // Logica per ottenere un cliente per ID
+        $customer = \App\Models\Customer::find($id);
+        if (!$customer) {
+            return response()->json(['message' => 'Customer non trovato'], 404);
+        }
+        return response()->json($customer);
+    }
+
+    public function delete(Request $request, $id)
+    {
+        // Trova il cliente da eliminare
+        $customer = \App\Models\Customer::findOrFail($id);
+        // Elimina il cliente
+        $customer->delete();
+        return response()->noContent();
+    }
+
+    public function getCustomers(Request $request, $filter)
     {
         // Prendi i parametri di paginazione dalla query string (default: pagina 1, 10 elementi per pagina)
         $page = (int)$request->query('page', 1);
@@ -30,6 +49,11 @@ class CustomerController extends BaseController
 
         // Crea la query base sul modello Customer
         $query = \App\Models\Customer::query();
+
+        // Applica il filtro se non è "all"
+        if ($filter && $filter !== "all") {
+            $query->where('customer_type', $filter);
+        }
 
         //Filtro di ricerca
         if ($search !== '') {
@@ -43,13 +67,13 @@ class CustomerController extends BaseController
                    ->orWhere('email', 'LIKE', $searchLike)
                    ->orWhere('phone', 'LIKE', $searchLike)
                    ->orWhere('address', 'LIKE', $searchLike)
-                   ->orWhere('status', 'LIKE', $searchLike)
                    ->orWhere('customer_type', 'LIKE', $searchLike)
                    ->orWhere('city', 'LIKE', $searchLike)
                    ->orWhere('postal_code', 'LIKE', $searchLike)
                    ->orWhere('country', 'LIKE', $searchLike)
                    ->orWhere('tax_code', 'LIKE', $searchLike)
-                   ->orWhere('vat_number', 'LIKE', $searchLike);
+                   ->orWhere('vat_number', 'LIKE', $searchLike)
+                   ->orWhere('company_name', 'LIKE', $searchLike);
                     });
                 }
             });

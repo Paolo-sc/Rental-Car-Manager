@@ -27,11 +27,12 @@ function hideLoader() {
 }
 
 // Carica i clienti dalla pagina corrente e stato selezionato
-async function loadCustomers( page = 1, pageSize = 10, search = "") {
+async function loadCustomers( page = 1, pageSize = 10, search = "",filterValue="all") {
     showLoader();
     try {
         let url =
             "/customers/get/" +
+            filterValue +
             "?page=" +
             page +
             "&pageSize=" +
@@ -39,6 +40,7 @@ async function loadCustomers( page = 1, pageSize = 10, search = "") {
         if (search && search.trim() !== "") {
             url += "&search=" + encodeURIComponent(search.trim());
         }
+        console.log("Fetching URL:", url);
         const response = await fetch(url);
         const data = await response.json();
         totalCustomers = data.total;
@@ -107,16 +109,30 @@ function generateRowHtml(customer) {
         '<button class="btn-danger delete-customer" data-customer-id="' +
         customer.id +
         '" data-first-name="' +
-        customer.first_name +
+        (customer.first_name || customer.company_name) +
         '" data-last-name="' +
-        customer.last_name +
+        (customer.last_name || "")+
         '" data-tax-code="' +
-        customer.tax_code +
+        (customer.tax_code || customer.vat_number)+
         '" data-action="delete">Elimina</button>' +
         "</div>" +
         "</td>" +
         "</tr>"
     );
+}
+
+//Attacca gli event listeners ai bottoni di eliminazione
+function attachEventListeners() {
+    document.querySelectorAll(".delete-customer").forEach((button) => {
+        button.addEventListener("click", function () {
+            const customerId = button.getAttribute("data-customer-id");
+            const firstName = button.getAttribute("data-first-name");
+            const lastName = button.getAttribute("data-last-name");
+            const taxCode = button.getAttribute("data-tax-code");
+            const action = button.getAttribute("data-action");
+            openDeleteModal(customerId, firstName, lastName, taxCode, action);
+        });
+    });
 }
 
 // Renderizza la tabella con i clienti ricevuti
@@ -130,7 +146,7 @@ function renderTable(customers) {
         return;
     }
     tableBody.innerHTML = customers.map(generateRowHtml).join("");
-    //attachEventListeners();
+    attachEventListeners();
 }
 
 // Pagina e paginazione
@@ -209,16 +225,79 @@ function renderPaginationControls() {
 
 // Gestisce cambio pagina o filtro
 function onPageChange() {
+    const filterValue = document.getElementById("typeFilter").value;
+    console.log("Filtro attuale:", filterValue);
     loadCustomers(
         currentPage,
         pageSize,
-        searchQuery
+        searchQuery,
+        filterValue
     );
+}
+
+function openDeleteModal(customerId, firstName, lastName, taxCode,action) {
+    const deleteModal = document.getElementById("delete-modal");
+    const modalCloseButton = document.getElementById("close-delete-modal");
+    const deleteForm = document.getElementById("delete-form");
+    const deleteCustomerName = document.getElementById("delete-customer-name");
+    customerIdToDelete = customerId;
+
+    deleteForm.action=action;
+    deleteCustomerName.textContent = firstName + " " + lastName + " (" + taxCode + ")";
+
+    deleteModal.style.display = "flex";
+
+    modalCloseButton.addEventListener("click", closeDeleteModal);
+    window.addEventListener("click", function (event) {
+        if (event.target === deleteModal) {
+            closeDeleteModal();
+        }
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeDeleteModal();
+        }
+    });
+}
+
+async function deleteCustomer(customerId) {
+    showLoader();
+    try {
+        const response = await fetch("/customers/delete/"+customerId, {
+            method: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector('input[name="_token"]')
+                    .value,
+                Accept: "application/json",
+            }
+        });
+        if (!response.ok) throw new Error("Errore nella cancellazione del cliente");
+        showSuccess("Cliente eliminato con successo.");
+    } catch (error) {
+        showError("Impossibile eliminare il cliente. Riprova più tardi.");
+    } finally {
+        //Dopo l'eliminazione, ricarica la pagina corrente con il filtro attivo
+        const filterValue = document.getElementById("typeFilter").value;
+        loadCustomers(currentPage, pageSize, searchQuery, filterValue);
+        closeDeleteModal();
+        hideLoader();
+    }
+}
+
+function closeDeleteModal() {
+    const deleteModal = document.getElementById("delete-modal");
+    deleteModal.style.display = "none";
+}
+
+function closeEditModal() {
+    const editModal = document.getElementById("edit-modal");
+    editModal.style.display = "none";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("searchInput");
     const addButton = document.getElementById("add-customer-button");
+    const filterSelect = document.getElementById("typeFilter");
     let searchTimeout;
 
     //Gestione ricerca
@@ -231,14 +310,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 500); // Ritardo di 500ms per evitare chiamate eccessive
     });
 
+    //Gestione filtro
+    filterSelect.addEventListener("change", function () {
+        currentPage = 1; // Reset della pagina corrente al cambio filtro
+        onPageChange();
+    });
+
     //Event listner addButton
     //addButton.addEventListener("click", openAddModal);
 
     // Modal delete submit
     document.getElementById("delete-form").onsubmit = async function (e) {
         e.preventDefault();
-        if (!vehicleIdToDelete) return;
-        await deleteVehicle(vehicleIdToDelete);
+        if (!customerIdToDelete) return;
+        await deleteCustomer(customerIdToDelete);
     };
     // Refresh button
     document.getElementById("refresh-btn").onclick = function () {

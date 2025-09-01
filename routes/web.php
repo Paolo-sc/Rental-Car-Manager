@@ -24,4 +24,7 @@ Route::post('vehicles', 'App\Http\Controllers\VehicleController@addVehicle')->mi
 Route::get('vehicles/getById/{id}', 'App\Http\Controllers\VehicleController@getVehicleById')->middleware('auth')->name('vehicles.getById');
 Route::put('vehicles/update/{id}', 'App\Http\Controllers\VehicleController@updateVehicle')->middleware('auth')->name('vehicles.update');
 Route::post('customers', 'App\Http\Controllers\CustomerController@addCustomer')->middleware('auth')->name('customers.add');
-Route::get('customers/get', 'App\Http\Controllers\CustomerController@getCustomers')->middleware('auth')->name('customers.get');
+Route::get('customers/get/{filter}', 'App\Http\Controllers\CustomerController@getCustomers')->middleware('auth')->name('customers.get');
+Route::delete('customers/delete/{id}', 'App\Http\Controllers\CustomerController@delete')->middleware('auth')->name('customers.delete');
+Route::get('/oauth/google/popup', 'App\Http\Controllers\GoogleDriveController@redirectToGooglePopup')->name('google.drive.auth.popup');
+Route::get('/oauth/google/callback-popup', 'App\Http\Controllers\GoogleDriveController@handleGoogleCallbackPopup')->name('google.drive.callback.popup');
