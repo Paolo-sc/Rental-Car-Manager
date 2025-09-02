@@ -26,5 +26,8 @@ Route::put('vehicles/update/{id}', 'App\Http\Controllers\VehicleController@updat
 Route::post('customers', 'App\Http\Controllers\CustomerController@addCustomer')->middleware('auth')->name('customers.add');
 Route::get('customers/get/{filter}', 'App\Http\Controllers\CustomerController@getCustomers')->middleware('auth')->name('customers.get');
 Route::delete('customers/delete/{id}', 'App\Http\Controllers\CustomerController@delete')->middleware('auth')->name('customers.delete');
-Route::get('/oauth/google/popup', 'App\Http\Controllers\GoogleDriveController@redirectToGooglePopup')->name('google.drive.auth.popup');
-Route::get('/oauth/google/callback-popup', 'App\Http\Controllers\GoogleDriveController@handleGoogleCallbackPopup')->name('google.drive.callback.popup');
+Route::get('/oauth/google/popup', 'App\Http\Controllers\GoogleDriveController@redirectToGooglePopup')->name('google.drive.auth.popup')->middleware('auth');
+Route::get('/oauth/google/callback-popup', 'App\Http\Controllers\GoogleDriveController@handleGoogleCallbackPopup')->name('google.drive.callback.popup')->middleware('auth');
+Route::post('/salva-token-google-drive', 'App\Http\Controllers\GoogleDriveController@salvaTokenGoogleDrive')->name('google.drive.save')->middleware('auth');
+Route::get('/drive-upload', 'App\Http\Controllers\GoogleDriveUploadController@showUploadForm')->name('drive.upload')->middleware('auth');
+Route::post('/drive-upload', 'App\Http\Controllers\GoogleDriveUploadController@handleUpload')->name('drive.upload.handle')->middleware('auth');

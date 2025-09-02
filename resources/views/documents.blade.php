@@ -2,24 +2,30 @@
 
 @section('title', 'Documenti') {{-- Definisce il titolo per questa pagina --}}
 
-@push('styles') {{-- Questa sezione corrisponde a @stack('styles') nel layout --}}
+@push('styles')
+    {{-- Questa sezione corrisponde a @stack('styles') nel layout --}}
     <link rel="stylesheet" href="{{ asset('css/pages/documents.css') }}"> {{-- Include il CSS specifico per la pagina documenti --}}
 @endpush
 
 @section('content') {{-- Questa sezione corrisponde a @yield('content') nel layout --}}
     <section class="simple-page-content">
-        <h1>Qui puoi gestire i tuoi documenti.</h1>
-        {{-- FORM PER CARICARE UN NUOVO DOCUMENTO --}}
-        <section class="document-upload-form">
-            <h2>Carica un nuovo documento</h2>
-            <p>Compila il modulo per caricare un nuovo documento</p>
-            @if ($errors->any())
-                <div id="document-error-message" class="error-message-container" role="alert" aria-live="assertive">
-                    <p class="error-text">{{ $errors->first() }}</p>
-                </div>
-            @endif
-        </section>
-    @endsection
+        <h2>Carica file su Google Drive (cartella "autonoleggio")</h2>
 
-    @push('scripts')
-    @endpush
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+
+        <form action="{{ route('drive.upload.handle') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <label for="file">Scegli file:</label>
+            <input type="file" name="file" id="file" required>
+            <button type="submit" class="btn btn-primary mt-2">Carica</button>
+        </form>
+    </section>
+@endsection
+
+@push('scripts')
+@endpush

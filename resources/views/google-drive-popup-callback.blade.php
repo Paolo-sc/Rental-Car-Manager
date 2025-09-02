@@ -1,3 +1,16 @@
-<div>
-    <!-- Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less. - Marie Curie -->
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Drive Autenticazione</title>
+</head>
+<body>
+<script>
+    // Passa token alla finestra principale
+    window.opener.postMessage({
+        googleDriveToken: {!! $token !!}
+    }, "*");
+    window.close();
+</script>
+Autenticazione completata, puoi chiudere questa finestra.
+</body>
+</html>

@@ -174,6 +174,14 @@
                         </svg>
                         <p class="header-widget-title">24° Gradi </br> Nuvoloso</p>
                     </div>
+                    <div class="header-widget google-drive-widget">
+                        @if (auth()->user()->google_drive_token)
+                            <button class="btn-secondary" disabled>Drive Collegato
+                                {{ auth()->user()->google_drive_name }}</button>
+                        @else
+                            <button class="btn-secondary" id="google-drive-auth">Collega Google Drive</button>
+                        @endif
+                    </div>
                     <div class="header-widget theme-toggle">
                         <button class="btn-secondary"><svg width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -218,6 +226,30 @@
             @yield('content')
         </div>
     </main>
+    <script>
+        document.getElementById('google-drive-auth')?.addEventListener('click', function() {
+            window.open(
+                "{{ route('google.drive.auth.popup') }}",
+                "GoogleAuth",
+                "width=500,height=600"
+            );
+        });
+
+        window.addEventListener("message", function(event) {
+            if (event.data.googleDriveToken) {
+                fetch("{{ route('google.drive.save') }}", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        token: event.data.googleDriveToken
+                    })
+                }).then(() => location.reload());
+            }
+        });
+    </script>
 
     {{-- Script extra specifici per una pagina --}}
     @stack('scripts')

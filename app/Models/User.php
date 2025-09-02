@@ -30,6 +30,8 @@ class User extends Authenticatable
         'last_login_at',
         'created_by',
         'remember_token',
+        'google_drive_token',
+        'google_drive_name'
     ];
 
     /**
