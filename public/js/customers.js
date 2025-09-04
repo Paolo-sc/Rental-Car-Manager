@@ -40,7 +40,6 @@ async function loadCustomers( page = 1, pageSize = 10, search = "",filterValue="
         if (search && search.trim() !== "") {
             url += "&search=" + encodeURIComponent(search.trim());
         }
-        console.log("Fetching URL:", url);
         const response = await fetch(url);
         const data = await response.json();
         totalCustomers = data.total;
@@ -58,7 +57,6 @@ async function loadCustomers( page = 1, pageSize = 10, search = "",filterValue="
 
 // Genera l'HTML per una riga della tabella
 function generateRowHtml(customer) {
-    console.log(customer);
     return (
         '<tr data-customer-id="' +
         customer.id +
@@ -227,7 +225,6 @@ function renderPaginationControls() {
 // Gestisce cambio pagina o filtro
 function onPageChange() {
     const filterValue = document.getElementById("typeFilter").value;
-    console.log("Filtro attuale:", filterValue);
     loadCustomers(
         currentPage,
         pageSize,

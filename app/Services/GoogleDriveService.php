@@ -8,7 +8,7 @@ use Exception;
 
 class GoogleDriveService
 {
-    public function uploadToAutonoleggio($filePath, $fileName, $user)
+    public function uploadToAutonoleggio($filePath, $fileName, $user, $subFolderName = null)
     {
         if (!$user || !$user->google_drive_token) {
             throw new Exception('Devi collegare il tuo account Google Drive prima di caricare file.');
@@ -33,22 +33,15 @@ class GoogleDriveService
 
         $driveService = new Drive($client);
 
-        $folders = $driveService->files->listFiles([
-            'q' => "mimeType='application/vnd.google-apps.folder' and name='Autonoleggio' and trashed=false",
-            'fields' => 'files(id, name)',
-            'spaces' => 'drive'
-        ]);
+        // Trova o crea la cartella Autonoleggio
+        $folderId = $this->findOrCreateFolder($driveService, 'Autonoleggio');
 
-        $folderId = count($folders->getFiles()) > 0
-            ? $folders->getFiles()[0]->getId()
-            : $driveService->files->create(
-                new Drive\DriveFile([
-                    'name' => 'Autonoleggio',
-                    'mimeType' => 'application/vnd.google-apps.folder'
-                ]),
-                ['fields' => 'id']
-              )->id;
+        // Se mi hai passato una sottocartella, cerco/creo quella dentro Autonoleggio
+        if ($subFolderName) {
+            $folderId = $this->findOrCreateFolder($driveService, $subFolderName, $folderId);
+        }
 
+        // Upload del file
         $fileMetadata = new Drive\DriveFile([
             'name' => $fileName,
             'parents' => [$folderId]
@@ -67,6 +60,33 @@ class GoogleDriveService
             'id' => $file->id,
             'url' => "https://drive.google.com/file/d/{$file->id}/view"
         ];
+    }
+
+     private function findOrCreateFolder(Drive $driveService, string $folderName, string $parentId = null)
+    {
+        $q = "mimeType='application/vnd.google-apps.folder' and name='$folderName' and trashed=false";
+        if ($parentId) {
+            $q .= " and '{$parentId}' in parents";
+        }
+
+        $folders = $driveService->files->listFiles([
+            'q' => $q,
+            'fields' => 'files(id, name)',
+            'spaces' => 'drive'
+        ]);
+
+        if (count($folders->getFiles()) > 0) {
+            return $folders->getFiles()[0]->getId();
+        }
+
+        $fileMetadata = new Drive\DriveFile([
+            'name' => $folderName,
+            'mimeType' => 'application/vnd.google-apps.folder',
+            'parents' => $parentId ? [$parentId] : []
+        ]);
+
+        $folder = $driveService->files->create($fileMetadata, ['fields' => 'id']);
+        return $folder->id;
     }
 
     public function deleteFile($fileId, $user)

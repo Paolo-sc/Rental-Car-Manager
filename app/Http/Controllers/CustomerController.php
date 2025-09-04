@@ -52,7 +52,7 @@ class CustomerController extends BaseController
         //Genero il nome del file da first_name - last_name - company name - document_type - document_number
         $fileName = "{$validated['first_name']}_{$validated['last_name']}_{$validated['company_name']}_{$validated['document_type']}_{$validated['document_number']}.{$uploadedFile->getClientOriginalExtension()}";
 
-        $result = $driveService->uploadToAutonoleggio($filePath, $fileName, auth()->user());
+        $result = $driveService->uploadToAutonoleggio($filePath, $fileName, auth()->user(),"Documenti Clienti");
 
         // Salvo il documento collegato al customer
         $customer->documents()->create([
