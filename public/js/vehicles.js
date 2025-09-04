@@ -117,6 +117,13 @@ function generateRowHtml(vehicle) {
         "</td>" +
         '<td class="col-actions">' +
         '<div class="action-buttons">' +
+        '<button class="btn-info view-documents" data-customer-id="' +
+        vehicle.id +
+        '">Visualizza Documenti</button>' +
+        "</div>" +
+        "</td>" +
+        '<td class="col-actions">' +
+        '<div class="action-buttons">' +
         '<button class="btn-secondary edit-vehicle" data-vehicle-id="' +
         vehicle.id +
         '">Modifica</button>' +

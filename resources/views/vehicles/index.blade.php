@@ -89,6 +89,7 @@
                                 <th>Km</th>
                                 <th>Stato</th>
                                 <th>Note</th>
+                                <th>Documenti</th>
                                 <th class="col-actions">Azioni</th>
                             </tr>
                         </thead>
