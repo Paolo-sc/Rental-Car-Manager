@@ -91,8 +91,8 @@
                                 <th>Città</th>
                                 <th>CAP</th>
                                 <th>Partita Iva</th>
-                                <th>Documento</th>
                                 <th>Note</th>
+                                <th>Documenti</th>
                                 <th class="col-actions">Azioni</th>
                             </tr>
                         </thead>

@@ -94,11 +94,15 @@ function generateRowHtml(customer) {
         "<td>" +
         (customer.vat_number || "-")+
         "</td>" +
-        "<td data-document="+(customer.document_number || "Nessun Documento") +">" +
-        (customer.document_number || "Nessun Documento") +
-        "</td>" +
         "<td>" +
-        (customer.notes || "Nessuna Nota") +
+        (customer.notes || "-") +
+        "</td>" +
+        '<td class="col-actions">' +
+        '<div class="action-buttons">' +
+        '<button class="btn-info view-documents" data-customer-id="' +
+        customer.id +
+        '">Visualizza Documenti</button>' +
+        "</div>" +
         "</td>" +
         '<td class="col-actions">' +
         '<div class="action-buttons">' +
