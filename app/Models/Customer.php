@@ -25,7 +25,6 @@ class Customer extends Model
         'country',
         'tax_code',
         'vat_number',
-        'id_document_number',
         'notes',
         'created_by',
     ];
@@ -45,7 +44,7 @@ class Customer extends Model
     /**
      * Documenti associati al cliente (solo individuali).
      */
-    public function personDocuments(): HasMany
+    public function documents(): HasMany
     {
         return $this->hasMany(PersonDocument::class, 'customer_id');
     }

@@ -32,3 +32,23 @@ input[type="checkbox"] {
     cursor: pointer;
     accent-color: var(--color-primary);
 }
+
+input[type="file"], input[type="file"]::selection,input[type="file"]:hover {
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.input-couple{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#edit-vehicle-mileage{
+  min-width: 105px;
+}
+
+#edit-vehicle-seats{
+  max-width: 65px;
+}

@@ -58,6 +58,7 @@ async function loadCustomers( page = 1, pageSize = 10, search = "",filterValue="
 
 // Genera l'HTML per una riga della tabella
 function generateRowHtml(customer) {
+    console.log(customer);
     return (
         '<tr data-customer-id="' +
         customer.id +
@@ -69,7 +70,7 @@ function generateRowHtml(customer) {
         (customer.last_name || "-") +
         "</td>" +
         "<td>" +
-        customer.tax_code +
+        (customer.tax_code || "-") +
         "</td>" +
         "<td>" +
         customer.email +
@@ -95,8 +96,8 @@ function generateRowHtml(customer) {
         "<td>" +
         (customer.vat_number || "-")+
         "</td>" +
-        "<td data-document="+(customer.id_document_number || "Nessun Documento") +">" +
-        (customer.id_document_number || "Nessun Documento") +
+        "<td data-document="+(customer.document_number || "Nessun Documento") +">" +
+        (customer.document_number || "Nessun Documento") +
         "</td>" +
         "<td>" +
         (customer.notes || "Nessuna Nota") +
@@ -235,6 +236,39 @@ function onPageChange() {
     );
 }
 
+function openAddModal() {
+    const addModal = document.getElementById("edit-modal");
+    const editModalCloseButton = document.getElementById("close-edit-modal");
+    const modalHeaderH2 = document.getElementById("modal-header-h2");
+    const submitButton = document.getElementById("submit-edit-customer");
+    const editForm = document.getElementById("edit-customer-form");
+
+    editForm.action = editForm.getAttribute("data-add-action");
+    editForm.method = "POST"; // Imposto il metodo a POST
+    editForm.reset();
+
+     //Rimuovi eventuale input_method
+    const oldMethodInput = editForm.querySelector("input[name='_method']");
+    if (oldMethodInput) oldMethodInput.remove();
+
+    submitButton.textContent = "Aggiungi";
+    modalHeaderH2.textContent = "Aggiungi Cliente";
+    addModal.style.display = "flex";
+
+    editModalCloseButton.addEventListener("click", closeEditModal);
+
+    window.addEventListener("click", function (event) {
+        if (event.target === addModal) {
+            closeEditModal();
+        }
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeEditModal();
+        }
+    });
+}
+
 function openDeleteModal(customerId, firstName, lastName, taxCode,action) {
     const deleteModal = document.getElementById("delete-modal");
     const modalCloseButton = document.getElementById("close-delete-modal");
@@ -317,7 +351,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     //Event listner addButton
-    //addButton.addEventListener("click", openAddModal);
+    addButton.addEventListener("click", openAddModal);
 
     // Modal delete submit
     document.getElementById("delete-form").onsubmit = async function (e) {

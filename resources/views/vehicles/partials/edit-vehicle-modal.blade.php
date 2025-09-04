@@ -48,7 +48,7 @@
                     <label for="edit-vehicle-vin">VIN</label>
                     <input type="text" name="vin" id="edit-vehicle-vin" required>
                 </div>
-                <div class="input-container" id="mileage-state-container">
+                <div class="input-container input-couple">
                     <label for="edit-vehicle-seats">Posti</label>
                     <input type="number" name="seats" id="edit-vehicle-seats" required>
                     <label for="edit-vehicle-engine-size">Cilindrata</label>

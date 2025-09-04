@@ -14,9 +14,57 @@ class CustomerController extends BaseController
         return view('customers.index');
     }
 
-    public function addCustomer(Request $request)
+    public function addCustomer(Request $request, \App\Services\GoogleDriveService $driveService)
     {
-        // Logica per aggiungere un nuovo cliente
+        $validated = $request->validate([
+            // campi customer
+            'first_name' => 'nullable|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'company_name' => 'nullable|string|max:255',
+            'tax_code' => 'nullable|string|max:20',
+            'vat_number' => 'nullable|string|max:20',
+            'email' => 'required|string|email|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+            'state' => 'required|string|max:100',
+            'city' => 'required|string|max:100',
+            'postal_code' => 'required|string|max:20',
+            'customer_type' => 'required|in:individual,company',
+            'notes' => 'nullable|string|max:255',
+
+            // campi document
+            'document_number' => 'required|string|max:255',
+            'document_type' => 'required|string|max:100',
+            'expiry_date' => 'required|date',
+            'document' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240'
+        ]);
+
+        //Creo il customer
+        $customerData = collect($validated)->except([
+            'document_number', 'document_type', 'expiry_date', 'document'
+        ])->toArray();
+
+        $customer = \App\Models\Customer::create($customerData);
+
+        // Gestisco l’upload del documento
+        $uploadedFile = $request->file('document');
+        $filePath = $uploadedFile->getPathname();
+        //Genero il nome del file da first_name - last_name - company name - document_type - document_number
+        $fileName = "{$validated['first_name']}_{$validated['last_name']}_{$validated['company_name']}_{$validated['document_type']}_{$validated['document_number']}.{$uploadedFile->getClientOriginalExtension()}";
+
+        $result = $driveService->uploadToAutonoleggio($filePath, $fileName, auth()->user());
+
+        // Salvo il documento collegato al customer
+        $customer->documents()->create([
+            'id_document_number' => $validated['document_number'],
+            'document_type' => $validated['document_type'],
+            'expiry_date' => $validated['expiry_date'],
+            'drive_file_id' => $result['id'],     // salvi l’id
+            'drive_file_url' => $result['url'],   // salvi anche l’url
+            'uploaded_by' => auth()->user()->id
+        ]);
+
+        return response()->json($customer->load('documents'), 201);
     }
 
     public function getCustomerById(Request $request, $id)
@@ -31,10 +79,21 @@ class CustomerController extends BaseController
 
     public function delete(Request $request, $id)
     {
-        // Trova il cliente da eliminare
-        $customer = \App\Models\Customer::findOrFail($id);
+         // Trova il cliente con i documenti
+        $customer = \App\Models\Customer::with('documents')->findOrFail($id);
+
+        // Elimina i file dal Drive
+        $driveService = app(\App\Services\GoogleDriveService::class);
+
+        foreach ($customer->documents as $doc) {
+            if (!empty($doc->drive_file_id)) {
+                $driveService->deleteFile($doc->drive_file_id, auth()->user());
+            }
+        }
+
         // Elimina il cliente
         $customer->delete();
+
         return response()->noContent();
     }
 
@@ -48,7 +107,7 @@ class CustomerController extends BaseController
         $search = trim($request->query('search', ''));
 
         // Crea la query base sul modello Customer
-        $query = \App\Models\Customer::query();
+        $query = \App\Models\Customer::with(['documents:id,customer_id,id_document_number']);
 
         // Applica il filtro se non è "all"
         if ($filter && $filter !== "all") {
@@ -86,7 +145,14 @@ class CustomerController extends BaseController
         $customers = $query->offset(($page - 1) * $pageSize)
                           ->limit($pageSize)
                           ->orderBy('id')
-                          ->get();
+                          ->get()
+                          ->map(function($customer) {
+                                // Aggiungo un campo "document_number" direttamente sul customer
+                                $customer->document_number = $customer->documents->first()->id_document_number ?? null;
+                                // Nascondo la relazione per non avere tutto l'array
+                                unset($customer->documents);
+                                return $customer;
+                          });
 
         // Restituisci i dati in formato JSON (clienti della pagina e il totale)
         return response()->json([

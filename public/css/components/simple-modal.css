@@ -88,11 +88,3 @@
 #edit-modal .modal-content {
     max-width: 650px;
 }
-
-#edit-vehicle-mileage{
-  min-width: 105px;
-}
-
-#edit-vehicle-seats{
-  max-width: 65px;
-}

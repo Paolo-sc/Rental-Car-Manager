@@ -156,7 +156,6 @@ function attachEventListeners() {
 }
 
 async function openEditModal(vehicleId) {
-    console.log("Open edit modal for vehicle ID:", vehicleId);
     //Apro il modale e carico i dati del veicoli dentro gli input del modale
     const editModal = document.getElementById("edit-modal");
     const editForm = document.getElementById("edit-vehicle-form");
