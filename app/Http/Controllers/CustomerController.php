@@ -77,6 +77,17 @@ class CustomerController extends BaseController
         return response()->json($customer);
     }
 
+    public function getDocumentsByCustomerId(Request $request, $id)
+    {
+        // Logica per ottenere i documenti di un cliente per ID
+        $customer = \App\Models\Customer::with('documents')->find($id);
+        if (!$customer) {
+            //se non esiste il cliente ritorno array vuoto
+            return response()->json([], 200);
+        }
+        return response()->json($customer->documents);
+    }
+
     public function delete(Request $request, $id)
     {
          // Trova il cliente con i documenti
@@ -93,6 +104,23 @@ class CustomerController extends BaseController
 
         // Elimina il cliente
         $customer->delete();
+
+        return response()->noContent();
+    }
+
+    public function deleteDocument(Request $request, $customerId, $documentId)
+    {
+        // Trova il documento
+        $document = \App\Models\PersonDocument::findOrFail($documentId);
+
+        // Elimina il file dal Drive
+        $driveService = app(\App\Services\GoogleDriveService::class);
+        if (!empty($document->drive_file_id)) {
+            $driveService->deleteFile($document->drive_file_id, auth()->user());
+        }
+
+        // Elimina il documento
+        $document->delete();
 
         return response()->noContent();
     }

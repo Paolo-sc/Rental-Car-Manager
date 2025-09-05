@@ -139,6 +139,9 @@
     </aside>
 
     <main class="main-content">
+       <div class="notification-popup" style="display: flex; right: 20px; z-index: 1000; background-color: #4BB543; color: white; padding: 10px 20px; border-radius: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+            <span id="notification-message">Cliente eliminato con successo</span>
+        </div>
         <div class="main-card">
             <header class="top-header">
                 <div class="header-left">

@@ -3,6 +3,9 @@ const pageSize = 10;
 let totalCustomers = 0;
 let customerIdToDelete = null;
 let searchQuery = "";
+let reopenDocumentModalAfterDelete = false;
+let lastCustomerIdForDocs = null;
+let lastCustomerNameForDocs = null;
 
 // Mostra messaggio di successo
 function showSuccess(msg) {
@@ -101,6 +104,10 @@ function generateRowHtml(customer) {
         '<div class="action-buttons">' +
         '<button class="btn-info view-documents" data-customer-id="' +
         customer.id +
+        '" data-customer-name="' +
+        (customer.first_name || customer.company_name) +
+        " " +
+        (customer.last_name || "") +
         '">Visualizza Documenti</button>' +
         "</div>" +
         "</td>" +
@@ -134,6 +141,13 @@ function attachEventListeners() {
             const taxCode = button.getAttribute("data-tax-code");
             const action = button.getAttribute("data-action");
             openDeleteModal(customerId, firstName, lastName, taxCode, action);
+        });
+    });
+    document.querySelectorAll(".view-documents").forEach((button) => {
+        button.addEventListener("click", function () {
+            const customerId = button.getAttribute("data-customer-id");
+            const customerName = button.getAttribute("data-customer-name");
+            openDocumentModal(customerId, customerName);
         });
     });
 }
@@ -295,6 +309,146 @@ function openDeleteModal(customerId, firstName, lastName, taxCode,action) {
     });
 }
 
+async function openDocumentModal(customerId, customerName) {
+    const documentModal = document.getElementById("document-modal");
+    const modalCloseButton = document.getElementById("close-document-modal");
+    const documentsList = document.getElementById("documents-list");
+    const customerNameSpan = document.getElementById("customer-name");
+
+    showLoader();
+    //Salvo il cliente
+    lastCustomerIdForDocs = customerId;
+    lastCustomerNameForDocs = customerName;
+    reopenDocumentModalAfterDelete = false;
+
+    // Imposta il nome del cliente nel modal
+    customerNameSpan.textContent = customerName;
+    
+
+    // Carica i documenti del cliente via AJAX
+    const response = await fetch("/customers/" + customerId + "/documents");
+    documentsList.innerHTML = ""; // Pulisce la lista dei documenti
+    if (!response.ok) throw new Error("Errore nel caricamento dei documenti");
+
+    //Creo la lista con le informazioni dei documenti e due pulsanti uno per la modifica del doc e uno per la cancellazione
+    const documents = await response.json();
+    if (!documents || documents.length === 0) {
+        documentsList.innerHTML = "<li>Nessun documento trovato.</li>";
+    } else {
+        documents.forEach(doc => {
+            const listItem = document.createElement("li");
+            listItem.textContent = doc.document_type + " - Numero documento: " + doc.id_document_number + " - Caricato il: " + new Date(doc.created_at).toLocaleDateString() + " - Scadenza: " + (doc.expiry_date ? new Date(doc.expiry_date).toLocaleDateString() : "N/A") + " ";
+            if (doc.drive_file_url) {
+                const link = document.createElement("a");
+                link.href = doc.drive_file_url;
+                link.textContent = "Visualizza Documento";
+                link.target = "_blank";
+                listItem.appendChild(link);
+            }
+            // Pulsante per la modifica del documento
+            const editButton = document.createElement("button");
+            editButton.classList.add("btn-secondary");
+            editButton.textContent = "Modifica";
+            editButton.addEventListener("click", function () {
+                openEditDocumentModal(doc.id);
+            });
+            listItem.appendChild(editButton);
+
+            // Pulsante per la cancellazione del documento
+            const deleteButton = document.createElement("button");
+            deleteButton.classList.add("btn-danger");
+            deleteButton.addEventListener("click", function () {
+                openDeleteDocumentModal(doc.id, doc.document_type, doc.id_document_number, customerId);
+            });
+            deleteButton.textContent = "Elimina";
+            listItem.appendChild(deleteButton);
+
+            documentsList.appendChild(listItem);
+        });
+    }
+
+    documentModal.style.display = "flex";
+
+    modalCloseButton.addEventListener("click", closeDocumentModal);
+    window.addEventListener("click", function (event) {
+        if (event.target === documentModal) {
+            closeDocumentModal();
+        }
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeDocumentModal();
+        }
+    });
+
+    hideLoader();
+}
+
+function openDeleteDocumentModal(documentId, documentType, documentNumber, customerId) {
+    // Implementa la logica per aprire il modal di cancellazione del documento
+    const deleteModal = document.getElementById("delete-modal");
+    //Mi nascondo il modal di visualizzazione documenti se aperto
+    showLoader();
+    closeDocumentModal();
+    reopenDocumentModalAfterDelete = true; // segnalo che va riaperto dopo
+
+    deleteModal.style.display = "flex";
+
+    //Prendi il paragraf figlio del form e settalo con le info del documento in unelemento <span>
+    const deleteForm = document.getElementById("delete-form");
+    const paragraph = deleteForm.querySelector("p");
+    const span = document.createElement("span");
+    span.style.fontWeight = "bold";
+    span.textContent = documentType + " - Numero documento: " + documentNumber;
+    paragraph.textContent = "Sei sicuro di voler eliminare il documento: ";
+    paragraph.appendChild(span);
+
+    //prendi l'ultimo paragraf figlio del form e settalo con un messaggio di avviso
+    const warningParagraph = deleteForm.querySelectorAll("p")[1];
+    warningParagraph.textContent = "Attenzione: Eliminando questo documento, non sarà più possibile recuperarlo.";
+
+    //Imposto l'eliminazione del doc al click del submit
+    const form = document.getElementById("delete-form");
+    form.onsubmit = async function (e) {
+        e.preventDefault();
+        await deleteDocument(documentId, customerId);
+    };
+
+    const modalCloseButton = document.getElementById("close-delete-modal");
+    modalCloseButton.addEventListener("click", closeDeleteModal);
+    window.addEventListener("click", function (event) {
+        if (event.target === deleteModal) {
+            closeDeleteModal();
+        }
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeDeleteModal();
+        }
+    });
+    hideLoader();
+}
+
+async function deleteDocument(documentId, customerId) {
+    showLoader();
+    try {
+        const response = await fetch("/customers/" + customerId + "/documents/" + documentId, {
+            method: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
+                Accept: "application/json",
+            }
+        });
+        if (!response.ok) throw new Error("Errore nella cancellazione del documento");
+        showSuccess("Documento eliminato con successo.");
+    } catch (error) {
+        showError("Impossibile eliminare il documento. Riprova più tardi.");
+    } finally {
+        closeDeleteModal();
+        hideLoader();
+    }
+}
+
 async function deleteCustomer(customerId) {
     showLoader();
     try {
@@ -319,9 +473,19 @@ async function deleteCustomer(customerId) {
     }
 }
 
+function closeDocumentModal() {
+    const documentModal = document.getElementById("document-modal");
+    documentModal.style.display = "none";
+}
+
 function closeDeleteModal() {
     const deleteModal = document.getElementById("delete-modal");
     deleteModal.style.display = "none";
+
+    //Se era aperto il modal documenti prima di aprire questo, riaprilo
+    if (reopenDocumentModalAfterDelete && lastCustomerIdForDocs && lastCustomerNameForDocs) {
+        openDocumentModal(lastCustomerIdForDocs, lastCustomerNameForDocs);
+    }
 }
 
 function closeEditModal() {

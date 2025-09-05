@@ -112,6 +112,7 @@
     </div>
     @include('customers.partials.delete-customer-modal')
     @include('customers.partials.edit-customer-modal')
+    @include('customers.partials.show-document-customer-modal')
 @endsection
 
 @push('scripts')

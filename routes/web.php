@@ -31,3 +31,5 @@ Route::get('/oauth/google/callback-popup', 'App\Http\Controllers\GoogleDriveCont
 Route::post('/salva-token-google-drive', 'App\Http\Controllers\GoogleDriveController@salvaTokenGoogleDrive')->name('google.drive.save')->middleware('auth');
 Route::get('/drive-upload', 'App\Http\Controllers\GoogleDriveUploadController@showUploadForm')->name('drive.upload')->middleware('auth');
 Route::post('/drive-upload', 'App\Http\Controllers\GoogleDriveUploadController@handleUpload')->name('drive.upload.handle')->middleware('auth');
+Route::get('customers/{id}/documents', 'App\Http\Controllers\CustomerController@getDocumentsByCustomerId')->middleware('auth')->name('customers.getDocuments');
+Route::delete('customers/{customerId}/documents/{documentId}', 'App\Http\Controllers\CustomerController@deleteDocument')->middleware('auth')->name('customers.deleteDocument');
