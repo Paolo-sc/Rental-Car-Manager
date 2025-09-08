@@ -67,6 +67,41 @@ class CustomerController extends BaseController
         return response()->json($customer->load('documents'), 201);
     }
 
+    public function addDocument(Request $request, \App\Services\GoogleDriveService $driveService)
+    {
+        $validated = $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'id_document_number' => 'required|string|max:255',
+            'document_type' => 'required|string|max:100',
+            'expiry_date' => 'required|date',
+            'document' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240'
+        ]);
+
+        // Trova il cliente
+        $customer = \App\Models\Customer::findOrFail($validated['customer_id']);
+
+        // Gestisco l’upload del documento
+        $uploadedFile = $request->file('document');
+        $filePath = $uploadedFile->getPathname();
+        //Genero il nome del file da first_name - last_name - company name - document_type - document_number
+        $fileName = "{$customer->first_name}_{$customer->last_name}_{$customer->company_name}_{$validated['document_type']}_{$validated['id_document_number']}.{$uploadedFile->getClientOriginalExtension()}";
+
+        $result = $driveService->uploadToAutonoleggio($filePath, $fileName, auth()->user(),"Documenti Clienti");
+
+        // Salvo il documento collegato al customer
+        $document = $customer->documents()->create([
+            'customer_id' => $customer->id,
+            'id_document_number' => $validated['id_document_number'],
+            'document_type' => $validated['document_type'],
+            'expiry_date' => $validated['expiry_date'],
+            'drive_file_id' => $result['id'],     // salvi l’id
+            'drive_file_url' => $result['url'],   // salvi anche l’url
+            'uploaded_by' => auth()->user()->id
+        ]);
+
+        return response()->json($document, 201);
+    }
+
     public function getCustomerById(Request $request, $id)
     {
         // Logica per ottenere un cliente per ID
@@ -86,6 +121,16 @@ class CustomerController extends BaseController
             return response()->json([], 200);
         }
         return response()->json($customer->documents);
+    }
+
+    public function getDocumentById(Request $request, $documentId)
+    {
+        // Logica per ottenere un documento specifico di un cliente
+        $document = \App\Models\PersonDocument::where('id', $documentId)->first();
+        if (!$document) {
+            return response()->json(['message' => 'Documento non trovato'], 404);
+        }
+        return response()->json($document);
     }
 
     public function delete(Request $request, $id)
@@ -188,4 +233,107 @@ class CustomerController extends BaseController
             'total' => $total
         ]);
     }
+
+    public function updateDocument(Request $request, $id, \App\Services\GoogleDriveService $driveService)
+{
+    $document = \App\Models\PersonDocument::findOrFail($id);
+
+    // Validazione
+    $validated = $request->validate([
+        'customer_id' => 'required|exists:customers,id',
+        'id_document_number' => 'required|string|max:255',
+        'document_type' => 'required|string|max:100',
+        'expiry_date' => 'nullable|date',
+        'document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:10240'
+    ]);
+
+    $customer = \App\Models\Customer::findOrFail($validated['customer_id']);
+
+    // Costruisci il nuovo nome file
+    $newFileName = "{$customer->first_name}_{$customer->last_name}_{$customer->company_name}_{$validated['document_type']}_{$validated['id_document_number']}";
+    
+    if ($request->hasFile('document')) {
+        $uploadedFile = $request->file('document');
+        $filePath = $uploadedFile->getPathname();
+        $newFileName .= ".{$uploadedFile->getClientOriginalExtension()}";
+
+        if ($document->drive_file_id) {
+            // Se esiste già un file su Drive, lo sostituisci
+            $result = $driveService->replaceFile(
+                $document->drive_file_id,
+                $filePath,
+                $newFileName,
+                auth()->user()
+            );
+        } else {
+            // Altrimenti carica un nuovo file
+            $newFileName .= ".{$uploadedFile->getClientOriginalExtension()}";
+            $result = $driveService->uploadToAutonoleggio(
+                $filePath,
+                $newFileName,
+                auth()->user(),
+                "Documenti Clienti"
+            );
+        }
+
+        $document->drive_file_id = $result['id'];
+        $document->drive_file_url = $result['url'];
+    } else if ($document->drive_file_id) {
+        // L’utente ha modificato solo il nome o altri campi → rinomina su Drive
+        $extension = pathinfo($document->drive_file_url, PATHINFO_EXTENSION);
+        $result = $driveService->renameFile(
+            $document->drive_file_id,
+            $newFileName . ($extension ? ".{$extension}" : ""),
+            auth()->user()
+        );
+        $document->drive_file_url = $result['url'];
+    }
+
+    // Aggiorno i campi testuali
+    $document->id_document_number = $validated['id_document_number'];
+    $document->document_type = $validated['document_type'];
+    $document->expiry_date = $validated['expiry_date'];
+    $document->customer_id = $validated['customer_id'];
+    $document->uploaded_by = auth()->user()->id;
+
+    $document->save();
+
+    // Risposta JSON per riempire il form in JS
+    return response()->json([
+        'id' => $document->id,
+        'document_type' => $document->document_type,
+        'id_document_number' => $document->id_document_number,
+        'expiry_date' => $document->expiry_date,
+        'customer_id' => $document->customer_id,
+        'drive_file_url' => $document->drive_file_url,
+    ]);
+}
+
+public function updateCustomer(Request $request, $id)
+{
+    $customer = \App\Models\Customer::findOrFail($id);
+
+    // Validazione
+    $validated = $request->validate([
+        'first_name' => 'nullable|string|max:255',
+        'last_name' => 'nullable|string|max:255',
+        'company_name' => 'nullable|string|max:255',
+        'tax_code' => 'nullable|string|max:20',
+        'vat_number' => 'nullable|string|max:20',
+        'email' => 'required|string|email|max:255',
+        'phone' => 'required|string|max:20',
+        'address' => 'required|string|max:255',
+        'state' => 'required|string|max:100',
+        'city' => 'required|string|max:100',
+        'postal_code' => 'required|string|max:20',
+        'customer_type' => 'required|in:individual,company',
+        'notes' => 'nullable|string|max:255',
+    ]);
+
+    // Aggiorno i campi del cliente
+    $customer->update($validated);
+
+    // Risposta JSON per riempire il form in JS
+    return response()->json($customer);
+}
 }

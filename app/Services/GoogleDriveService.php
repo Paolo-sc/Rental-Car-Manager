@@ -125,4 +125,96 @@ class GoogleDriveService
             throw $e;
         }
     }
+
+    public function renameFile($fileId, $newBaseName, $user)
+{
+    if (!$user || !$user->google_drive_token) {
+        throw new Exception('Devi collegare il tuo account Google Drive prima di rinominare file.');
+    }
+
+    $token = json_decode($user->google_drive_token, true);
+
+    $client = new \Google\Client();
+    $client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
+    $client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
+    $client->setAccessToken($token);
+
+    if ($client->isAccessTokenExpired()) {
+        if (isset($token['refresh_token'])) {
+            $client->fetchAccessTokenWithRefreshToken($token['refresh_token']);
+            $user->google_drive_token = json_encode($client->getAccessToken());
+            $user->save();
+        } else {
+            throw new Exception('Il token di accesso è scaduto. Devi ricollegare il tuo account Google Drive.');
+        }
+    }
+
+    $driveService = new \Google\Service\Drive($client);
+
+    // Recupera il nome esistente
+    $file = $driveService->files->get($fileId, ['fields' => 'name']);
+    $oldName = $file->name;
+    $extension = pathinfo($oldName, PATHINFO_EXTENSION);
+
+    $newName = $newBaseName . '.' . $extension;
+
+    // Aggiorna il nome del file su Drive
+    $fileMetadata = new \Google\Service\Drive\DriveFile(['name' => $newName]);
+    $updatedFile = $driveService->files->update($fileId, $fileMetadata, ['fields' => 'id, name']);
+
+    return [
+        'id' => $updatedFile->id,
+        'name' => $updatedFile->name,
+        'url' => "https://drive.google.com/file/d/{$updatedFile->id}/view"
+    ];
+}
+
+public function replaceFile($fileId, $filePath, $fileName, $user)
+{
+    if (!$user || !$user->google_drive_token) {
+        throw new Exception('Devi collegare il tuo account Google Drive prima di caricare file.');
+    }
+
+    $token = json_decode($user->google_drive_token, true);
+
+    $client = new Client();
+    $client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
+    $client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
+    $client->setAccessToken($token);
+
+    if ($client->isAccessTokenExpired()) {
+        if (isset($token['refresh_token'])) {
+            $client->fetchAccessTokenWithRefreshToken($token['refresh_token']);
+            $user->google_drive_token = json_encode($client->getAccessToken());
+            $user->save();
+        } else {
+            throw new Exception('Il token di accesso è scaduto. Devi ricollegare il tuo account Google Drive.');
+        }
+    }
+
+    $driveService = new Drive($client);
+
+    // Aggiorna il file esistente
+    $fileMetadata = new Drive\DriveFile([
+        'name' => $fileName
+    ]);
+
+    $content = file_get_contents($filePath);
+
+    $file = $driveService->files->update(
+        $fileId,
+        $fileMetadata,
+        [
+            'data' => $content,
+            'mimeType' => mime_content_type($filePath),
+            'uploadType' => 'multipart',
+            'fields' => 'id'
+        ]
+    );
+
+    return [
+        'id' => $file->id,
+        'url' => "https://drive.google.com/file/d/{$file->id}/view"
+    ];
+}
 }

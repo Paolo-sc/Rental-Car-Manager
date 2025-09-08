@@ -1,7 +1,7 @@
 <div id="edit-modal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <h2 id="modal-header-h2">Aggiungi Veicolo</h2>
+            <h2 id="modal-header-h2">Aggiungi Cliente</h2>
         </div>
         <div class="modal-body">
             @if ($errors->any())
@@ -14,7 +14,7 @@
                 </div>
             @endif
             <form id="edit-customer-form" method="POST" action="{{ route('customers.add') }}"
-                data-add-action="{{ route('customers.add') }}" enctype="multipart/form-data">
+                customer-add-action="{{ route('customers.add') }}" document-add-action="{{ route('documents.add') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="input-container input-couple">
                     <label for="edit-customer-name">Nome</label>
@@ -55,7 +55,7 @@
                     <label for="edit-customer-postalcode">CAP</label>
                     <input type="text" name="postal_code" id="edit-customer-postalcode" required>
                 </div>
-                <div class="input-container input-couple">
+                <div class="input-container input-couple" id= "document-section">
                     <label for="edit-document-number">Numero documento</label>
                     <input type="text" name="document_number" id="edit-document-number">
                     <label for="edit-document-type">Tipo documento</label>

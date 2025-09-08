@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
     <link rel="preload" href="/fonts/Geist/Geist-Regular.woff2" as="font" type="font/woff2" crossorigin>
     {{-- Aggiungi qui eventuali stili extra specifici per una pagina --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @stack('styles')
 </head>
 

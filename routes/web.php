@@ -33,3 +33,8 @@ Route::get('/drive-upload', 'App\Http\Controllers\GoogleDriveUploadController@sh
 Route::post('/drive-upload', 'App\Http\Controllers\GoogleDriveUploadController@handleUpload')->name('drive.upload.handle')->middleware('auth');
 Route::get('customers/{id}/documents', 'App\Http\Controllers\CustomerController@getDocumentsByCustomerId')->middleware('auth')->name('customers.getDocuments');
 Route::delete('customers/{customerId}/documents/{documentId}', 'App\Http\Controllers\CustomerController@deleteDocument')->middleware('auth')->name('customers.deleteDocument');
+Route::post('documents', 'App\Http\Controllers\CustomerController@addDocument')->middleware('auth')->name('documents.add');
+Route::get('documents/{id}', 'App\Http\Controllers\CustomerController@getDocumentById')->middleware('auth')->name('documents.getById');
+Route::put('documents/update/{id}', 'App\Http\Controllers\CustomerController@updateDocument')->middleware('auth')->name('documents.update');
+Route::get('customer/{id}', 'App\Http\Controllers\CustomerController@getCustomerById')->middleware('auth')->name('customers.getById');
+Route::put('customers/update/{id}', 'App\Http\Controllers\CustomerController@updateCustomer')->middleware('auth')->name('customers.update');
