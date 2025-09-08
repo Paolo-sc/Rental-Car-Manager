@@ -228,8 +228,8 @@ namespace App\Models{
  * @property int $vehicle_id
  * @property \Illuminate\Support\Carbon $start_date
  * @property \Illuminate\Support\Carbon $end_date
- * @property mixed|null $pickup_time
- * @property mixed|null $return_time
+ * @property string|null $pickup_time
+ * @property string|null $return_time
  * @property string|null $pickup_location
  * @property string|null $return_location
  * @property numeric $daily_rate
