@@ -38,3 +38,8 @@ Route::get('documents/{id}', 'App\Http\Controllers\CustomerController@getDocumen
 Route::put('documents/update/{id}', 'App\Http\Controllers\CustomerController@updateDocument')->middleware('auth')->name('documents.update');
 Route::get('customer/{id}', 'App\Http\Controllers\CustomerController@getCustomerById')->middleware('auth')->name('customers.getById');
 Route::put('customers/update/{id}', 'App\Http\Controllers\CustomerController@updateCustomer')->middleware('auth')->name('customers.update');
+Route::get('vehicles/{id}/documents', 'App\Http\Controllers\VehicleController@getDocumentsByVehicleId')->middleware('auth')->name('vehicles.getDocuments');
+Route::post('vehicles/add-document', 'App\Http\Controllers\VehicleController@addDocument')->middleware('auth')->name('vehicles.addDocument');
+Route::delete('vehicles/{vehicleId}/documents/{documentId}', 'App\Http\Controllers\VehicleController@deleteDocument')->middleware('auth')->name('vehicles.deleteDocument');
+Route::put('vehicles/documents/update/{id}', 'App\Http\Controllers\VehicleController@updateDocument')->middleware('auth')->name('vehicles.documents.update');
+Route::get('vehicles/documents/{id}', 'App\Http\Controllers\VehicleController@getDocumentById')->middleware('auth')->name('vehicles.documents.getById');

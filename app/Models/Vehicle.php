@@ -47,7 +47,7 @@ class Vehicle extends Model
     /**
      * Documenti associati al veicolo.
      */
-    public function vehicleDocuments(): HasMany
+    public function documents(): HasMany
     {
         return $this->hasMany(VehicleDocument::class, 'vehicle_id');
     }

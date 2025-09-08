@@ -3,6 +3,9 @@ const pageSize = 10;
 let totalVehicles = 0;
 let vehicleIdToDelete = null;
 let searchQuery = "";
+let lastVehicleIdForDocs = null;
+let lastVehicleNameForDocs = null;
+let originalFormContent = "";
 
 // Mostra messaggio di successo
 function showSuccess(msg) {
@@ -117,8 +120,15 @@ function generateRowHtml(vehicle) {
         "</td>" +
         '<td class="col-actions">' +
         '<div class="action-buttons">' +
-        '<button class="btn-info view-documents" data-customer-id="' +
+        '<button class="btn-info view-documents" data-vehicle-id="' +
         vehicle.id +
+        '" data-vehicle-name="' +
+        vehicle.license_plate +
+        " " +
+        vehicle.brand +
+        " " +
+        vehicle.model +
+        " " +
         '">Visualizza Documenti</button>' +
         "</div>" +
         "</td>" +
@@ -160,6 +170,353 @@ function attachEventListeners() {
             openEditModal(vehicleId);
         });
     });
+    document.querySelectorAll(".view-documents").forEach((button) => {
+        button.addEventListener("click", function () {
+            const vehicleId = button.getAttribute("data-vehicle-id");
+            const vehicleName = button.getAttribute("data-vehicle-name");
+            openDocumentModal(vehicleId, vehicleName);
+        });
+    });
+}
+
+// Pulisce completamente il form mantenendo token e _method
+function resetEditForm(editForm) {
+    // salva _token e _method
+    const token = editForm.querySelector('input[name="_token"]');
+    const method = editForm.querySelector('input[name="_method"]');
+
+    // cancella tutto
+    editForm.innerHTML = "";
+
+    // reinserisci token e method
+    if (token) editForm.appendChild(token);
+    if (method) editForm.appendChild(method);
+}
+
+function closeDocumentModal() {
+    const documentModal = document.getElementById("document-modal");
+    documentModal.style.display = "none";
+}
+
+async function openDocumentModal(vehicleId, vehicleName) {
+    const documentModal = document.getElementById("document-modal");
+    const modalCloseButton = document.getElementById("close-document-modal");
+    const documentsList = document.getElementById("documents-list");
+    const vehicleNameSpan = document.getElementById("vehicle-name");
+    const addDocumentButton = document.getElementById("add-document-button");
+
+     //Aggiungo l'event listener al pulsante di aggiunta documento
+    addDocumentButton.onclick = function () {
+        // Apro il modal di aggiunta documento
+        openAddDocumentModal(vehicleId, vehicleName);
+    };
+
+    showLoader();
+    //Salvo il veicolo
+    lastVehicleIdForDocs = vehicleId;
+    lastVehicleNameForDocs = vehicleName;
+    reopenDocumentModalAfterDelete = false;
+
+    // Imposta il nome del veicolo nel modal
+    vehicleNameSpan.textContent = vehicleName;
+
+    // Carica i documenti del veicolo via AJAX
+    const response = await fetch("/vehicles/" + vehicleId + "/documents");
+    documentsList.innerHTML = ""; // Pulisce la lista dei documenti
+    if (!response.ok) throw new Error("Errore nel caricamento dei documenti");
+
+    //Creo la lista con le informazioni dei documenti e due pulsanti uno per la modifica del doc e uno per la cancellazione
+    const documents = await response.json();
+    if (!documents || documents.length === 0) {
+        documentsList.innerHTML = "<li>Nessun documento trovato.</li>";
+    } else {
+        documents.forEach((doc) => {
+            const listItem = document.createElement("li");
+            listItem.textContent =
+                doc.document_type +
+                " - Documento: " +
+                doc.document_name +
+                " - Caricato il: " +
+                new Date(doc.created_at).toLocaleDateString() +
+                " ";
+            if (doc.drive_file_url) {
+                const link = document.createElement("a");
+                link.href = doc.drive_file_url;
+                link.textContent = "Visualizza Documento";
+                link.target = "_blank";
+                listItem.appendChild(link);
+            }
+            // Pulsante per la modifica del documento
+            const editButton = document.createElement("button");
+            editButton.classList.add("btn-secondary");
+            editButton.textContent = "Modifica";
+            editButton.addEventListener("click", function () {
+                openEditDocumentModal(doc.id, vehicleId, vehicleName);
+            });
+            listItem.appendChild(editButton);
+
+            // Pulsante per la cancellazione del documento
+            const deleteButton = document.createElement("button");
+            deleteButton.classList.add("btn-danger");
+            deleteButton.addEventListener("click", function () {
+                openDeleteDocumentModal(
+                    doc.id,
+                    doc.document_type,
+                    doc.document_name,
+                    vehicleId
+                );
+            });
+            deleteButton.textContent = "Elimina";
+            listItem.appendChild(deleteButton);
+
+            documentsList.appendChild(listItem);
+        });
+    }
+
+    documentModal.style.display = "flex";
+
+    modalCloseButton.addEventListener("click", closeDocumentModal);
+    window.addEventListener("click", function (event) {
+        if (event.target === documentModal) {
+            closeDocumentModal();
+        }
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeDocumentModal();
+        }
+    });
+
+    hideLoader();
+}
+
+function openDeleteDocumentModal(
+    documentId,
+    documentType,
+    documentNumber,
+    vehicleId
+) {
+    // Implementa la logica per aprire il modal di cancellazione del documento
+    const deleteModal = document.getElementById("delete-modal");
+    //Mi nascondo il modal di visualizzazione documenti se aperto
+    showLoader();
+    closeDocumentModal();
+    reopenDocumentModalAfterDelete = true; // segnalo che va riaperto dopo
+
+    deleteModal.style.display = "flex";
+
+    //Prendi il paragraf figlio del form e settalo con le info del documento in unelemento <span>
+    const deleteForm = document.getElementById("delete-form");
+    const paragraph = deleteForm.querySelector("p");
+    const span = document.createElement("span");
+    span.style.fontWeight = "bold";
+    span.textContent = documentType + " - Numero documento: " + documentNumber;
+    paragraph.textContent = "Sei sicuro di voler eliminare il documento: ";
+    paragraph.appendChild(span);
+
+    //prendi l'ultimo paragraf figlio del form e settalo con un messaggio di avviso
+    const warningParagraph = deleteForm.querySelectorAll("p")[1];
+    warningParagraph.textContent =
+        "Attenzione: Eliminando questo documento, non sarà più possibile recuperarlo.";
+
+    //Imposto l'eliminazione del doc al click del submit
+    const form = document.getElementById("delete-form");
+    form.onsubmit = async function (e) {
+        e.preventDefault();
+        await deleteDocument(documentId, vehicleId);
+    };
+
+    const modalCloseButton = document.getElementById("close-delete-modal");
+    modalCloseButton.addEventListener("click", closeDeleteModal);
+    window.addEventListener("click", function (event) {
+        if (event.target === deleteModal) {
+            closeDeleteModal();
+        }
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeDeleteModal();
+        }
+    });
+    hideLoader();
+}
+
+async function openEditDocumentModal(
+    documentId,
+    vehicleId = null,
+    vehicleName = null
+) {
+    const editModal = document.getElementById("edit-modal");
+    const modalCloseButton = document.getElementById("close-edit-modal");
+    const modalHeaderH2 = document.getElementById("modal-header-h2");
+    const submitButton = document.getElementById("submit-edit-vehicle");
+    const editForm = document.getElementById("edit-vehicle-form");
+
+    showLoader();
+    closeDocumentModal();
+    reopenDocumentModalAfterDelete = true;
+    lastVehicleIdForDocs = vehicleId;
+    lastVehicleNameForDocs = vehicleName;
+
+    //Salvo e poi Resetto il form
+    if (!originalFormContent || originalFormContent.trim() === "") {
+        originalFormContent = editForm.innerHTML;
+    }
+    resetEditForm(editForm);
+
+    // setto action e method "virtuale"
+    editForm.action = "vehicles/documents/update/" + documentId;
+    editForm.method = "POST"; // Laravel gestisce il PUT tramite _method
+
+    // pulisco SOLO i campi dinamici, NON gli hidden
+    Array.from(editForm.querySelectorAll(".dynamic-field")).forEach((el) =>
+        el.remove()
+    );
+
+    // --- Costruzione campi dinamici ---
+    const fields = [];
+
+    // Tipo documento
+    const typeContainer = document.createElement("div");
+    typeContainer.className = "input-container dynamic-field";
+    typeContainer.innerHTML = `
+        <label for="edit_document_type">Tipo di Documento</label>
+        <select name="document_type" id="edit_document_type" required>
+            <option value="registration">Libretto</option>
+            <option value="manual">Manuale</option>
+            <option value="insurance">Assicurazione</option>
+            <option value="other">Altro</option>
+        </select>`;
+    fields.push(typeContainer);
+
+    // Numero documento
+    const numberContainer = document.createElement("div");
+    numberContainer.className = "input-container dynamic-field";
+    numberContainer.innerHTML = `
+        <label for="edit_id_document_name">Id Documento</label>
+        <input type="text" name="document_name" id="edit_id_document_name" required>`;
+    fields.push(numberContainer);
+
+    // Note
+    const notesContainer = document.createElement("div");
+    notesContainer.className = "input-container dynamic-field";
+    notesContainer.innerHTML = `
+        <label for="edit_notes">Note</label>
+        <input type="text" name="notes" id="edit_notes">`;
+    fields.push(notesContainer);
+
+    // File documento
+    const fileContainer = document.createElement("div");
+    fileContainer.className = "input-container dynamic-field";
+    fileContainer.innerHTML = `
+        <label for="edit_document">File Documento (PDF, JPG, PNG)</label>
+        <div id="current-document-container"></div>
+        <input type="file" name="document" id="edit_document">
+        <small>Lascialo vuoto se non vuoi sostituire il file attuale</small>`;
+    fields.push(fileContainer);
+
+    // vehicle_id hidden
+    const hiddenVehicle = document.createElement("input");
+    hiddenVehicle.type = "hidden";
+    hiddenVehicle.name = "vehicle_id";
+    hiddenVehicle.value = vehicleId;
+    hiddenVehicle.classList.add("dynamic-field");
+    fields.push(hiddenVehicle);
+
+    // Aggiungo i campi al form
+    fields.forEach((f) => editForm.appendChild(f));
+
+    // Reinserisco o creo input _method=PUT (se non esiste)
+    if (!editForm.querySelector('input[name="_method"]')) {
+        const methodInput = document.createElement("input");
+        methodInput.type = "hidden";
+        methodInput.name = "_method";
+        methodInput.value = "PUT";
+        editForm.appendChild(methodInput);
+    }
+
+    // Reinserisco o creo token CSRF (se non esiste)
+    if (!editForm.querySelector('input[name="_token"]')) {
+        const csrfToken = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
+        const csrfInput = document.createElement("input");
+        csrfInput.type = "hidden";
+        csrfInput.name = "_token";
+        csrfInput.value = csrfToken;
+        editForm.appendChild(csrfInput);
+    }
+
+    // Titoli pulsanti
+    submitButton.textContent = "Modifica";
+    modalHeaderH2.textContent = "Modifica Documento";
+
+    // Carico dati documento
+    try {
+        const response = await fetch("vehicles/documents/" + documentId);
+        if (!response.ok)
+            throw new Error("Errore nel caricamento del documento");
+        const documentData = await response.json();
+
+        editForm.querySelector("select[name='document_type']").value =
+            documentData.document_type;
+        editForm.querySelector("input[name='document_name']").value =
+            documentData.document_name;
+        editForm.querySelector("input[name='notes']").value =
+            documentData.notes || "";
+        editForm.querySelector("input[name='vehicle_id']").value =
+            documentData.vehicle_id;
+
+        if (documentData.drive_file_url) {
+            const currentDocContainer = editForm.querySelector(
+                "#current-document-container"
+            );
+            currentDocContainer.innerHTML = `
+                <p>Documento attuale: 
+                    <a href="${documentData.drive_file_url}" target="_blank">Visualizza</a>
+                </p>`;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    // Mostro modal
+    editModal.style.display = "flex";
+    modalCloseButton.addEventListener("click", closeEditModal);
+    window.addEventListener("click", (e) => {
+        if (e.target === editModal) closeEditModal();
+    });
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeEditModal();
+    });
+
+    hideLoader();
+}
+
+async function deleteDocument(documentId, vehicleId) {
+    showLoader();
+    try {
+        const response = await fetch(
+            "/vehicles/" + vehicleId + "/documents/" + documentId,
+            {
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector(
+                        'input[name="_token"]'
+                    ).value,
+                    Accept: "application/json",
+                },
+            }
+        );
+        if (!response.ok)
+            throw new Error("Errore nella cancellazione del documento");
+        showSuccess("Documento eliminato con successo.");
+    } catch (error) {
+        showError("Impossibile eliminare il documento. Riprova più tardi.");
+    } finally {
+        closeDeleteModal();
+        hideLoader();
+    }
 }
 
 async function openEditModal(vehicleId) {
@@ -259,6 +616,15 @@ function openDeleteModal(vehicleId, brand, model, licensePlate, action) {
 function closeEditModal() {
     const editModal = document.getElementById("edit-modal");
     editModal.style.display = "none";
+
+    //Se era aperto il modal documenti prima di aprire questo, riaprilo
+    if (
+        reopenDocumentModalAfterDelete &&
+        lastVehicleIdForDocs &&
+        lastVehicleNameForDocs
+    ) {
+        openDocumentModal(lastVehicleIdForDocs, lastVehicleNameForDocs);
+    }
 }
 
 // Modal di eliminazione: chiudi
@@ -266,6 +632,100 @@ function closeDeleteModal() {
     const deleteModal = document.getElementById("delete-modal");
     deleteModal.style.display = "none";
     vehicleIdToDelete = null;
+
+    //Se era aperto il modal documenti prima di aprire questo, riaprilo
+    if (
+        reopenDocumentModalAfterDelete &&
+        lastVehicleIdForDocs &&
+        lastVehicleNameForDocs
+    ) {
+        openDocumentModal(lastVehicleIdForDocs, lastVehicleNameForDocs);
+    }
+}
+
+function openAddDocumentModal(vehicleId = null, vehicleName = null) {
+    const addModal = document.getElementById("edit-modal");
+    const modalCloseButton = document.getElementById("close-edit-modal");
+    const modalHeaderH2 = document.getElementById("modal-header-h2");
+    const submitButton = document.getElementById("submit-edit-vehicle");
+    const editForm = document.getElementById("edit-vehicle-form");
+
+    showLoader();
+    closeDocumentModal();
+    reopenDocumentModalAfterDelete = true; // segnalo che va riaperto dopo
+    lastVehicleIdForDocs = vehicleId;
+    lastVehicleNameForDocs = vehicleName;
+
+    editForm.action = "vehicles/add-document";
+    editForm.method = "POST"; // Imposto il metodo a POST
+    editForm.reset();
+    editForm.setAttribute("enctype", "multipart/form-data");
+
+    //Rimuovi eventuale input_method
+    const oldMethodInput = editForm.querySelector("input[name='_method']");
+    if (oldMethodInput) oldMethodInput.remove();
+
+    submitButton.textContent = "Aggiungi";
+    modalHeaderH2.textContent = "Aggiungi Documento";
+
+    //salvo il contenuto originale del form per il ripristino
+    if (!originalFormContent || originalFormContent.trim() === "") {
+        originalFormContent = editForm.innerHTML;
+    }
+
+    //Svuoto il form e lo riempio con i campi per l'aggiunta documento
+    editForm.innerHTML = `
+            <div class="input-container">
+                <label for="edit_document_type">Tipo di Documento</label>
+                <select name="document_type" id="edit_document_type" required>
+                    <option value="registration">Libretto</option>
+                    <option value="manual">Manuale</option>
+                    <option value="insurance">Assicurazione</option>
+                    <option value="other">Altro</option>
+                </select>
+                </div>
+            <div class="input-container">
+                <label for="edit_document_name">Id Documento</label>
+                <input type="text" name="document_name" id="edit_document_name" required>
+            </div>
+            <div class="input-container">
+                <label for="edit_notes">Note</label>
+                <input type="text" name="notes" id="edit_notes">
+            </div>
+            <div class="input-container">
+                <label for="edit_document">File Documento (PDF, JPG, PNG)</label>
+                <input type="file" name="document" id="edit_document" required>
+            </div>
+            <input type="hidden" name="vehicle_id" value="${vehicleId}">`;
+
+    // reinserisco il CSRF token
+    // reinserisco il CSRF token se non è già presente
+    if (!editForm.querySelector('input[name="_token"]')) {
+        const csrfToken = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
+        const csrfInput = document.createElement("input");
+        csrfInput.type = "hidden";
+        csrfInput.name = "_token";
+        csrfInput.value = csrfToken;
+        editForm.prepend(csrfInput);
+    }
+
+    addModal.style.display = "flex";
+
+    modalCloseButton.addEventListener("click", closeEditModal);
+
+    window.addEventListener("click", function (event) {
+        if (event.target === addModal) {
+            closeEditModal();
+        }
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeEditModal();
+        }
+    });
+    hideLoader();
 }
 
 // Elimina un veicolo
@@ -293,6 +753,8 @@ async function deleteVehicle(vehicleId) {
         hideLoader();
     }
 }
+
+
 
 // Pagina e paginazione
 function renderPaginationControls() {

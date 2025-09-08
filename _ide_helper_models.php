@@ -61,7 +61,6 @@ namespace App\Models{
  * @property string|null $country
  * @property string|null $tax_code
  * @property string|null $vat_number
- * @property string|null $id_document_number
  * @property string|null $notes
  * @property int|null $created_by
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -83,7 +82,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Customer whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Customer whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Customer whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Customer whereIdDocumentNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Customer whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Customer whereNotes($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Customer wherePhone($value)
@@ -430,10 +428,10 @@ namespace App\Models{
  * @property string|null $notes
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\VehicleDocument> $documents
+ * @property-read int|null $documents_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RentalContract> $rentalContracts
  * @property-read int|null $rental_contracts_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\VehicleDocument> $vehicleDocuments
- * @property-read int|null $vehicle_documents_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\VehicleInspection> $vehicleInspections
  * @property-read int|null $vehicle_inspections_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Vehicle newModelQuery()

@@ -109,6 +109,7 @@
     </div>
     @include('vehicles.partials.delete-vehicle-modal')
     @include('vehicles.partials.edit-vehicle-modal')
+    @include('vehicles.partials.show-document-vehicle-modal')
 @endsection
 
 @push('scripts')
