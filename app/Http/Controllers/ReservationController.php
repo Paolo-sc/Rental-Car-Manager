@@ -46,7 +46,7 @@ class ReservationController extends BaseController
         $reservations = $query->with(['vehicle','customer'])
                           ->offset(($page - 1) * $pageSize)
                           ->limit($pageSize)
-                          ->orderBy('id')
+                          ->orderBy('start_date')
                           ->get();
 
         // Restituisci i dati in formato JSON (clienti della pagina e il totale)
@@ -54,5 +54,15 @@ class ReservationController extends BaseController
             'reservations' => $reservations,
             'total' => $total
         ]);
+    }
+
+    public function delete(Request $request, $id){
+        //Trova la prenotazione da eliminare
+        $reservation = \App\Models\RentalContract::findOrFail($id);
+
+        //Elimina il cliente
+        $reservation->delete();
+
+        return response()->noContent();
     }
 }

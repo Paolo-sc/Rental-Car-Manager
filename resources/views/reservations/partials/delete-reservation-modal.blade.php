@@ -7,10 +7,9 @@
             <form id="delete-form" method="POST">
                 @csrf
                 @method('DELETE')
-                <p>Sei sicuro di voler eliminare il veicolo <span id="delete-car-name" style="font-weight:600"></span>?
-                    <br>Una volta eliminato non potrai recuperarlo.</p>
+                <p>Sei sicuro di voler eliminare la prenotazione <span id="delete-reservation" style="font-weight:600"></span>?
                 <p style="color: red; font-weight: bold;">
-                    Attenzione: Eliminando questo veicolo perderai anche tutti i contratti e le prenotazioni collegati!
+                    Attenzione: Eliminando questa prenotazione non potrai piu recuperarla!
                 </p>
 
             </form>

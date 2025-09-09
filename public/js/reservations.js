@@ -61,7 +61,7 @@ function renderTable(reservations) {
         return;
     }
     tableBody.innerHTML = reservations.map(generateRowHtml).join("");
-    //attachEventListeners();
+    attachEventListeners();
 }
 
 // Genera l'HTML per una riga della tabella
@@ -140,7 +140,7 @@ function generateRowHtml(reservation) {
         reservation.booking_code +
         '" data-contract-number="' +
         reservation.contract_number +
-        '" data-action="delete">Elimina</button>' +
+        '" data-action="reservations/delete">Elimina</button>' +
         "</div>" +
         "</td>" +
         "</tr>"
@@ -148,17 +148,17 @@ function generateRowHtml(reservation) {
 }
 
 // Attacca gli event listeners ai bottoni di eliminazione
-/*function attachEventListeners() {
+function attachEventListeners() {
     document.querySelectorAll(".delete-reservation").forEach((button) => {
         button.addEventListener("click", function () {
-            const vehicleId = button.getAttribute("data-reservation-id");
+            const reservationId = button.getAttribute("data-reservation-id");
             const bookingCode = button.getAttribute("data-booking-code");
             const contractNumber = button.getAttribute("data-contract-number");
             const action = button.getAttribute("data-action");
-            openDeleteModal(vehicleId, bookingCode, contractNumber, action);
+            openDeleteModal(reservationId, bookingCode, contractNumber, action);
         });
     });
-    document.querySelectorAll(".edit-vehicle").forEach((button) => {
+    /*document.querySelectorAll(".edit-vehicle").forEach((button) => {
         button.addEventListener("click", function () {
             const vehicleId = button.getAttribute("data-vehicle-id");
             openEditModal(vehicleId);
@@ -170,8 +170,8 @@ function generateRowHtml(reservation) {
             const vehicleName = button.getAttribute("data-vehicle-name");
             openDocumentModal(vehicleId, vehicleName);
         });
-    });
-}*/
+    });*/
+}
 
 // Pagina e paginazione
 function renderPaginationControls() {
@@ -252,6 +252,69 @@ function onPageChange() {
     loadReservations(currentPage, pageSize, searchQuery);
 }
 
+function openDeleteModal(reservationId, bookingCode, contractNumber, action){
+    const deleteModal = document.getElementById("delete-modal");
+    const modalCloseButton = document.getElementById("close-delete-modal");
+    const deleteForm = document.getElementById("delete-form");
+    const deleteReservation = document.getElementById("delete-reservation");
+    reservationIdToDelete = reservationId;
+
+    deleteReservation.textContent = bookingCode + " " + contractNumber;
+
+    deleteModal.style.display = "flex";
+
+    modalCloseButton.addEventListener("click", closeDeleteModal);
+    window.addEventListener("click", function (event) {
+        if (event.target === deleteModal) {
+            closeDeleteModal();
+        }
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeDeleteModal();
+        }
+    });
+}
+
+function closeDeleteModal(){
+    const deleteModal = document.getElementById("delete-modal");
+    deleteModal.style.display = "none";
+    reservationIdToDelete = null;
+
+    //Se era aperto il modal documenti prima di aprire questo, riaprilo
+    /*if (
+        reopenDocumentModalAfterDelete &&
+        lastVehicleIdForDocs &&
+        lastVehicleNameForDocs
+    ) {
+        openDocumentModal(lastVehicleIdForDocs, lastVehicleNameForDocs);
+    }*/
+}
+
+// Elimina una prenotazione
+async function deleteReservation(reservationId) {
+    showLoader();
+    try {
+        const response = await fetch("/reservations/delete/" + reservationId, {
+            method: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector('input[name="_token"]')
+                    .value,
+                Accept: "application/json",
+            },
+        });
+        if (!response.ok) throw new Error("DELETE request failed");
+        showSuccess("Prenotazione eliminata con successo.");
+    } catch {
+        showError("Impossibile eliminare la prenotazione. Riprova più tardi.");
+    } finally {
+        // Dopo l'eliminazione, ricarica la pagina corrente
+        loadReservations(currentPage, pageSize);
+        closeDeleteModal();
+        hideLoader();
+    }
+}
+
 //Gestione Avvio
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("searchInput");
@@ -267,18 +330,18 @@ document.addEventListener("DOMContentLoaded", function () {
             onPageChange();
         }, 500); // Ritardo di 500ms per evitare chiamate eccessive
     });
-    /*
+    
     //Event listner addButton
-    addButton.addEventListener("click", openAddModal);
+    //addButton.addEventListener("click", openAddModal);
 
-    // Modal delete submit
+    //Modal delete submit
     document.getElementById("delete-form").onsubmit = async function (e) {
         e.preventDefault();
-        if (!vehicleIdToDelete) return;
-        await deleteVehicle(vehicleIdToDelete);
+        if (!reservationIdToDelete) return;
+        await deleteReservation(reservationIdToDelete);
     };
     // Refresh button
-    document.getElementById("refresh-btn").onclick = function () {
+   /* document.getElementById("refresh-btn").onclick = function () {
         currentPage = 1;
         onPageChange();
     };*/

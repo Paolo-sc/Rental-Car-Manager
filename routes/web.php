@@ -45,3 +45,4 @@ Route::put('vehicles/documents/update/{id}', 'App\Http\Controllers\VehicleContro
 Route::get('vehicles/documents/{id}', 'App\Http\Controllers\VehicleController@getDocumentById')->middleware('auth')->name('vehicles.documents.getById');
 Route::get('reservations', 'App\Http\Controllers\ReservationController@showReservation')->middleware('auth')->name('reservations');
 Route::get('reservations/get', 'App\Http\Controllers\ReservationController@getReservation')->middleware('auth')->name('reservation.get');
+Route::delete('reservations/delete/{id}', 'App\Http\Controllers\ReservationController@delete')->middleware('auth')->name('reservetion.delete');
