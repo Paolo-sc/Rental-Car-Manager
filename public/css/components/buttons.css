@@ -133,3 +133,10 @@ input[type="button"]:hover {
   justify-content: center;
   gap: 8px;
 }
+
+.input-couple .btn-primary{
+  margin-top: 19px;
+  padding: 0 12px;
+  text-align: center;
+  width: 130px;
+}

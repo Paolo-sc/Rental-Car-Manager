@@ -24,6 +24,33 @@ class VehicleController extends BaseController
         return response()->noContent();
     }
 
+    
+    public function search(Request $request)
+{
+    $q = trim($request->query('q', ''));
+    if (!$q) return response()->json([]);
+
+    $results = \App\Models\Vehicle::where(function($qq) use ($q) {
+        $qq->where('license_plate', 'like', "%$q%")
+           ->orWhere('brand', 'like', "%$q%")
+           ->orWhere('model', 'like', "%$q%")
+           ->orWhere('year', 'like', "%$q%")
+           ->orWhere('color', 'like', "%$q%");
+    })
+    ->orderBy('license_plate')
+    ->limit(10)
+    ->get([
+        'id', 'license_plate', 'brand', 'model', 'year', 'color'
+    ]);
+
+    // Prepara un campo di visualizzazione "smart"
+    $results->each(function($c) {
+        $c->display = trim(($c->license_plate ?? '') . ' ' . ($c->brand ?? ''). ' ' . ($c->model ?? '') . ' ' . ($c->year ?? ''));
+    });
+
+    return response()->json($results);
+}
+
     public function addVehicle(Request $request)
     {
         // Valida i dati del veicolo

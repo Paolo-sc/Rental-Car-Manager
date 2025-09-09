@@ -234,6 +234,33 @@ class CustomerController extends BaseController
         ]);
     }
 
+    public function search(Request $request)
+{
+    $q = trim($request->query('q', ''));
+    if (!$q) return response()->json([]);
+
+    $results = \App\Models\Customer::where(function($qq) use ($q) {
+        $qq->where('first_name', 'like', "%$q%")
+           ->orWhere('last_name', 'like', "%$q%")
+           ->orWhere('company_name', 'like', "%$q%")
+           ->orWhere('email', 'like', "%$q%")
+           ->orWhere('phone', 'like', "%$q%");
+    })
+    ->orderBy('first_name')
+    ->limit(10)
+    ->get([
+        'id', 'first_name', 'last_name', 'company_name', 'email', 'phone'
+    ]);
+
+    // Prepara un campo di visualizzazione "smart"
+    $results->each(function($c) {
+        $c->display = trim(($c->first_name ?? '') . ' ' . ($c->last_name ?? '')) ?: $c->company_name;
+        if ($c->email) $c->display .= " ({$c->email})";
+    });
+
+    return response()->json($results);
+}
+
     public function updateDocument(Request $request, $id, \App\Services\GoogleDriveService $driveService)
 {
     $document = \App\Models\PersonDocument::findOrFail($id);

@@ -31,7 +31,7 @@
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </button>
-                    <button id="add-vehicle-button" class="add-btn">
+                    <button id="add-reservation-button" class="add-btn">
                         <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -73,7 +73,6 @@
                         <thead>
                             <tr>
                                 <th>Codice prenotazione</th>
-                                <th>Codice contratto</th>
                                 <th>Cliente</th>
                                 <th>Veicolo</th>
                                 <th>Data inizio</th>
@@ -86,6 +85,7 @@
                                 <th>Stato contratto</th>
                                 <th>Stato prenotazione</th>
                                 <th>Contratto</th>
+                                <th>Conducente</th>
                                 <th class="col-actions">Azioni</th>
                             </tr>
                         </thead>

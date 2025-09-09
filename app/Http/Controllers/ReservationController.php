@@ -65,4 +65,55 @@ class ReservationController extends BaseController
 
         return response()->noContent();
     }
+
+    public function addReservation(Request $request)
+    {
+        // Validazione dei dati in ingresso booking_code
+        $validatedData = $request->validate([
+            'booking_code' => 'required|string|max:255|unique:rental_contracts,booking_code',
+            'vehicle_id' => 'required|exists:vehicles,id',
+            'customer_id' => 'required|exists:customers,id',
+            'main_driver_id' => 'nullable|exists:customers,id',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'pickup_time' => 'nullable|string|max:255',
+            'return_time' => 'nullable|string|max:255',
+            'pickup_location' => 'nullable|string|max:255',
+            'return_location' => 'nullable|string|max:255',
+            'daily_rate' => 'nullable|numeric|min:0',
+            'deductible_damage' => 'nullable|numeric|min:0',
+            'deductible_rca' => 'nullable|numeric|min:0',
+            'deposit_amount' => 'nullable|numeric|min:0',
+            'deposit_payment_method' => 'nullable|string|max:255',
+            'discount_amount' => 'nullable|numeric|min:0',
+            'franchise_theft_fire' => 'nullable|numeric|min:0',
+            'km_included_type' => 'nullable|in:limited,unlimited',
+            'km_included_value' => 'nullable|numeric|min:0',
+            'subtotal' => 'nullable|numeric|min:0',
+            'tax_rate' => 'nullable|numeric|min:0',
+            'total_amount' => 'nullable|numeric|min:0',
+            'total_days' => 'nullable|numeric|min:0',
+            'total_paid' => 'nullable|numeric|min:0',
+            'payment_date' => 'nullable|date',
+            'payment_method' => 'nullable|string|max:255',
+            'payment_received' => 'nullable|boolean',
+            'customer_signature_obtained' => 'nullable|boolean',
+            'customer_signature_required' => 'nullable|boolean',
+            'signature_date' => 'nullable|date',
+            'special_conditions' => 'nullable|string|max:1000',
+            'notes' => 'nullable|string|max:1000',
+            'reservation_status' => 'nullable|string|max:255',
+            'status' => 'nullable|string|max:255',
+            'tax_amount' => 'nullable|numeric|min:0',
+        ]);
+
+        // Crea una nuova prenotazione con i dati validati con created_by l'utente autenticato
+        $reservation = \App\Models\RentalContract::create(array_merge($validatedData, ['created_by' => auth()->id()]));
+
+        // Carica le relazioni vehicle e customer
+        $reservation->load(['vehicle', 'customer', 'mainDriver']);
+
+        // Restituisci la nuova prenotazione in formato JSON
+        return response()->json($reservation, 201);
+    }
 }

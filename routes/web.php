@@ -44,5 +44,10 @@ Route::delete('vehicles/{vehicleId}/documents/{documentId}', 'App\Http\Controlle
 Route::put('vehicles/documents/update/{id}', 'App\Http\Controllers\VehicleController@updateDocument')->middleware('auth')->name('vehicles.documents.update');
 Route::get('vehicles/documents/{id}', 'App\Http\Controllers\VehicleController@getDocumentById')->middleware('auth')->name('vehicles.documents.getById');
 Route::get('reservations', 'App\Http\Controllers\ReservationController@showReservation')->middleware('auth')->name('reservations');
-Route::get('reservations/get', 'App\Http\Controllers\ReservationController@getReservation')->middleware('auth')->name('reservation.get');
-Route::delete('reservations/delete/{id}', 'App\Http\Controllers\ReservationController@delete')->middleware('auth')->name('reservetion.delete');
+Route::get('reservations/get', 'App\Http\Controllers\ReservationController@getReservation')->middleware('auth')->name('reservations.get');
+Route::delete('reservations/delete/{id}', 'App\Http\Controllers\ReservationController@delete')->middleware('auth')->name('reservations.delete');
+Route::get('customers/search', 'App\Http\Controllers\CustomerController@search')->middleware('auth')->name('customers.search');
+Route::get('vehicles/search', 'App\Http\Controllers\VehicleController@search')->middleware('auth')->name('vehicles.search');
+Route::get('drivers', 'App\Http\Controllers\DriverController@index')->middleware('auth')->name('drivers.index');
+Route::get('drivers/search', 'App\Http\Controllers\DriverController@search')->middleware('auth')->name('drivers.search');
+Route::post('reservations/add', 'App\Http\Controllers\ReservationController@addReservation')->middleware('auth')->name('reservations.add');
