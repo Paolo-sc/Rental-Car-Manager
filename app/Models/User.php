@@ -108,4 +108,23 @@ class User extends Authenticatable
     {
         return $this->hasMany(AdditionalCharge::class, 'added_by');
     }
+
+    public function isGoogleDriveConnected(): bool
+{
+    if (!$this->google_drive_token) return false;
+
+    $token = json_decode($this->google_drive_token, true);
+
+    if (empty($token)) return false;
+
+    // Controlla se c'è expiry_date e se è scaduto
+    if (!empty($token['expires_in']) && !empty($token['created'])) {
+        $expireTime = $token['created'] + $token['expires_in'];
+        if (time() >= $expireTime) {
+            return false; // token scaduto
+        }
+    }
+
+    return true;
+}
 }
