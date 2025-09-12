@@ -74,12 +74,12 @@ class ReservationController extends BaseController
 
     public function addReservation(Request $request, \App\Services\GoogleDriveService $driveService)
 {
-    // 1️⃣ Validazione dei dati
+    // Validazione dei dati
     $validatedData = $request->validate([
         'booking_code' => 'required|string|max:255|unique:rental_contracts,booking_code',
         'vehicle_id' => 'required|exists:vehicles,id',
         'customer_id' => 'required|exists:customers,id',
-        'main_driver_id' => 'nullable|exists:customers,id',
+        'main_driver_id' => 'nullable|exists:drivers,id',
         'start_date' => 'required|date',
         'end_date' => 'required|date|after_or_equal:start_date',
         'pickup_time' => 'nullable|string|max:255',
@@ -113,19 +113,19 @@ class ReservationController extends BaseController
         'tax_amount' => 'nullable|numeric|min:0',
     ]);
 
-    // 2️⃣ Creazione prenotazione
+    //  Creazione prenotazione
     $reservation = \App\Models\RentalContract::create(
         array_merge($validatedData, ['created_by' => auth()->id()])
     );
 
-    // 3️⃣ Carica relazioni per il PDF
+    //  Carica relazioni per il PDF
     $reservation->load(['vehicle', 'customer', 'mainDriver']);
 
-    // 4️⃣ Generazione PDF in memoria
+    //  Generazione PDF in memoria
     $pdf = \PDF::loadView('contract', ['reservation' => $reservation]);
     $pdfContent = $pdf->output();
 
-    // 5️⃣ Upload PDF su Google Drive nella cartella Autonoleggio/Contratti
+    //  Upload PDF su Google Drive nella cartella Autonoleggio/Contratti
     $file = $driveService->uploadPdfFromMemory(
         $pdfContent,
         'contratto_'.$reservation->booking_code.'_'.$reservation->customer->first_name.'_'.$reservation->customer->last_name.'.pdf',
@@ -133,16 +133,16 @@ class ReservationController extends BaseController
         'Contratti'
     );
 
-    // 6️⃣ Aggiornamento prenotazione con ID e URL del contratto
+    //  Aggiornamento prenotazione con ID e URL del contratto
     $reservation->update([
-        'drive_file_id' => $file['id'],
-        'drive_file_url' => $file['url'],
+        'contract_pdf_drive_file_id' => $file['id'],
+        'contract_pdf_drive_file_url' => $file['url'],
     ]);
 
-    // 7️⃣ Restituzione JSON con prenotazione e link al contratto
+    // Restituzione JSON con prenotazione e link al contratto
     return response()->json([
         'reservation' => $reservation,
-        'contract_link' => $reservation->drive_file_url
+        'contract_link' => $reservation->contract_pdf_drive_file_url
     ], 201);
 }
 

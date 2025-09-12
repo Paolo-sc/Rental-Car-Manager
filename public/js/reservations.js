@@ -74,6 +74,7 @@ function generateRowHtml(reservation) {
             .join(" ") ||
         reservation.customer.company_name ||
         "";
+        console.log("Rendering reservation:", reservation);
     return (
         '<tr data-booking-code="' +
         reservation.booking_code +
@@ -773,9 +774,11 @@ async function addReservation(formData) {
         const result = await response.json();
         console.log("Risposta del server:", result);
     } catch (error) {
+        
         console.error("Si è verificato un errore:", error);
     } finally {
         hideLoader();
+        
     }
 }
 

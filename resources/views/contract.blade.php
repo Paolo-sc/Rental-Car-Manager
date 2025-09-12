@@ -158,10 +158,9 @@
         <tr>
             <td>Alimentazione</td>
             <td>{{ $reservation->vehicle->fuel_type }}</td>
-        </tr>
-        <tr>
             <td>Cambio</td>
             <td>{{ $reservation->vehicle->transmission }}</td>
+        </tr>
     </table>
 
     {{-- ====================== COSTI ====================== --}}
@@ -233,7 +232,6 @@
     {{-- ====================== FIRME ====================== --}}
     <p style="margin-top:40px;">
         Firma Cliente: ________________________ <br><br>
-        Firma Noleggiatore: ___________________
     </p>
 </body>
 

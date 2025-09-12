@@ -210,20 +210,6 @@
                             placeholder="Note">
                     </div>
                 </div>
-                <div class="input-container input-couple">
-                    <div class="couple-container">
-                        <label for="customer_signature_status">Firma Cliente</label>
-                        <select id="customer_signature_status" name="customer_signature_status" class="form-control">
-                            <option value="not signed">Non Firmato</option>
-                            <option value="signed">Firmato</option>
-                        </select>
-                    </div>
-                    <div class="couple-container">
-                        <label for="signature_date">Data Firma</label>
-                        <input type="date" id="signature_date" name="signature_date" class="form-control"
-                            placeholder="Data Firma">
-                    </div>
-                </div>
             </form>
         </div>
         <div class="modal-footer">
