@@ -26,6 +26,10 @@
     -ms-overflow-style: none; /* Internet Explorer and Edge */
 }
 
+#signature-modal .modal-content {
+    max-width: 900px;
+}
+
 .modal-content::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
 }

@@ -105,9 +105,11 @@
     </div>
     @include('reservations.partials.delete-reservation-modal')
     @include('reservations.partials.edit-reservation-modal')
-    @include('reservations.partials.show-document-reservation-modal')
+    @include('reservations.partials.signature-modal')
+    @include('reservations.partials.show-driver-modal')
 @endsection
 
 @push('scripts')
     <script src="{{ asset('js/reservations.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.6/dist/signature_pad.umd.min.js"></script>
 @endpush

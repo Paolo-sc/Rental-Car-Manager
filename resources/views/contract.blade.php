@@ -31,6 +31,11 @@
             background: #f0f0f0;
             padding: 4px;
         }
+
+        .signature {
+            margin-top: 50px;
+            z-index: 1000;
+        }
     </style>
 </head>
 
@@ -230,9 +235,15 @@
     </table>
 
     {{-- ====================== FIRME ====================== --}}
-    <p style="margin-top:40px;">
-        Firma Cliente: ________________________ <br><br>
-    </p>
+    <p class="signature">
+    Firma Cliente: <br>
+    @if(!empty($signature_base64))
+        <img src="{{ $signature_base64 }}" style="width:200px; height:auto;">
+    @else
+        ________________________
+    @endif
+    <br><br>
+</p>
 </body>
 
 </html>

@@ -6,6 +6,7 @@ let searchQuery = "";
 let customerAutocompleteInitialized = false;
 let vehicleAutocompleteInitialized = false;
 let mainDriverAutocompleteInitialized = false;
+let signaturePadInstance = null;
 
 // Mostra messaggio di successo
 function showSuccess(msg) {
@@ -74,7 +75,6 @@ function generateRowHtml(reservation) {
             .join(" ") ||
         reservation.customer.company_name ||
         "";
-        console.log("Rendering reservation:", reservation);
     return (
         '<tr data-booking-code="' +
         reservation.booking_code +
@@ -134,8 +134,11 @@ function generateRowHtml(reservation) {
             : "Cancellato") +
         "</span></td>" +
         "<td>" +
-        "<a href='" +
-        reservation.contract_pdf_drive_file_url +
+        "<a class='view-contract'" +
+        "' data-reservation-contract-pdf-drive-file-id='" +
+        reservation.contract_pdf_drive_file_id +
+        "' data-reservation-id='" +
+        reservation.id +
         "'>Apri contratto</a>" +
         "</td>" +
         "<td>" +
@@ -172,6 +175,15 @@ function attachEventListeners() {
             openDeleteModal(reservationId, bookingCode, contractNumber, action);
         });
     });
+    
+    document.querySelectorAll(".view-contract").forEach((a) => {
+        a.addEventListener("click", function () {
+            const reservationId = a.getAttribute("data-reservation-id");
+            const contractPdfUrl = `https://drive.google.com/file/d/${a.getAttribute("data-reservation-contract-pdf-drive-file-id")}/preview`;
+            openSignatureModal(contractPdfUrl, reservationId);
+        });
+    });
+
     /*document.querySelectorAll(".edit-vehicle").forEach((button) => {
         button.addEventListener("click", function () {
             const vehicleId = button.getAttribute("data-vehicle-id");
@@ -717,7 +729,6 @@ async function addReservation(formData) {
     // Implementa la logica per aggiungere una prenotazione
     // Usa fetch per inviare i dati al server
     // mostra i dati del form per ora
-    console.log("Dati del form:", formData);
     //setuppo i dati da inviare al server
     //aggiungo il campo total_days che è la differenza tra start_date e end_date
     const startDate = new Date(formData.start_date);
@@ -754,7 +765,6 @@ async function addReservation(formData) {
     delete formData.vehicle;
     delete formData.main_driver;
     delete formData.customer_signature_status;
-    console.log("Dati del form modificati:", formData);
 
     showLoader();
     try {
@@ -768,17 +778,98 @@ async function addReservation(formData) {
         });
 
         if (!response.ok) {
+            const errorData = await response.json();
+            showError(errorData.error || "Errore nella richiesta");
             throw new Error("Errore nella richiesta");
         }
 
         const result = await response.json();
-        console.log("Risposta del server:", result);
     } catch (error) {
-        
         console.error("Si è verificato un errore:", error);
     } finally {
         hideLoader();
         
+    }
+}
+
+
+function openSignatureModal(pdfUrl, reservationId) {
+    document.getElementById("signature-modal").style.display = "flex";
+    document.getElementById("contract-pdf-frame").src = pdfUrl;
+    // Inizializza SignaturePad quando apri il modal
+    const canvas = document.getElementById("signature-pad");
+    signaturePadInstance = new SignaturePad(canvas);
+    // Pulisci canvas all'apertura
+    signaturePadInstance.clear();
+
+    // Handler salva firma
+    document.getElementById("save-signature-btn").onclick = function() {
+        if (signaturePadInstance.isEmpty()) {
+            alert("Firma non presente!");
+            return;
+        }
+        const signatureData = signaturePadInstance.toDataURL();
+        // Invia al server (aggiungi il reservationId se serve)
+        saveSignature(signatureData, reservationId);
+    };
+
+    // Handler cancella firma
+    document.getElementById("clear-signature-btn").onclick = function() {
+        signaturePadInstance.clear();
+    };
+
+    // Handler chiudi modal
+    document.getElementById("close-signature-modal").onclick = function() {
+        closeSignatureModal();
+    };
+    window.addEventListener("click", function (event) {
+        if (event.target === document.getElementById("signature-modal")) {
+            closeSignatureModal();
+        }
+    });
+}
+
+function closeSignatureModal() {
+    document.getElementById("signature-modal").style.display = "none";
+    document.getElementById("contract-pdf-frame").src = "";
+    signaturePadInstance = null;
+}
+
+async function saveSignature(signatureData, reservationId) {
+    try {
+        // Mostra un loader, opzionale
+        showLoader();
+
+        const response = await fetch(`/reservations/sign/${reservationId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({ signature: signatureData })
+        });
+
+        if (!response.ok) {
+            throw new Error("Errore nel salvataggio firma.");
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("Firma salvata! Il PDF firmato è pronto.");
+            closeSignatureModal();
+            // Aggiorna la tabella (o la riga) delle prenotazioni per mostrare che la firma è stata acquisita
+            onPageChange(); // se usi la funzione per ricaricare la tabella
+            // Volendo apri il PDF firmato:
+            // window.open(data.contract_link, "_blank");
+        } else {
+            alert("Errore: il server ha risposto ma non ha salvato il PDF.");
+        }
+    } catch (error) {
+        alert(error.message || "Errore imprevisto nel salvataggio firma.");
+    } finally {
+        hideLoader();
     }
 }
 
@@ -840,6 +931,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
+
     //Modal delete submit
     document.getElementById("delete-form").onsubmit = async function (e) {
         e.preventDefault();
@@ -862,7 +954,6 @@ document.addEventListener("DOMContentLoaded", function () {
             data[key] = value;
         });
         addReservation(data);
-        console.log("Submitting form to:", action, "with method:", method);
     }
     // Refresh button
     /* document.getElementById("refresh-btn").onclick = function () {
