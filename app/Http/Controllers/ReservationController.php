@@ -226,4 +226,76 @@ public function signReservation(Request $request, $id, \App\Services\GoogleDrive
     ]);
 }
 
+public function getReservationById($id)
+    {
+        // Trova la prenotazione per ID con relazioni
+        $reservation = \App\Models\RentalContract::with(['vehicle', 'customer', 'mainDriver'])->find($id);
+
+        if (!$reservation) {
+            return response()->json(['error' => 'Prenotazione non trovata'], 404);
+        }
+
+
+        return response()->json($reservation);
+    }
+
+public function updateReservation(Request $request, $id, \App\Services\GoogleDriveService $driveService)
+{
+    // Trova la prenotazione esistente con relazioni
+    $reservation = \App\Models\RentalContract::with(['vehicle', 'customer', 'mainDriver'])->findOrFail($id);
+
+
+    // Aggiorna la prenotazione + reset firma
+    $reservation->update(array_merge($request->all(), [
+        'customer_signature_obtained' => false,
+        'signature_date' => null,
+    ]));
+
+    // Ricarico relazioni aggiornate
+    $reservation->load(['vehicle', 'customer', 'mainDriver']);
+
+    // Genera il nuovo PDF
+    $pdf = \PDF::loadView('contract', ['reservation' => $reservation]);
+    $pdfContent = $pdf->output();
+
+    $fileName = 'contratto_'.$reservation->booking_code.'_'.$reservation->customer->first_name.'_'.$reservation->customer->last_name.'.pdf';
+
+    // Salva PDF temporaneo
+    $tempPath = tempnam(sys_get_temp_dir(), 'pdf');
+    file_put_contents($tempPath, $pdfContent);
+
+    try {
+        if ($reservation->contract_pdf_drive_file_id) {
+            // Sostituisco il file esistente
+            $file = $driveService->replaceFile(
+                $reservation->contract_pdf_drive_file_id,
+                $tempPath,
+                $fileName,
+                auth()->user()
+            );
+        } else {
+            // Primo upload
+            $file = $driveService->uploadToAutonoleggio(
+                $tempPath,
+                $fileName,
+                auth()->user(),
+                'Contratti'
+            );
+        }
+
+        // Aggiorna la prenotazione con il nuovo link/ID
+        $reservation->update([
+            'contract_pdf_drive_file_id' => $file['id'],
+            'contract_pdf_drive_file_url' => $file['url'],
+        ]);
+    } finally {
+        if (file_exists($tempPath)) unlink($tempPath);
+    }
+
+    return response()->json([
+        'success' => true,
+        'contract_link' => $reservation->contract_pdf_drive_file_url,
+    ]);
+}
+
 }

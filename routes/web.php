@@ -54,3 +54,5 @@ Route::post('reservations/add', 'App\Http\Controllers\ReservationController@addR
 Route::post('reservations/sign/{id}', 'App\Http\Controllers\ReservationController@signReservation')->middleware('auth')->name('reservations.sign');
 Route::get('reservations/{id}/drivers', 'App\Http\Controllers\DriverController@getDrivers')->middleware('auth')->name('drivers.get');
 Route::post('reservations/{id}/drivers/add', 'App\Http\Controllers\DriverController@addDriverToReservation')->middleware('auth')->name('drivers.addToReservation');
+Route::get('reservations/{id}', 'App\Http\Controllers\ReservationController@getReservationById')->middleware('auth')->name('reservations.getById');
+Route::put('reservations/update/{id}', 'App\Http\Controllers\ReservationController@updateReservation')->middleware('auth')->name('reservations.update');
