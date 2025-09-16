@@ -46,7 +46,6 @@ public function getDrivers(Request $request, $reservation_id)
 
 public function addDriverToReservation(Request $request, $reservation_id)
 {
-    \Log::info('Request payload:', $request->all());
     //Fai questo solo se nel request c'è driver_id (conducente esistente) altrimenti crea un nuovo conducente e lo associa alla prenotazione
     if ($request->has('driver_id')) {
     $validatedData = $request->validate([
@@ -69,7 +68,6 @@ public function addDriverToReservation(Request $request, $reservation_id)
 
     return response()->json($rentalContractDriver, 201);
  } else if ($request->has('new_driver')) {
-    \Log::info('Creazione nuovo conducente con dati:', $request->input('new_driver'));
 
         // Crea il nuovo conducente
         $driverData = $request->input('new_driver');
@@ -90,8 +88,6 @@ public function addDriverToReservation(Request $request, $reservation_id)
             'postal_code' => 'nullable|string|max:20',  
         ]);
         $driverData['created_by'] = auth()->id();
-        \Log::info('Dati conducente da creare:', $driverData);
-
         //Se il conducente gia esiste ritorna un json che dice che il conducente esiste gia
         $existingDriver = \App\Models\Driver::where('first_name', $driverData['first_name'])
             ->where('last_name', $driverData['last_name'])
@@ -102,7 +98,6 @@ public function addDriverToReservation(Request $request, $reservation_id)
         }
 
         $driver = \App\Models\Driver::create($driverData);
-        \Log::info('Nuovo conducente creato:', $driver->toArray());
 
         // Associa il nuovo conducente alla prenotazione
         $rentalContractDriver = \App\Models\RentalContractDriver::create([
