@@ -5,7 +5,7 @@ let reservationIdToDelete = null;
 let searchQuery = "";
 let customerAutocompleteInitialized = false;
 let vehicleAutocompleteInitialized = false;
-let mainDriverAutocompleteInitialized = false;
+let driverAutocompleteInitialized = false;
 let signaturePadInstance = null;
 
 // Mostra messaggio di successo
@@ -189,14 +189,13 @@ function attachEventListeners() {
             const vehicleId = button.getAttribute("data-vehicle-id");
             openEditModal(vehicleId);
         });
-    });
-    document.querySelectorAll(".view-documents").forEach((button) => {
-        button.addEventListener("click", function () {
-            const vehicleId = button.getAttribute("data-vehicle-id");
-            const vehicleName = button.getAttribute("data-vehicle-name");
-            openDocumentModal(vehicleId, vehicleName);
-        });
     });*/
+    document.querySelectorAll(".add-driver").forEach((button) => {
+        button.addEventListener("click", function () {
+            const reservationId = button.getAttribute("data-reservation-id");
+            openDriversModal(reservationId);
+        });
+    });
 }
 
 // Pagina e paginazione
@@ -331,7 +330,7 @@ function openAddModal() {
     // reset indicatori di autocomplete
     customerAutocompleteInitialized = false;
     vehicleAutocompleteInitialized = false;
-    mainDriverAutocompleteInitialized = false;
+    driverAutocompleteInitialized = false;
 
 
     //Rimuovi eventuale input_method
@@ -508,13 +507,13 @@ function customerAutocomplete(inputId, hiddenId, suggestionsId) {
     });
 }
 
-function mainDriverAutocomplete(inputId, hiddenId, suggestionsId) {
+function driverAutocomplete(inputId, hiddenId, suggestionsId) {
     const input = document.getElementById(inputId);
     const hidden = document.getElementById(hiddenId);
     const suggestions = document.getElementById(suggestionsId);
     let debounceTimeout, currentIndex = -1, items = [], lastData = [];
 
-    // Stili per dropdown (puoi spostarli in CSS)
+    // Stili per dropdown (spostare in CSS)
     suggestions.style.position = "absolute";
     suggestions.style.zIndex = 1000;
     suggestions.style.background = "#fff";
@@ -873,6 +872,169 @@ async function saveSignature(signatureData, reservationId) {
     }
 }
 
+function openDriversModal(reservationId) {
+    // Implementa l'apertura del modal per la gestione dei conducenti
+    const driversModal = document.getElementById("drivers-modal");
+    const modalCloseButton = document.getElementById("close-drivers-modal");
+
+    // Carica i conducenti associati alla prenotazione
+    loadDrivers(reservationId);
+
+    driversModal.style.display = "flex";
+
+    modalCloseButton.addEventListener("click", closeDriversModal);
+    window.addEventListener("click", function (event) {
+        if (event.target === driversModal) {
+            closeDriversModal();
+        }
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeDriversModal();
+        }
+    });
+
+    // Aggiungi event listener al bottone "Aggiungi Conducente"
+    document.getElementById("add-new-driver-button").onclick = function() {
+        openAddDriverModal(reservationId);
+    };
+
+}
+
+function closeDriversModal() {
+    const driversModal = document.getElementById("drivers-modal");
+    driversModal.style.display = "none";
+}
+
+async function loadDrivers(reservationId) {
+    // Implementa il caricamento dei conducenti associati alla prenotazione
+    // Usa fetch per ottenere i dati dal server e popolare il modal
+    showLoader();
+    try {
+        const response = await fetch(`/reservations/${reservationId}/drivers`);
+        if (!response.ok) throw new Error("GET request failed");
+        const data = await response.json();
+        // Popola il modal con i dati ricevuti
+        console.log(data);
+        const driversList = document.getElementById("drivers-list");
+        driversList.innerHTML = "";
+        data.forEach(driver => {
+            console.log(driver);
+            const listItem = document.createElement("li");
+            listItem.textContent = `${driver.first_name} ${driver.last_name} - Patente: ${driver.driving_license_number} (Scadenza: ${driver.driving_license_expires_at})`;
+            driversList.appendChild(listItem);
+        });
+    } catch {
+        showError("Impossibile caricare i conducenti. Riprova più tardi.");
+    } finally {
+        hideLoader();
+    }
+}
+
+function openAddDriverModal(reservationId) {
+    // Implementa l'apertura del modal per aggiungere un conducente
+    const addDriverModal = document.getElementById("add-driver-modal");
+    const modalCloseButton = document.getElementById("close-add-driver-modal");
+    addDriverModal.style.display = "flex";
+
+    modalCloseButton.addEventListener("click", closeAddDriverModal);
+    window.addEventListener("click", function (event) {
+        if (event.target === addDriverModal) {
+            closeAddDriverModal();
+        }
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeAddDriverModal();
+        }
+    });
+
+    // Aggiungi event listener al form di aggiunta conducente
+    document
+        .getElementById("driver-input")
+        .addEventListener("focus", function () {
+            if (!driverAutocompleteInitialized) {
+                driverAutocomplete(
+                    "driver-input",
+                    "driver-id",
+                    "driver-suggestions"
+                );
+                driverAutocompleteInitialized = true;
+            }
+        });
+
+    document.getElementById("add-existing-driver-button").onclick = function() {
+        console.log("Aggiungi conducente a prenotazione ID:", reservationId);
+        const driverId = document.getElementById("driver-id").value;
+        if (driverId) {
+            addDriverToReservation(reservationId, driverId);
+        }
+    };
+
+    document.getElementById("save-new-driver-btn").onclick = function() {
+        // Prendi i dati del form li metti in newDriverData e li passi alla funzione
+            const newDriverData = {
+                first_name: document.getElementById("first_name").value,
+                last_name: document.getElementById("last_name").value,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value,
+                tax_code: document.getElementById("tax_code").value,
+                birth_date: document.getElementById("birth_date").value,
+                birth_place: document.getElementById("birth_place").value,
+                driving_license_number: document.getElementById("driving_license_number").value,
+                driving_license_issue_date: document.getElementById("driving_license_issue_date").value,
+                driving_license_expires_at: document.getElementById("driving_license_expires_at").value,
+                address: document.getElementById("address").value,
+                city: document.getElementById("city").value,
+                postal_code: document.getElementById("postal_code").value,
+                country: document.getElementById("country").value,
+                notes: document.getElementById("notes").value
+            };
+            addDriverToReservation(reservationId, null, newDriverData);
+        };
+}
+
+function closeAddDriverModal() {
+    const addDriverModal = document.getElementById("add-driver-modal");
+    addDriverModal.style.display = "none";
+}
+
+async function addDriverToReservation(reservationId, driverId, newDriverData = null) {
+    // Implementa la logica per aggiungere un conducente alla prenotazione
+    // Usa fetch per inviare i dati al server
+    console.log(newDriverData);
+    showLoader();
+    try {
+        //se clicco su aggiungi conduncete associo il conducente alla prenotazione(serve solo l'id del driver e della prenotazione)
+        if (!newDriverData) {
+        const response = await fetch(`/reservations/${reservationId}/drivers/add`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+            },
+            body: JSON.stringify({ driver_id: driverId })
+        });
+        } else {
+            console.log("Creazione nuovo conducente e associazione a prenotazione ID:", reservationId, newDriverData);
+            console.log('/reservations/' + reservationId + '/drivers/add');
+            //se clicco su crea conducente creo il conducente e lo associo alla prenotazione (serve l'id della prenotazione e i dati del nuovo conducente)
+            const response = await fetch(`/reservations/${reservationId}/drivers/add`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                },
+                body: JSON.stringify({ new_driver: newDriverData })
+            });
+        }
+    } catch (error) {
+        console.error("Error adding driver:", error);
+    } finally {
+        hideLoader();
+    }
+}
+
 //Gestione Avvio
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("searchInput");
@@ -921,13 +1083,13 @@ document.addEventListener("DOMContentLoaded", function () {
     document
         .getElementById("main-driver-input")
         .addEventListener("focus", function () {
-            if (!mainDriverAutocompleteInitialized) {
-                mainDriverAutocomplete(
+            if (!driverAutocompleteInitialized) {
+                driverAutocomplete(
                     "main-driver-input",
                     "main-driver-id",
                     "main-driver-suggestions"
                 );
-                mainDriverAutocompleteInitialized = true;
+                driverAutocompleteInitialized = true;
             }
         });
 

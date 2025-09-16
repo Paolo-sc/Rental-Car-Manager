@@ -1,7 +1,7 @@
 <div id="edit-modal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <h2 id="modal-header-h2">Aggiungi Veicolo</h2>
+            <h2 id="modal-header-h2">Aggiungi Prenotazione</h2>
         </div>
         <div class="modal-body">
             @if ($errors->any())

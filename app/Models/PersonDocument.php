@@ -27,7 +27,7 @@ class PersonDocument extends Model
     protected $casts = [
         'customer_id'  => 'integer',
         'driver_id'    => 'integer',
-        'expiry_date'  => 'date',
+        'expiry_date'  => 'date:d/m/Y',
         'uploaded_by'  => 'integer',
     ];
 

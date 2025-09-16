@@ -131,10 +131,16 @@ class ReservationController extends BaseController
         ], 422);
     }
 
-    //  Creazione prenotazione
+    //  Creazione prenotazione e aggiunta il main driver id al model RentalContractDriver
     $reservation = \App\Models\RentalContract::create(
         array_merge($validatedData, ['created_by' => auth()->id()])
     );
+    if (isset($validatedData['main_driver_id'])) {
+        \App\Models\RentalContractDriver::create([
+            'rental_contract_id' => $reservation->id,
+            'driver_id' => $validatedData['main_driver_id'],
+        ]);
+    }
 
     //  Carica relazioni per il PDF
     $reservation->load(['vehicle', 'customer', 'mainDriver']);

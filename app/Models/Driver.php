@@ -33,9 +33,9 @@ class Driver extends Model
     ];
 
     protected $casts = [
-        'driving_license_issue_date'  => 'date',
-        'driving_license_expires_at'  => 'date',
-        'birth_date'                  => 'date',
+        'driving_license_issue_date'  => 'date:d/m/Y',
+        'driving_license_expires_at'  => 'date:d/m/Y',
+        'birth_date'                  => 'date:d/m/Y',
         'created_by'                  => 'integer',
     ];
 

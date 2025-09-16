@@ -52,3 +52,5 @@ Route::get('drivers', 'App\Http\Controllers\DriverController@index')->middleware
 Route::get('drivers/search', 'App\Http\Controllers\DriverController@search')->middleware('auth')->name('drivers.search');
 Route::post('reservations/add', 'App\Http\Controllers\ReservationController@addReservation')->middleware('auth')->name('reservations.add');
 Route::post('reservations/sign/{id}', 'App\Http\Controllers\ReservationController@signReservation')->middleware('auth')->name('reservations.sign');
+Route::get('reservations/{id}/drivers', 'App\Http\Controllers\DriverController@getDrivers')->middleware('auth')->name('drivers.get');
+Route::post('reservations/{id}/drivers/add', 'App\Http\Controllers\DriverController@addDriverToReservation')->middleware('auth')->name('drivers.addToReservation');

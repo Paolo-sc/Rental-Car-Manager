@@ -221,8 +221,7 @@ namespace App\Models{
  * 
  *
  * @property int $id
- * @property string $contract_number
- * @property string|null $booking_code
+ * @property string $booking_code
  * @property int $customer_id
  * @property int $main_driver_id
  * @property int $vehicle_id
@@ -246,13 +245,11 @@ namespace App\Models{
  * @property bool|null $payment_received
  * @property \Illuminate\Support\Carbon|null $payment_date
  * @property string|null $payment_method
- * @property string|null $payment_notes
  * @property string $km_included_type
  * @property int|null $km_included_value
  * @property numeric|null $franchise_theft_fire
  * @property numeric|null $deductible_damage
  * @property numeric|null $deductible_rca
- * @property int|null $max_passengers
  * @property string|null $special_conditions
  * @property bool|null $customer_signature_required
  * @property bool|null $customer_signature_obtained
@@ -277,7 +274,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract whereBookingCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract whereContractNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract whereContractPdfDriveFileId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract whereContractPdfDriveFileUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract whereCreatedAt($value)
@@ -297,11 +293,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract whereKmIncludedType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract whereKmIncludedValue($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract whereMainDriverId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract whereMaxPassengers($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract whereNotes($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract wherePaymentDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract wherePaymentMethod($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract wherePaymentNotes($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract wherePaymentReceived($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract wherePickupLocation($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContract wherePickupTime($value)
@@ -329,7 +323,6 @@ namespace App\Models{
  *
  * @property int $rental_contract_id
  * @property int $driver_id
- * @property string|null $notes
  * @property int|null $created_by
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -342,7 +335,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContractDriver whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContractDriver whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContractDriver whereDriverId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContractDriver whereNotes($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContractDriver whereRentalContractId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RentalContractDriver whereUpdatedAt($value)
  */

@@ -1,8 +1,8 @@
-<div id="driver-modal" class="modal-overlay">
+<div id="drivers-modal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
             <h2 id="modal-header-h2">Driver della prenotazione <span id="booking-id"></span></h2>
-            <button class="btn-primary" id="add-driver-button">
+            <button class="btn-primary" id="add-new-driver-button">
                 <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -28,7 +28,7 @@
             </ul>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn-primary" id="close-driver-modal">Chiudi</button>
+            <button type="submit" class="btn-primary" id="close-drivers-modal">Chiudi</button>
         </div>
     </div>
 </div>

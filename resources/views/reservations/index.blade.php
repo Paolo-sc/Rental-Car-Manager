@@ -106,7 +106,8 @@
     @include('reservations.partials.delete-reservation-modal')
     @include('reservations.partials.edit-reservation-modal')
     @include('reservations.partials.signature-modal')
-    @include('reservations.partials.show-driver-modal')
+    @include('reservations.partials.show-drivers-modal')
+    @include('reservations.partials.add-driver-modal')
 @endsection
 
 @push('scripts')

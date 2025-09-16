@@ -57,8 +57,8 @@ class RentalContract extends Model
     ];
 
     protected $casts = [
-        'start_date'                 => 'date:Y/m/d',
-        'end_date'                   => 'date:Y/m/d',
+        'start_date'                 => 'date:d/m/Y',
+        'end_date'                   => 'date:d/m/Y',
         'pickup_time'                => 'string',
         'return_time'                => 'string',
         'daily_rate'                 => 'decimal:2',
@@ -70,7 +70,7 @@ class RentalContract extends Model
         'deposit_amount'             => 'decimal:2',
         'total_paid'                 => 'decimal:2',
         'payment_received'           => 'boolean',
-        'payment_date'               => 'date:Y/m/d',
+        'payment_date'               => 'date:d/m/Y',
         'km_included_value'          => 'integer',
         'franchise_theft_fire'       => 'decimal:2',
         'deductible_damage'          => 'decimal:2',
