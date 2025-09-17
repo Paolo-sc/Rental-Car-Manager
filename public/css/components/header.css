@@ -85,3 +85,9 @@
     background: var(--color-pagination-button-hover);
     box-shadow: 0 4px 16px rgba(0,123,255,0.22);
 }
+
+@media (max-width: 1024px) {
+    .span-divider {
+        display: none !important;
+    }
+}

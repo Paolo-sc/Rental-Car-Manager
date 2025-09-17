@@ -108,6 +108,8 @@
     @include('reservations.partials.signature-modal')
     @include('reservations.partials.show-drivers-modal')
     @include('reservations.partials.add-driver-modal')
+    @include('customers.partials.edit-customer-modal')
+    @include('vehicles.partials.edit-vehicle-modal')
 @endsection
 
 @push('scripts')

@@ -31,7 +31,8 @@ class User extends Authenticatable
         'created_by',
         'remember_token',
         'google_drive_token',
-        'google_drive_name'
+        'google_drive_name',
+        'sidebar_collapsed'
     ];
 
     /**

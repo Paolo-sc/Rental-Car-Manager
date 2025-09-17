@@ -56,3 +56,5 @@ Route::get('reservations/{id}/drivers', 'App\Http\Controllers\DriverController@g
 Route::post('reservations/{id}/drivers/add', 'App\Http\Controllers\DriverController@addDriverToReservation')->middleware('auth')->name('drivers.addToReservation');
 Route::get('reservations/{id}', 'App\Http\Controllers\ReservationController@getReservationById')->middleware('auth')->name('reservations.getById');
 Route::put('reservations/update/{id}', 'App\Http\Controllers\ReservationController@updateReservation')->middleware('auth')->name('reservations.update');
+Route::get('sidebar-state', 'App\Http\Controllers\SidebarController@getState')->middleware('auth')->name('sidebar.getState');
+Route::post('sidebar-state', 'App\Http\Controllers\SidebarController@updateState')->middleware('auth')->name('sidebar.updateState');

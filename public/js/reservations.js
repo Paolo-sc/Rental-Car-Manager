@@ -1112,6 +1112,10 @@ function openEditModal(reservationId) {
     modalHeaderH2.textContent = "Modifica Prenotazione";
     editModal.style.display = "flex";
 
+    customerAutocompleteInitialized = false;
+    vehicleAutocompleteInitialized = false;
+    driverAutocompleteInitialized = false;
+
     // Gestione chiusura modale
     const closeHandler = () => closeEditModal();
     editModalCloseButton.addEventListener("click", closeHandler);

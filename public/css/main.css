@@ -22,6 +22,7 @@ body {
     padding: 5px; /* spazio attorno alla card */
     box-sizing: border-box; /* include padding nel 100vh */
     background-color: #f2f2f2; /* sfondo grigio */
+    transition: margin-left 0.3s ease; /* transizione fluida */
 }
 
 .main-card {
@@ -30,4 +31,15 @@ body {
     box-sizing: border-box; /* include padding nel min-height */
     min-height: 100%; /* almeno l’altezza del viewport meno i 20px top/bottom di padding del main-content */
     overflow: visible; /* lascia che sia il main-content a gestire lo scroll */
+}
+
+.main-content.collapsed {
+    margin-left: 120px; /* sposta tutto a destra per la sidebar collassata */
+    transition: margin-left 0.3s ease; /* transizione fluida */
+}
+
+@media(max-width: 1024px) {
+    .main-content {
+        margin-left: 120px; /* sposta tutto a destra per la sidebar collassata */
+    }
 }

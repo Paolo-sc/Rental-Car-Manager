@@ -12,6 +12,7 @@
     overflow-y: auto; /* NUOVO: Permette lo scroll interno alla sidebar se il suo contenuto è troppo lungo */
     z-index: 1000; /* NUOVO: Assicura che la sidebar sia sopra gli altri elementi */
     box-sizing: border-box; /* NUOVO: Include padding e bordo nel calcolo della larghezza/altezza */
+    transition: width 0.3s ease;
 }
 
 .sidebar .logo {
@@ -170,4 +171,127 @@
 
 .sidebar .user-profile .nav-icon:hover {
     opacity: 0.7; /* Effetto hover per l'icona */
+}
+
+.sidebar.collapsed {
+    width: 130px; /* Larghezza ridotta quando collassata */
+    transition: width 0.3s ease;
+}
+
+/* Logo */
+.sidebar.collapsed .logo img {
+    margin-right: 0; /* Rimuove il margine destro dell'immagine del logo */
+    transition: margin 0.3s ease;
+}
+
+.sidebar.collapsed .logo span {
+    display: none; /* Nasconde il testo del logo quando collassata */
+}
+
+/* Testo dei link */
+.sidebar.collapsed .nav-text {
+    display: none; /* Nasconde il testo quando collassata */
+}
+
+/* Icone dei link */
+.sidebar.collapsed ul li a .nav-icon {
+    margin-right: 0; /* Rimuove il margine destro */
+    width: 100%; /* Le icone occupano tutta la larghezza del link */
+    transition: all 0.3s ease; /* Transizione su margini, width e height */
+}
+
+.sidebar.collapsed ul li.active a .nav-icon {
+    margin: 0; /* Rimuove il margine quando attivo */
+    transition: margin 0.3s ease;
+}
+
+/* Link */
+.sidebar.collapsed ul li a {
+    padding: var(--spacing-xs); /* Riduce il padding per adattarsi alla larghezza ridotta */
+    transition: padding 0.3s ease; /* Transizione sul padding */
+}
+
+/* Hover / Attivo */
+.sidebar.collapsed ul li a:hover,
+.sidebar.collapsed ul li.active a {
+    padding-left: var(--spacing-xs); /* Riduce il padding sinistro */
+    padding-right: var(--spacing-xs); /* Riduce il padding destro */
+    transition: padding 0.3s ease;
+}
+
+/* Utente in basso */
+.sidebar.collapsed .user-profile .user-info {
+    display: none; /* Nasconde nome e email */
+    transition: all 0.3s ease;
+}
+
+.sidebar.collapsed .user-profile .nav-icon {
+    margin-left: 0;
+    transition: margin 0.3s ease;
+}
+
+/* Nasconde il toggle su tablet / schermi piccoli */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 130px; /* Collassa automaticamente la sidebar */
+        transition: width 0.3s ease;
+    }
+
+    /* Logo */
+    .sidebar .logo img {
+        margin-right: 0;
+        transition: margin 0.3s ease;
+    }
+
+    .sidebar .logo span {
+        display: none; /* Nasconde il testo del logo */
+    }
+
+    /* Testo dei link */
+    .sidebar .nav-text {
+        display: none; /* Nasconde il testo */
+    }
+
+    /* Icone dei link */
+    .sidebar ul li a .nav-icon {
+        margin-right: 0;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar ul li.active a .nav-icon {
+        margin: 0;
+        transition: margin 0.3s ease;
+    }
+
+    /* Link */
+    .sidebar ul li a {
+        padding: var(--spacing-xs);
+        transition: padding 0.3s ease;
+        justify-content: center; /* centra le icone */
+    }
+
+    /* Hover / Attivo */
+    .sidebar ul li a:hover,
+    .sidebar ul li.active a {
+        padding-left: var(--spacing-xs);
+        padding-right: var(--spacing-xs);
+        transition: padding 0.3s ease;
+    }
+
+    /* Utente in basso */
+    .sidebar .user-profile .user-info {
+        display: none;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar .user-profile .nav-icon {
+        margin-left: 0;
+        transition: margin 0.3s ease;
+    }
+
+    /* Nascondi tasto toggle */
+    #toggle-sidebar-btn {
+        display: none;
+    }
 }
