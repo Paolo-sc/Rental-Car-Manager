@@ -4,6 +4,7 @@
 @import url("./components/sidebar.css");
 @import url("./components/header.css");
 @import url("./components/buttons.css");
+@import url("./components/bottom-nav.css");
 
 html
 body {
@@ -41,5 +42,11 @@ body {
 @media(max-width: 1024px) {
     .main-content {
         margin-left: 120px; /* sposta tutto a destra per la sidebar collassata */
+    }
+}
+
+@media (max-width: 768px) {
+    .main-card {
+        margin-bottom: 80px; /* spazio per la bottom nav */
     }
 }

@@ -17,7 +17,7 @@ Route::post('invitations', 'App\Http\Controllers\InvitationController@doInvite')
 Route::get('register/invitation/{token}', 'App\Http\Controllers\RegisterController@showRegisterFormWithToken')->middleware('guest')->name('register.invitation');
 Route::post('register/invitation/{token}', 'App\Http\Controllers\RegisterController@doRegisterWithToken')->middleware('guest')->name('register.invitation.token.post');
 Route::get('invitations', 'App\Http\Controllers\InvitationController@index')->middleware('auth')->name('invitations');
-Route::get('vehicles', 'App\Http\Controllers\VehicleController@index')->middleware('auth')->name('vehicles.index');
+Route::get('vehicles', 'App\Http\Controllers\VehicleController@index')->middleware('auth')->name('vehicles');
 Route::delete('vehicles/delete/{id}', 'App\Http\Controllers\VehicleController@delete')->middleware('auth')->name('vehicles.delete');
 Route::get('vehicles/get/{status}', 'App\Http\Controllers\VehicleController@getVehicles')->middleware('auth')->name('vehicles.get');
 Route::post('vehicles', 'App\Http\Controllers\VehicleController@addVehicle')->middleware('auth')->name('vehicles.add');

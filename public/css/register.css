@@ -1,0 +1,106 @@
+@import url('/css/base/fonts.css');
+@import url('/css/base/variable.css');
+@import url('/css/components/inputs.css');
+@import url('/css/components/buttons.css');
+@import url('/css/components/forms.css');
+@import url('/css/base/typography.css');
+
+/* Body generale */
+body {
+    background-color: var(--color-background-alt);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Titoli */
+h1, p {
+    margin: 0;
+    text-align: center;
+}
+
+/* Container principale del form */
+#registration {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 50px;
+    box-shadow: var(--box-shadow-xl);
+    overflow: hidden;
+    width: 85%;
+    max-width: 600px;
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    margin: 0 auto;
+}
+
+/* Container interno */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Etichette input */
+.label {
+    margin-bottom: var(--layout-spacing-xxs);
+}
+
+/* Password e occhio */
+#password-container,
+#confirm-password-container {
+    position: relative;
+}
+
+#eye {
+    position: absolute;
+    right: var(--spacing-xs);
+    top: 69%;
+    transform: translateY(-50%);
+    width: var(--spacing-md);
+    height: var(--spacing-md);
+    cursor: pointer;
+}
+
+.fixed-eye {
+    top: 50% !important;
+}
+
+#psw-label a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+#footer {
+    margin-top: var(--layout-spacing-sm);
+    text-align: center;
+}
+
+/* Responsive mobile ≤768px */
+@media (max-width: 768px) {
+    #registration {
+        width: 75%;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: none;
+    }
+
+    h1, p {
+        font-size: 1rem;
+    }
+
+
+    .fixed-eye {
+        top: 50% !important;
+    }
+
+    #psw-label a {
+        font-size: 0.75rem;
+    }
+
+    form[name="registration"] {
+        width: 350px;
+    }
+}

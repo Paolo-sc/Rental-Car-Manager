@@ -115,3 +115,44 @@ h1,p{
 .fixed-eye{
     top: 54%!important;
 }
+
+@media (max-width: 768px) {
+    #login {
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        box-shadow: none;
+    }
+
+    #image {
+        display: none !important;
+    }
+
+    .container {
+        margin-top: var(--spacing-md);
+        padding: var(--spacing-lg);
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    h1, p {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    #psw-label {
+        margin-bottom: var(--layout-spacing-xxs);
+    }
+
+    /*Ridimensioniamo il link "Hai dimenticato la password?" */
+    #psw-label a {
+        font-size: 0.75rem;   /* più piccolo */
+    }
+
+    #eye {
+        top: 69%;
+    }
+}
+
+

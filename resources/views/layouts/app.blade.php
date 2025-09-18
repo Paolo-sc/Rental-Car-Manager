@@ -23,7 +23,7 @@
         <nav class="main-nav">
             <ul>
                 {{-- Link per la dashboard --}}
-                <li class="{{ Request::routeIs('dashboard') ? 'active' : '' }}">
+                <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}">
                         <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -36,10 +36,10 @@
                             <path d="M10 16H3V21H10V16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
-                        <div class="nav-text">Dashboard</div>
+                        <span class="nav-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="{{ Request::routeIs('reservations') ? 'active' : '' }}">
+                <li class="{{ request()->is('reservations') ? 'active' : '' }}">
                     <a href="{{ route('reservations') }}">
                         <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -65,11 +65,11 @@
                             <path d="M16 18H16.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
-                        <div class="nav-text">Prenotazioni</div>
+                        <span class="nav-text">Prenotazioni</span>
                     </a>
                 </li>
-                <li class="{{ Request::routeIs('vehicles.index') ? 'active' : '' }}">
-                    <a href="{{ route('vehicles.index') }}">
+                <li class="{{ request()->is('vehicles') ? 'active' : '' }}">
+                    <a href="{{ route('vehicles') }}">
                         <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -85,12 +85,11 @@
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
-                        <div class="nav-text">Veicoli</div>
+                        <span class="nav-text">Veicoli</span>
                     </a>
                 </li>
-                <li class="{{ Request::routeIs('customers') ? 'active' : '' }}">
+                <li class="{{ request()->is('customers') ? 'active' : '' }}">
                     <a href="{{ route('customers') }}">
-                        {{-- Puoi aggiungere un'icona SVG qui per i clienti --}}
                         <svg class="nav-icon"width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -110,10 +109,10 @@
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
-                        <div class="nav-text">Clienti</div>
+                        <span class="nav-text">Clienti</span>
                     </a>
                 </li>
-                <li class="{{ Request::routeIs('invitations') ? 'active' : '' }}">
+                <li class="{{ request()->is('invitations') ? 'active' : '' }}">
                     <a href="{{ route('invitations') }}">
                         <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -130,7 +129,7 @@
                             <path d="M16 19H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
-                        <div class="nav-text">Inviti</div>
+                        <span class="nav-text">Inviti</span>
                     </a>
                 </li>
             </ul>
@@ -198,43 +197,6 @@
                             <button class="btn-secondary" id="google-drive-auth">Collega Google Drive</button>
                         @endif
                     </div>
-                    <div class="header-widget theme-toggle">
-                        <button class="btn-secondary"><svg width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M12 20V22" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M4.93005 4.92993L6.34005 6.33993" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M17.66 17.6599L19.07 19.0699" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M2 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M20 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M6.34005 17.6599L4.93005 19.0699" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M19.07 4.92993L17.66 6.33993" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                            </svg></button>
-                    </div>
-                    <button class="btn-secondary"><svg width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                            <path
-                                d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </button>
                 </div>
             </header>
 
@@ -271,6 +233,9 @@
 
     {{-- Script extra specifici per una pagina --}}
     @stack('scripts')
+
+    {{-- Bottom nav solo mobile --}}
+    @include('partials.bottom-nav')
 </body>
 
 </html>

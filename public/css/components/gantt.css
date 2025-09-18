@@ -429,3 +429,43 @@
     display: table-row;
     height: 20px;
 }
+
+
+@media (max-width: 768px) {
+    .calendar-card .card-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    /* fai adattare gli elementi interni */
+    .card-header .card-title,
+    .card-header .card-subtitle,
+    .month-filter,
+    .filter-reset {
+        width: 100%;      /* prendono tutta la larghezza disponibile */
+        max-width: 100%;  /* assicurati che non escano dal container */
+        flex: none;       /* disabilita grow/shrink se c’è */
+    }
+
+    .month-filter {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background-color: transparent;
+        align-items: flex-start;
+        border: none;
+        padding: 0;
+    }
+
+    .month-filter select {
+        min-width: unset; /* permette di restringersi su mobile */
+        width: auto;
+    }
+
+    .filter-reset{
+        margin-left: 0;
+    }
+}
+

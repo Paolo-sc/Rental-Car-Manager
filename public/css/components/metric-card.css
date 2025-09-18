@@ -62,3 +62,24 @@
 .metric-card .card-sub-description {
   margin-top: 5px;
 }
+
+@media (max-width: 768px) {
+  .metrics-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-card {
+    padding: 1rem 1.5rem;
+  }
+
+  .metric-card .card-value {
+    font-size: 1.5em;
+  }
+
+  .metric-card .card-title,
+  .metric-card .card-trend,
+  .metric-card .card-description,
+  .metric-card .card-sub-description {
+    font-size: 0.75em;
+  }
+}
