@@ -115,7 +115,7 @@ function generateRowHtml(customer) {
         (customer.first_name || customer.company_name) +
         " " +
         (customer.last_name || "") +
-        '">Visualizza Documenti</button>' +
+        '">Documenti</button>' +
         "</div>" +
         "</td>" +
         '<td class="col-actions">' +

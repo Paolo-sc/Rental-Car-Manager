@@ -142,9 +142,11 @@ function generateRowHtml(reservation) {
         "'>Apri contratto</a>" +
         "</td>" +
         "<td>" +
+        "<div class='action-buttons'>" +
         "<button class='btn-primary add-driver' data-reservation-id='" +
         reservation.id +
-        "'>Visualizza Conducenti</button>" +
+        "'>Conducenti</button>" +
+        "</div>" +
         "</td>" +
         '<td class="col-actions">' +
         '<div class="action-buttons">' +

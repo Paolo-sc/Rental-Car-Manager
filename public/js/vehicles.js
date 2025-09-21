@@ -129,7 +129,7 @@ function generateRowHtml(vehicle) {
         " " +
         vehicle.model +
         " " +
-        '">Visualizza Documenti</button>' +
+        '">Documenti</button>' +
         "</div>" +
         "</td>" +
         '<td class="col-actions">' +
