@@ -35,11 +35,6 @@ Per proporre modifiche o nuove funzionalità, apri una Issue o un Pull Request.
 4. Push sul tuo branch (`git push origin feature/NuovaFunzionalita`)
 5. Apri una Pull Request
 
-## License
-
-Questo progetto è distribuito sotto licenza MIT.  
-Consulta il file [LICENSE](LICENSE) per maggiori dettagli.
-
 ## Autore
 
 Paolo-sc  
