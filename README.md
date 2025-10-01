@@ -1,61 +1,84 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Rental Car Manager Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Gestisci in modo semplice ed efficiente un sistema di noleggio auto!  
+Questa applicazione Laravel offre tutte le funzionalità fondamentali per gestire veicoli, clienti, prenotazioni e amministrazione.
 
-## About Laravel
+## Caratteristiche
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Gestione Veicoli:** Aggiungi, modifica e rimuovi auto dal parco veicoli.
+- **Gestione Clienti:** Anagrafica clienti con dettagli e storico prenotazioni.
+- **Prenotazioni:** Crea e gestisci prenotazioni, controlla la disponibilità delle auto.
+- **Dashboard Amministrativa:** Statistiche, report e strumenti di amministrazione.
+- **Autenticazione:** Accesso sicuro tramite autenticazione Laravel.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tecnologie utilizzate
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend:** [Laravel](https://laravel.com/)
+- **Database:** MySQL/MariaDB (configurabile)
+- **Frontend:** Blade (personalizzabile)
+- **Altre dipendenze:** Composer, npm
 
-## Learning Laravel
+## Installazione
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Clona la repository:**
+   ```bash
+   git clone https://github.com/Paolo-sc/Rental-Car-Manager-Laravel.git
+   cd Rental-Car-Manager-Laravel
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. **Installa le dipendenze PHP:**
+   ```bash
+   composer install
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Installa le dipendenze JavaScript:**
+   ```bash
+   npm install
+   npm run build
+   ```
 
-## Laravel Sponsors
+4. **Configura il file `.env`:**
+   - Copia `.env.example` in `.env`
+   - Inserisci le credenziali del database e altri parametri
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. **Genera la chiave dell'app:**
+   ```bash
+   php artisan key:generate
+   ```
 
-### Premium Partners
+6. **Esegui le migrazioni:**
+   ```bash
+   php artisan migrate
+   ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+7. **Avvia il server di sviluppo:**
+   ```bash
+   php artisan serve
+   ```
 
-## Contributing
+## Utilizzo
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Accedi tramite la pagina di login.
+- Configura i veicoli, crea clienti e gestisci le prenotazioni.
+- Usa la dashboard amministrativa per statistiche e report.
 
-## Code of Conduct
+## Contribuire
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Sono benvenuti contributi!  
+Per proporre modifiche o nuove funzionalità, apri una Issue o un Pull Request.
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Forka il progetto
+2. Crea il tuo branch feature (`git checkout -b feature/NuovaFunzionalita`)
+3. Commit delle modifiche (`git commit -am 'Aggiunta nuova funzionalità'`)
+4. Push sul tuo branch (`git push origin feature/NuovaFunzionalita`)
+5. Apri una Pull Request
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Questo progetto è distribuito sotto licenza MIT.  
+Consulta il file [LICENSE](LICENSE) per maggiori dettagli.
+
+## Autore
+
+Paolo-sc  
+[GitHub](https://github.com/Paolo-sc)
