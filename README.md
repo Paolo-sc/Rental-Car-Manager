@@ -1,5 +1,7 @@
 # Rental Car Manager
 
+⚠️ Questo sito è un progetto "work in progress" e non è ancora completo. Alcune funzionalità potrebbero essere mancanti o soggette a cambiamenti.
+
 Gestisci in modo semplice ed efficiente un sistema di noleggio auto!  
 Questa applicazione Laravel offre tutte le funzionalità fondamentali per gestire veicoli, clienti, prenotazioni e amministrazione.
 
