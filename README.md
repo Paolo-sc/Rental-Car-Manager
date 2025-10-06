@@ -16,24 +16,13 @@ Questa applicazione Laravel offre tutte le funzionalità fondamentali per gestir
 - **Backend:** [Laravel](https://laravel.com/)
 - **Database:** MySQL/MariaDB (configurabile)
 - **Frontend:** Blade (personalizzabile)
-- **Altre dipendenze:** Composer, npm
+- **Altre dipendenze:** Composer
 
 ## Utilizzo
 
 - Accedi tramite la pagina di login.
 - Configura i veicoli, crea clienti e gestisci le prenotazioni.
 - Usa la dashboard amministrativa per statistiche e report.
-
-## Contribuire
-
-Sono benvenuti contributi!  
-Per proporre modifiche o nuove funzionalità, apri una Issue o un Pull Request.
-
-1. Forka il progetto
-2. Crea il tuo branch feature (`git checkout -b feature/NuovaFunzionalita`)
-3. Commit delle modifiche (`git commit -am 'Aggiunta nuova funzionalità'`)
-4. Push sul tuo branch (`git push origin feature/NuovaFunzionalita`)
-5. Apri una Pull Request
 
 ## Autore
 
