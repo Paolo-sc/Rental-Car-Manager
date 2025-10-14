@@ -34,4 +34,4 @@ Questo progetto è distribuito con licenza MIT. Vedi il file `LICENSE` per maggi
 **Paolo-sc**
 
 -   [GitHub](https://github.com/Paolo-sc)
--   [LinkedIn](www.linkedin.com/in/paolo-scarentino-59852438a)
+-   [LinkedIn](https://linkedin.com/in/paolo-scarentino-59852438a)
