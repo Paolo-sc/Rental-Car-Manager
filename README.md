@@ -1,32 +1,37 @@
-# Rental Car Manager
+# 🚗 Rental Car Manager
 
-⚠️ Questo sito è un progetto "work in progress" e non è ancora completo. Alcune funzionalità potrebbero essere mancanti o soggette a cambiamenti.
+[![Laravel](https://img.shields.io/badge/Laravel-10.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.1+-777BB4?style=for-the-badge&logo=php)](https://www.php.net)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Gestisci in modo semplice ed efficiente un sistema di noleggio auto!  
-Questa applicazione Laravel offre tutte le funzionalità fondamentali per gestire veicoli, clienti, prenotazioni e amministrazione.
+> ⚠️ **Work in Progress**: Questo progetto è in fase di sviluppo. Alcune funzionalità potrebbero essere incomplete o soggette a cambiamenti.
 
-## Caratteristiche
+**Rental Car Manager** è un'applicazione web costruita con Laravel per gestire in modo semplice ed efficiente un sistema di noleggio auto. Offre tutte le funzionalità fondamentali per amministrare veicoli, clienti e prenotazioni attraverso una dashboard intuitiva.
 
-- **Gestione Veicoli:** Aggiungi, modifica e rimuovi auto dal parco veicoli.
-- **Gestione Clienti:** Anagrafica clienti con dettagli e storico prenotazioni.
-- **Prenotazioni:** Crea e gestisci prenotazioni, controlla la disponibilità delle auto.
-- **Dashboard Amministrativa:** Statistiche, report e strumenti di amministrazione.
-- **Autenticazione:** Accesso sicuro tramite autenticazione Laravel.
+![Screenshot della Dashboard](./asset/DashboardScreen.png)(.asset/Rental Car Manager Presentation.pdf)
 
-## Tecnologie utilizzate
+## ✨ Caratteristiche Principali
 
-- **Backend:** [Laravel](https://laravel.com/)
-- **Database:** MySQL/MariaDB (configurabile)
-- **Frontend:** Blade (personalizzabile)
-- **Altre dipendenze:** Composer
+-   👥 **Gestione Clienti**: Anagrafica completa dei clienti con storico delle prenotazioni e dettagli di contatto.
+-   🚗 **Gestione Parco Veicoli**: Aggiungi, modifica, e visualizza lo stato di ogni veicolo (disponibile, in manutenzione, noleggiato).
+-   📅 **Sistema di Prenotazioni**: Crea e gestisci le prenotazioni, con un calendario per verificare la disponibilità dei veicoli.
+-   📈 **Dashboard Amministrativa**: Una vista d'insieme con statistiche chiave, ultime prenotazioni e report.
+-   🔐 **Autenticazione Sicura**: Sistema di login e registrazione basato su Laravel per proteggere l'accesso.
 
-## Utilizzo
+## 🛠️ Tecnologie Utilizzate
 
-- Accedi tramite la pagina di login.
-- Configura i veicoli, crea clienti e gestisci le prenotazioni.
-- Usa la dashboard amministrativa per statistiche e report.
+-   **Backend**: [Laravel 10](https://laravel.com/)
+-   **Frontend**: Template engine [Blade](https://laravel.com/docs/10.x/blade) con HTML/CSS (facilmente personalizzabile con Tailwind CSS, Bootstrap, etc.)
+-   **Database**: MySQL / MariaDB (configurabile tramite file `.env`)
+-   **Gestione Dipendenze**: [Composer](https://getcomposer.org/)
 
-## Autore
+## 📜 Licenza
 
-Paolo-sc  
-[GitHub](https://github.com/Paolo-sc)
+Questo progetto è distribuito con licenza MIT. Vedi il file `LICENSE` per maggiori dettagli.
+
+## 👨‍💻 Autore
+
+**Paolo-sc**
+
+-   [GitHub](https://github.com/Paolo-sc)
+-   [LinkedIn](https://www.linkedin.com/in/tuo-profilo/) ```
