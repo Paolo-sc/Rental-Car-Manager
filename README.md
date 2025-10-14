@@ -8,7 +8,7 @@
 
 **Rental Car Manager** è un'applicazione web costruita con Laravel per gestire in modo semplice ed efficiente un sistema di noleggio auto. Offre tutte le funzionalità fondamentali per amministrare veicoli, clienti e prenotazioni attraverso una dashboard intuitiva.
 
-[![Screenshot della Dashboard](./asset/DashboardScreen.png)](.asset/Rental Car Manager Presentation.pdf)
+[![Screenshot della Dashboard](./asset/DashboardScreen.png)](./asset/Rental Car Manager Presentation.pdf)
 
 ## ✨ Caratteristiche Principali
 
