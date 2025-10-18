@@ -1,17 +1,16 @@
-/* Sidebar*/
 .sidebar {
-    position: fixed; /* NUOVO: La rende fissa rispetto al viewport */
-    top: 0;          /* NUOVO: Posiziona in alto */
-    left: 0;         /* NUOVO: Posiziona a sinistra */
+    position: fixed; 
+    top: 0;         
+    left: 0;         
     width: 250px;
-    height: 100vh;   /* NUOVO: Alta quanto l'intera viewport */
+    height: 100vh;  
     padding: var(--spacing-md);
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Per posizionare il profilo utente in basso */
-    overflow-y: auto; /* NUOVO: Permette lo scroll interno alla sidebar se il suo contenuto è troppo lungo */
-    z-index: 1000; /* NUOVO: Assicura che la sidebar sia sopra gli altri elementi */
-    box-sizing: border-box; /* NUOVO: Include padding e bordo nel calcolo della larghezza/altezza */
+    justify-content: space-between; 
+    overflow-y: auto; 
+    z-index: 1000; 
+    box-sizing: border-box; 
     transition: width 0.3s ease;
 }
 
@@ -20,7 +19,7 @@
     align-items: center;
     font-weight: bold;
     font-size: var(--font-size-lg);
-    color: var(--color-primary); /* Colore principale per il logo */
+    color: var(--color-primary);
     margin-bottom: 30px;
 }
 
@@ -54,7 +53,7 @@
     margin-right: var(--spacing-xs);
     width: var(--spacing-md);
     height: var(--spacing-md);
-    color: var(--color-white); /* Colore dell'icona */
+    color: var(--color-white); 
 }
 
 .sidebar ul {
@@ -70,7 +69,7 @@
 
 .sidebar ul li a {
     text-decoration: none;
-    color: var(--color-sidebar-a); /* Colore dei link della sidebar */
+    color: var(--color-sidebar-a); 
     display: flex;
     align-items: center;
     padding: var(--spacing-xs);
@@ -82,25 +81,25 @@
 .sidebar ul li a:hover,
 .sidebar ul li.active a {
     background-color: var(--color-sidebar-a-selected);
-    color: var(--color-primary); /* Colore principale per l'elemento attivo/hover */
+    color: var(--color-primary); 
     font-weight: var(--font-weight-medium);
-    text-shadow: var(--shadow-sm); /* shadow-sm */
-    box-shadow: var(--shadow-sm); /* shadow-sm */
-    padding-left: 1rem; /* px-4 */
-    padding-right: 1rem; /* px-4 */
-    padding-top: 0.5rem; /* py-2 */
-    padding-bottom: 0.5rem; /* py-2 */
-    border-radius: 0.5rem; /* rounded-lg */
-    border: 1px solid #d0def2; /* border */
+    text-shadow: var(--shadow-sm); 
+    box-shadow: var(--shadow-sm); 
+    padding-left: 1rem; 
+    padding-right: 1rem; 
+    padding-top: 0.5rem; 
+    padding-bottom: 0.5rem; 
+    border-radius: 0.5rem; 
+    border: 1px solid #d0def2; 
 }
 
 .sidebar ul li a .nav-icon {
     margin-right: var(--spacing-xs);
-    color: var(--color-text-muted); /* Colore delle icone */
+    color: var(--color-text-muted); 
 }
 
 .sidebar ul li.active a .nav-icon {
-    color: var(--color-primary); /* Colore principale per l'icona attiva */
+    color: var(--color-primary); 
 }
 
 .nav-icon {
@@ -126,7 +125,7 @@
     display: flex;
     align-items: center;
     padding: var(--spacing-sm);
-    margin-top: auto; /* Spinge il profilo utente in fondo */
+    margin-top: auto; 
     border-top: 1px solid #eee;
     gap: var(--spacing-xs);
 }
@@ -134,13 +133,13 @@
 .sidebar .user-profile .user-avatar-icon {
     width: 28px;
     height: 28px;
-    flex-shrink: 0; /* NUOVO: Impedisce all'icona di ridursi */
+    flex-shrink: 0; 
 }
 
 .sidebar .user-info {
-    flex-grow: 1; /* Permette al contenitore di occupare lo spazio rimanente */
-    overflow: hidden; /* Impedisce che il testo esca dal contenitore */
-    white-space: nowrap; /* Impedisce il ritorno a capo del testo */
+    flex-grow: 1;
+    overflow: hidden; 
+    white-space: nowrap; 
 }
 
 .sidebar .user-profile .user-info .username {
@@ -159,69 +158,69 @@
     text-overflow: ellipsis;
 }
 
-.sidebar .user-profile .nav-icon { /* Selettore più specifico per l'icona a destra del profilo */
+.sidebar .user-profile .nav-icon { 
     width: var(--spacing-md);
     height: var(--spacing-md);
-    margin-left: auto; /* Spinge l'icona a destra */
+    margin-left: auto; 
     color: var(--color-text-muted);
     cursor: pointer;
-    transition: opacity 0.3s ease; /* Transizione per l'hover */
-    flex-shrink: 0; /* NUOVO: Impedisce all'icona di ridursi */
+    transition: opacity 0.3s ease; 
+    flex-shrink: 0; 
 }
 
 .sidebar .user-profile .nav-icon:hover {
-    opacity: 0.7; /* Effetto hover per l'icona */
+    opacity: 0.7; 
 }
 
 .sidebar.collapsed {
-    width: 130px; /* Larghezza ridotta quando collassata */
+    width: 130px; 
     transition: width 0.3s ease;
 }
 
 /* Logo */
 .sidebar.collapsed .logo img {
-    margin-right: 0; /* Rimuove il margine destro dell'immagine del logo */
+    margin-right: 0; 
     transition: margin 0.3s ease;
 }
 
 .sidebar.collapsed .logo span {
-    display: none; /* Nasconde il testo del logo quando collassata */
+    display: none; 
 }
 
-/* Testo dei link */
+
 .sidebar.collapsed .nav-text {
-    display: none; /* Nasconde il testo quando collassata */
+    display: none;
 }
 
-/* Icone dei link */
+
 .sidebar.collapsed ul li a .nav-icon {
-    margin-right: 0; /* Rimuove il margine destro */
-    width: 100%; /* Le icone occupano tutta la larghezza del link */
-    transition: all 0.3s ease; /* Transizione su margini, width e height */
+    margin-right: 0; 
+    width: 100%; 
+    transition: all 0.3s ease; 
 }
 
 .sidebar.collapsed ul li.active a .nav-icon {
-    margin: 0; /* Rimuove il margine quando attivo */
+    margin: 0; 
     transition: margin 0.3s ease;
 }
 
-/* Link */
+
 .sidebar.collapsed ul li a {
-    padding: var(--spacing-xs); /* Riduce il padding per adattarsi alla larghezza ridotta */
-    transition: padding 0.3s ease; /* Transizione sul padding */
+    padding: var(--spacing-xs); 
+    transition: padding 0.3s ease; 
 }
 
-/* Hover / Attivo */
+
 .sidebar.collapsed ul li a:hover,
 .sidebar.collapsed ul li.active a {
-    padding-left: var(--spacing-xs); /* Riduce il padding sinistro */
-    padding-right: var(--spacing-xs); /* Riduce il padding destro */
+    padding-left: var(--spacing-xs); 
+    padding-right: var(--spacing-xs);
     transition: padding 0.3s ease;
 }
 
-/* Utente in basso */
+
 .sidebar.collapsed .user-profile .user-info {
-    display: none; /* Nasconde nome e email */
+    display: none; 
     transition: all 0.3s ease;
 }
 
@@ -230,29 +229,28 @@
     transition: margin 0.3s ease;
 }
 
-/* Nasconde il toggle su tablet / schermi piccoli */
+
 @media (max-width: 1024px) {
     .sidebar {
-        width: 130px; /* Collassa automaticamente la sidebar */
+        width: 130px; 
         transition: width 0.3s ease;
     }
 
-    /* Logo */
     .sidebar .logo img {
         margin-right: 0;
         transition: margin 0.3s ease;
     }
 
     .sidebar .logo span {
-        display: none; /* Nasconde il testo del logo */
+        display: none; 
     }
 
-    /* Testo dei link */
+
     .sidebar .nav-text {
-        display: none; /* Nasconde il testo */
+        display: none; 
     }
 
-    /* Icone dei link */
+
     .sidebar ul li a .nav-icon {
         margin-right: 0;
         width: 100%;
@@ -264,14 +262,14 @@
         transition: margin 0.3s ease;
     }
 
-    /* Link */
+
     .sidebar ul li a {
         padding: var(--spacing-xs);
         transition: padding 0.3s ease;
-        justify-content: center; /* centra le icone */
+        justify-content: center; 
     }
 
-    /* Hover / Attivo */
+    
     .sidebar ul li a:hover,
     .sidebar ul li.active a {
         padding-left: var(--spacing-xs);
@@ -279,7 +277,7 @@
         transition: padding 0.3s ease;
     }
 
-    /* Utente in basso */
+    
     .sidebar .user-profile .user-info {
         display: none;
         transition: all 0.3s ease;
@@ -290,7 +288,7 @@
         transition: margin 0.3s ease;
     }
 
-    /* Nascondi tasto toggle */
+    
     #toggle-sidebar-btn {
         display: none;
     }

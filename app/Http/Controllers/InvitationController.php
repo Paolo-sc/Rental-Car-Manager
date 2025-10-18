@@ -42,6 +42,7 @@ class InvitationController extends BaseController
         // Genera un token casuale per l'invito
         $token = bin2hex(random_bytes(32));
 
+
         // Salva l'invito nel database
         $invitation =Invitation::create([
             'email' => $email,

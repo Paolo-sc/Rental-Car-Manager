@@ -46,8 +46,6 @@
         <strong>Data:</strong> {{ $reservation->signature_date ?? now()->format('d/m/Y H:i') }} <br>
         <strong>Codice Contratto:</strong> {{ $reservation->booking_code }}
     </p>
-
-    {{-- ====================== DATI CLIENTE ====================== --}}
     <div class="section-title">Cliente</div>
     <table border="1" cellpadding="5">
         <tr>
@@ -88,7 +86,6 @@
     </table>
 
 
-    {{-- ====================== DATI CONDUCENTE ====================== --}}
     <div class="section-title">Conducente Principale</div>
     <table border="1" cellpadding="5" cellspacing="0">
         <tr>
@@ -138,8 +135,6 @@
         </tr>
     </table>
 
-
-    {{-- ====================== DATI VEICOLO ====================== --}}
     <div class="section-title">Veicolo</div>
     <table>
         <tr>
@@ -168,7 +163,6 @@
         </tr>
     </table>
 
-    {{-- ====================== COSTI ====================== --}}
     <div class="section-title">Costi</div>
     <table>
         <tr>
@@ -197,7 +191,6 @@
         </tr>
     </table>
 
-    {{-- ====================== DETTAGLI NOLEGGIO ====================== --}}
     <div class="section-title">Dettagli Noleggio</div>
     <table>
         <tr>
@@ -234,7 +227,6 @@
         </tr>
     </table>
 
-    {{-- ====================== FIRME ====================== --}}
     <p class="signature">
     Firma Cliente: <br>
     @if(!empty($signature_base64))

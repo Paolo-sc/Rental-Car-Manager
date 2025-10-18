@@ -145,9 +145,8 @@ h1,p{
         margin-bottom: var(--layout-spacing-xxs);
     }
 
-    /*Ridimensioniamo il link "Hai dimenticato la password?" */
     #psw-label a {
-        font-size: 0.75rem;   /* più piccolo */
+        font-size: 0.75rem;
     }
 
     #eye {

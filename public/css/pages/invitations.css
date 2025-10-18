@@ -1,3 +1,33 @@
 @import url("../components/inputs.css");
 @import url("../components/forms.css");
 @import url("../components/buttons.css");
+@import url("../components/content-card.css");
+
+
+.invitation-form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 40%;
+}
+
+.invitation-form form{
+    margin-top: 0;
+    display: inline;
+}
+
+.content-card-header{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .invitation-form{
+        width: 100%;
+    }
+
+    .invitation-form form .input-container{
+        width: 100%;
+    }
+}

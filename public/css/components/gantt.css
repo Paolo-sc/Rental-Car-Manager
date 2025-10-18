@@ -404,7 +404,7 @@
     text-align: center;
 }
 
-/* Scrollbar styling */
+
 .calendar-container::-webkit-scrollbar {
     height: 8px;
     width: 8px;
@@ -423,7 +423,7 @@
     background: #122133;
 }
 
-/* Fix per evitare il taglio dell'ultima riga */
+
 .calendar-grid::after {
     content: "";
     display: table-row;
@@ -439,14 +439,14 @@
         gap: 10px;
     }
 
-    /* fai adattare gli elementi interni */
+    
     .card-header .card-title,
     .card-header .card-subtitle,
     .month-filter,
     .filter-reset {
-        width: 100%;      /* prendono tutta la larghezza disponibile */
-        max-width: 100%;  /* assicurati che non escano dal container */
-        flex: none;       /* disabilita grow/shrink se c’è */
+        width: 100%;      
+        max-width: 100%;  
+        flex: none;       
     }
 
     .month-filter {
@@ -460,7 +460,7 @@
     }
 
     .month-filter select {
-        min-width: unset; /* permette di restringersi su mobile */
+        min-width: unset; 
         width: auto;
     }
 

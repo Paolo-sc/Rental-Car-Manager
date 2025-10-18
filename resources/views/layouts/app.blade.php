@@ -4,11 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{-- Il titolo della pagina sarà dinamico --}}
     <title>Rental Car Manager - @yield('title', 'Dashboard')</title>
     <link rel="stylesheet" href="{{ url('css/main.css') }}">
     <link rel="preload" href="/fonts/Geist/Geist-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    {{-- Aggiungi qui eventuali stili extra specifici per una pagina --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @stack('styles')
 </head>
@@ -22,7 +20,6 @@
 
         <nav class="main-nav">
             <ul>
-                {{-- Link per la dashboard --}}
                 <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}">
                         <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -134,7 +131,6 @@
                 </li>
             </ul>
         </nav>
-        {{-- ... Altri elementi della sidebar ... --}}
 
         <div class="user-profile">
             <svg class="user-avatar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -147,9 +143,7 @@
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <div class="user-info">
-                {{-- Mostra il nome completo dell'utente autenticato --}}
                 <div class="username">{{ auth()->user()->full_name }}</div>
-                {{-- Mostra l'email dell'utente autenticato --}}
                 <div class="user-email">{{ auth()->user()->email ?? '' }}</div>
             </div>
             <svg class="nav-icon"xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -163,10 +157,6 @@
     </aside>
 
     <main class="main-content">
-        <div class="notification-popup"
-            style="display: flex; right: 20px; z-index: 1000; background-color: #4BB543; color: white; padding: 10px 20px; border-radius: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-            <span id="notification-message">Cliente eliminato con successo</span>
-        </div>
         <div class="main-card">
             <header class="top-header">
                 <div class="header-left">
@@ -203,6 +193,11 @@
             {{-- Qui verrà iniettato il contenuto specifico di ogni pagina --}}
             @yield('content')
         </div>
+        <footer>
+            <div id="footer">
+                <p>&copy; 2025 Manager Car rental. Tutti i diritti riservati.</p>
+            </div>
+        </footer>
     </main>
     <script>
         document.getElementById('google-drive-auth')?.addEventListener('click', function() {

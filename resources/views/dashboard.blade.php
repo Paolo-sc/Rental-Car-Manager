@@ -1,14 +1,13 @@
-@extends('layouts.app') {{-- Indice a che questa vista estende il layout 'app' --}}
+@extends('layouts.app') 
 
-@section('title', 'Dashboard') {{-- Definisce il titolo per questa pagina --}}
+@section('title', 'Dashboard') 
 
 @push('styles')
-    {{-- Questa sezione corrisponde a @stack('styles') nel layout --}}
-    <link rel="stylesheet" href="{{ asset('css/pages/dashboard.css') }}"> {{-- Include il CSS specifico per la dashboard --}}
+
+    <link rel="stylesheet" href="{{ asset('css/pages/dashboard.css') }}"> 
 @endpush
-@section('content') {{-- Questa sezione corrisponde a @yield('content') nel layout --}}
+@section('content') 
     <section class="simple-page-content">
-        {{-- INIZIO DEL CODICE DELLE METRICHE --}}
         <section class="metrics-cards">
             <div class="content-card metric-card">
                 <div class="card-title">Total Revenue</div>
@@ -39,7 +38,7 @@
                 <div class="card-sub-description">Meets growth projections</div>
             </div>
         </section>
-        {{-- FINE DEL CODICE DELLE METRICHE --}}
+
         <section class="calendar-card">
             <div class="card-header">
                 <div class="header-left">
@@ -79,7 +78,6 @@
             </div>
         </section>
 
-        {{-- Aggiungere altri contenuti specifici della dashboard qui sotto --}}
     </section>
 @endsection
 

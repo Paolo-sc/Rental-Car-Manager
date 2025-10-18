@@ -55,7 +55,7 @@
                         <div class="label" id="psw-label"><label for="password">Password</label></div>
                         <div><input type="password" id="password" name="password"></div>
                         <div><img id="eye" src="{{ url('img/icon-eye.svg') }}" alt="Mostra password"
-                                onclick="togglePasswordVisibility()" class="@error('password')fixed-eye @enderror">
+                            class="@error('password')fixed-eye @enderror">
                         </div>
                         @error('password')
                             <span class="input-error-message">{{ $message }}</span>
@@ -80,7 +80,7 @@
             <p>&copy; 2025 Manager Car rental. Tutti i diritti riservati.</p>
         </div>
     </footer>
-    <script src="{{ url('js/login.js') }}" defer></script>
+    <script src="{{ url('js/register.js') }}" defer></script>
 </body>
 
 </html>

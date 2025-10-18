@@ -33,7 +33,6 @@
                         <div id="password-container" class="input-container">
                             <div id="psw-label">
                                 <label for="password">Password</label>
-                                <a href="">Hai dimenticato la password?</a>
                             </div>
                                 <div><input type="password" id="password" name="password"></div>
                                 <div><img id="eye" src="{{ url('img/icon-eye.svg') }}" alt="Mostra password" onclick="togglePasswordVisibility()" class="

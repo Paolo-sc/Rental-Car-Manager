@@ -8,7 +8,6 @@
 
 @section('content')
     <div class="vehicles-container">
-
         <div class="content-card">
             <!-- Header della card -->
             <div class="content-card-header">

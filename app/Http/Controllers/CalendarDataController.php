@@ -29,10 +29,9 @@ class CalendarDataController extends BaseController
                 ];
             });
 
-        // 2) Determiniamo se è stato passato un intervallo di date
-        //    (utile per inviare al front-end solo le prenotazioni che cadono nel periodo visibile)
-        $from = $request->query('from'); // es. "2025-01-01"
-        $to   = $request->query('to');   // es. "2025-12-31"
+        // 2) Determino se è stato passato un intervallo di date
+        $from = $request->query('from'); 
+        $to   = $request->query('to');   
 
         // Impostiamo un minimo/massimo per evitare query troppo vaste (es. ±1 mese rispetto a oggi)
         $today = Carbon::today();
@@ -44,7 +43,7 @@ class CalendarDataController extends BaseController
             $to = $today->copy()->addMonths(1)->toDateString();
         }
 
-        // 3) Carichiamo i contratti attivi (stato in ["pending", "active", "completed", ...])
+        // 3) Carico i contratti attivi (stato in ["pending", "active", "completed", ...])
         //    che abbiano almeno un giorno di sovrapposizione con [from, to]
         $rawBookings = RentalContract::select('vehicle_id', 'id', 'start_date', 'end_date')
             ->whereIn('status', ['pending', 'active', 'completed'])

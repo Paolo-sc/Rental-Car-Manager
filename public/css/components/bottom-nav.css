@@ -2,10 +2,10 @@
 .bottom-nav {
     position: fixed;
     bottom: 0;
-    left: 0;                /* centra il contenitore */
-    right: 0;               /* centra il contenitore */
+    left: 0;
+    right: 0;
     height: 60px;
-    max-width: 500px;         /* opzionale, per non farla enorme su tablet */
+    max-width: 500px;         /* per non farla enorme su tablet */
     background-color: #fff;
     display: none; /* di default nascosta, solo mobile */
     justify-content: space-around;
@@ -15,7 +15,7 @@
 }
 
 
-/* Lista interna */
+
 .bottom-nav ul {
     display: flex;
     justify-content: space-around;
@@ -26,13 +26,13 @@
     list-style: none;
 }
 
-/* Ogni elemento */
+
 .bottom-nav ul li {
     flex: 1;
     text-align: center;
 }
 
-/* Link */
+
 .bottom-nav ul li a {
     display: flex;
     flex-direction: column;
@@ -45,19 +45,19 @@
     border-radius: 999px;
 }
 
-/* Icona */
+
 .bottom-nav ul li a .nav-icon {
     width: 24px;
     height: 24px;
     transition: transform 0.2s ease, color 0.3s ease;
 }
 
-/* Active */
+
 .bottom-nav ul li.active a {
     background-color: var(--color-sidebar-a-selected);
-    border-radius: 999px; /* assicura tondo completo */
-    padding: 8px 12px;    /* aumenta il padding per fare “pillola” */
-    display: inline-flex; /* per contenere bene icona + testo */
+    border-radius: 999px; 
+    padding: 8px 12px;    
+    display: inline-flex; 
     align-items: center;
     justify-content: center;
 }
@@ -67,12 +67,12 @@
 }
 
 .bottom-nav .nav-text {
-    display: none; /* di default nascosto */
+    display: none; 
 }
 
 .bottom-nav ul li.active a .nav-text {
-    display: inline; /* mostra solo se attivo */
-    margin-left: 6px; /* spazio tra icona e testo */
+    display: inline; 
+    margin-left: 6px; 
     font-weight: var(--font-weight-medium);
     color: var(--color-primary);
 }

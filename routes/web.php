@@ -10,7 +10,6 @@ Route::get('login', 'App\Http\Controllers\LoginController@showLoginForm')->middl
 Route::post('login', 'App\Http\Controllers\LoginController@doLogin')->middleware('guest');
 Route::get('dashboard', 'App\Http\Controllers\DashboardController@showDashboard')->middleware('auth')->name('dashboard');
 Route::get('logout', 'App\Http\Controllers\LoginController@doLogout')->middleware('auth')->name('logout');
-Route::get('documents', 'App\Http\Controllers\DocumentController@showDocuments')->middleware('auth')->name('documents');
 Route::get('customers', 'App\Http\Controllers\CustomerController@index')->middleware('auth')->name('customers');
 Route::get('/calendar-data', 'App\Http\Controllers\CalendarDataController@index')->middleware('auth')->name('calendar.data');
 Route::post('invitations', 'App\Http\Controllers\InvitationController@doInvite')->middleware('auth')->name('invite');

@@ -83,7 +83,7 @@ function getWeatherIcon(code) {
     }
 }
 
-// 🔹 Prendi posizione utente (fallback su Enna)
+// Prendi posizione utente (fallback su Enna)
 navigator.geolocation.getCurrentPosition(
     (pos) => getWeather(pos.coords.latitude, pos.coords.longitude),
     (err) => {

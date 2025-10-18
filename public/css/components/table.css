@@ -1,48 +1,47 @@
-/* Wrapper responsive per tabelle */
+
 .table-responsive {
   width: 100%;
-  overflow-x: hidden; /* nessuno scroll orizzontale su desktop */
+  overflow-x: hidden; 
 }
 
-/* Stili base tabella */
+
 .data-table {
   width: 100%;
-  table-layout: fixed; /* chiave per adattarsi al container */
+  table-layout: fixed; 
   border-collapse: collapse;
   background: #fff;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(16, 30, 54, 0.08);
   border: 1px solid #e3e8ee;
-  font-size: 0.85rem; /* leggermente più leggibile */
+  font-size: 0.85rem; 
 }
 
-/* Celle */
 .data-table th,
 .data-table td {
-  padding: 0.75rem 0.5rem; /* compatto in orizzontale */
+  padding: 0.75rem 0.5rem; 
   border-bottom: 1px solid #e8edf3;
   text-align: left;
   vertical-align: middle;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  /* altezza invariata */
+  
 }
 
-/* Distribuzione proporzionale delle colonne */
+
 .data-table th,
 .data-table td {
   width: auto;
 }
 
-/* Colonna azioni più piccola */
+
 .data-table .col-actions {
   width: 80px;
   text-align: center;
 }
 
-/* Bottoni azioni più piccoli */
+
 .action-buttons {
   display: flex;
   justify-content: center;
@@ -56,24 +55,24 @@
   min-width: 4rem;
 }
 
-/* Riga archiviata */
+
 .archived-row {
   background-color: var(--color-table-archived) !important;
   color: #888;
   border-left: 5px solid var(--color-primary);
 }
 
-/* === MOBILE === rimane invariato === */
+
 @media (max-width: 768px) {
   .table-responsive {
-    overflow-x: auto; /* scroll orizzontale */
+    overflow-x: auto; 
     -webkit-overflow-scrolling: touch;
   }
 
   .data-table {
     font-size: 0.85rem;
     min-width: 600px;
-    table-layout: auto; /* permette larghezza dinamica su mobile */
+    table-layout: auto; 
   }
 
   .data-table th,
